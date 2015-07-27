@@ -1,0 +1,33 @@
+{template admin/header}
+{template admin/sub_menu}
+<div id="main_wp" class="mt10">
+	<form method="post" action="admin.php?mod=vote&code=dosetting">
+	<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+		<tr class="header">
+			<td colspan="2">投票配置</td>
+		</tr>
+		<tr>
+			<td class="altbg1" width="150">
+			开启投票:
+			</td>
+			<td class="altbg2">
+			<input name="config[vote_open]" value="1" id="vote_open_1" class="radio" type="radio" {$checked['vote_open'][1]}>
+			<label for="vote_open_1">是</label>
+			&nbsp;&nbsp;
+			<input name="config[vote_open]" value="0" id="vote_open_0" class="radio" type="radio" {$checked['vote_open'][0]}>
+			<label for="vote_open_0">否</label>	
+			&nbsp;&nbsp;（选择是，前台可发起、查看、参与投票，选择否即关闭;）
+			</td>
+		</tr>
+		<tr>
+			<td class="altbg1" width="150">&nbsp;
+			
+			</td>
+			<td class="altbg2">
+			<button name="do" value='' type="submit" class="button">提交</button>
+			</td>
+		</tr>
+		
+	</table>
+	</form>
+</div>

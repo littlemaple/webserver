@@ -1,0 +1,85 @@
+{template "topic_header"}
+
+<div class="main {$t_col_main}">
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+  <div class="t_col_main_fl">
+    <div id="topic_index_left_ajax_list">
+      <!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+      {template "topic_left.inc"}
+      <!--{/if}-->
+    </div>
+  </div>
+</div>
+<!--此处三栏-->
+  <div class="main3Box_m HotW">	
+    <div id="topNews_1" class="Hotwarp">
+	
+	<!--用户还没有加入任何微群的提示 Begin-->
+		<!--{if $join_qun_count === 0}-->
+			<div style=" border: solid 1px #F9F2A7; padding:10px; margin:10px; background:#FEFFE5; color:#333333">
+				你还没有加入任何微群呢。赶快加入到群里发言吧！
+			</div>
+		<!--{/if}-->
+  	<!--用户还没有加入任何微群的提示 End-->
+	
+	<div class="Menubox2">
+		<!--{if $nav_cat_ary}-->
+		<ul id="cat_nav">
+			<!--{loop $nav_cat_ary $tcat}-->
+			<li>
+				<div  class="tagn" id="nav_inner_$tcat['cat_id']">
+				<A HREF="javascript:;"  onclick="recommendQun($tcat['cat_id'])"><span>{$tcat['cat_name']}</span></A>
+				</div>
+			</li>
+			<!--{/loop}-->
+		</ul>
+		<!--{/if}-->
+	</div>
+<style type="text/css">
+	a.v_on{ color:#000; font-weight:700;}
+</style>
+      <div id="listTopicArea">
+	  
+	  	<!--简单显示 Bein-->
+		<div class="Listmain" style="margin-top:20px;" id="recdqun_wp"></div>
+		<!--简单显示 End-->
+
+		
+		<!--微群分类 Begin-->
+		<div class="Listmain" style="margin-top:20px;">
+		<div style=" padding-bottom:5px; font-size:14px; font-weight:700; border-bottom: dotted 1px #CCCCCC; margin-bottom:20px;">微群分类</div>
+		<div id="cat_content_wp">
+			<!--{loop $top_cat_ary $key $top_cat}-->
+			<div class="cat_block">
+			<div class="cat_block_h"><a href="index.php?mod=qun&code=category&cat_id={$top_cat['cat_id']}">{$top_cat['cat_name']}</a><span>({$top_cat['qun_num']})</span></div>
+			<div class="cat_content">
+				<!--{loop $sub_cat_ary $sub_cat}-->
+					<!--{if $sub_cat['parent_id'] == $key}-->
+					<a href="index.php?mod=qun&code=category&cat_id={$sub_cat['cat_id']}">{$sub_cat['cat_name']}</a>
+					<!--{/if}-->
+				<!--{/loop}-->
+			</div>
+			</div>
+			<!--{/loop}-->
+			<div style="clear:both"></div>
+		</div>
+		</div>
+		<!--微群分类 End-->
+		
+      </div>
+</div>
+
+<!--右边栏 Begin-->
+{template "qun/qun_right"}
+<!--右边栏 End-->
+<script language="javascript">
+<!--{if $first_cat_id>0}-->
+recommendQun({$first_cat_id});
+<!--{/if}-->
+</script>
+ 
+<!--{if $this->Config[ad_enable]}-->
+<div align="center" class="T_AD"> {$this->Config[ad][ad_list][qun][footer]} </div>
+<!--{/if}-->
+{template "topic_footer"}

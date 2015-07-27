@@ -1,0 +1,20 @@
+<!--Shopping Begin-->
+<!--{if !empty($val[ShoppingTypeLogo])}-->
+<div class="artZoomtop" style="display:none ">
+	<img src="{$val[ShoppingTypeLogo]}" width="16" height="16" align="absmiddle" />
+	<a target="_blank" href="#" style="display:none ">title</a>
+	<span class="price"><i>¥</i>{$val[ShoppingPrice]}</span>
+	<a class="buy_url" target="_blank" href="{$val[ShoppingUrl]}"></a>
+</div>
+<!--{/if}-->      
+
+<!--Shopping End-->
+
+<!--{if $val[imageid] && $val[image_list]}-->
+	<!--{eval $val[image_key]=$val[tid].'_'.random(6);}-->
+	<ul class="imgList" id="image_area_{$val['image_key']}">
+	  <!--{loop $val[image_list] $iv}-->
+	  <li><a href="{$iv[image_original]}" class="artZoomAll" topicId="{$val[tid]}" rel="{$iv[image_small]}" rev="{$val[image_key]}" shoppingUrl="{$val[ShoppingUrl]}" shoppingPrice="{$val[ShoppingPrice]}" shoppingTypeLogo="{$val[ShoppingTypeLogo]}"><img style="width:{conf thumbwidth}px; height:{conf thumbheight}px;" src="{$iv[image_small]}" /></a></li>
+	  <!--{/loop}-->
+	</ul>
+<!--{/if}-->

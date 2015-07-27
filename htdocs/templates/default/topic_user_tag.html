@@ -1,0 +1,71 @@
+<!--{template "topic_header"}-->
+<div class="main_2 {$t_col_main}">
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+
+
+<div class="main_2b">
+<div class="main_t"><span>个人标签</span></div>
+<div class="Menubox2">
+<ul>
+<!--{loop $act_list $key $val}-->
+<!--{eval $_hoverCLS = ($key==$act ? ' class="tago" ' : 'class="tagn"');}-->
+<!--{if !is_array($val)}-->
+<li><div {$_hoverCLS}><A HREF="index.php?mod=settings&code={$key}"><span>{$val}</span></A></div></li>
+<!--{else}-->
+<li><div {$_hoverCLS}><A HREF="index.php?mod={$val[link_mod]}&code={$val[link_code]}"><span>{$val[name]}</span></A></div></li>
+<!--{/if}-->
+<!--{/loop}-->
+</ul>
+</div>
+
+<div class="labelBox">
+<div class="setupTag">
+<div class="setupTag_box">
+<div class="setupTag_boxR">
+<p class="setupTag_tip2 gray6">1、添加描述自己职业、兴趣爱好等方面的词语，让更多人找到你，让你找到更多同类(点击直接添加) ：</p>
+<div id="rec_tags" class="setupTag_list01">
+<!--{loop $user_tag $val}-->
+<span id="del_tag_{$val[id]}">
+<a href="javascript:void(0)" onclick="user_tag('{$val[id]}','{$val[name]}','useradd');return false;" title="添加标签"><em>+</em>{$val[name]}</a>
+</span>
+<!--{/loop}-->
+</div>
+</div>
+<div class="setupTag_boxL">
+<div class="setupTag_input">
+<iframe id="user_tag_frame" name="user_tag_frame" width="0" height="0" marginwidth="0" frameborder="0" src="about:blank"></iframe>
+<form action="ajax.php?mod=topic&code=user_tag" method="post" enctype="multipart/form-data" name="user_tag_form" id="user_tag_form" target="user_tag_frame">
+<p class="setupTag_tip2">2、自定义标签，每次添加一个 &nbsp; <input name="tag_name" type="text" class="setupTag_txt" id="tags_name" onfocus="if(value=='我来写标签') {value=''}" onblur="if (value=='') {value='我来写标签'}" value="我来写标签" maxlength="6">
+<input type="button" class="shareI" value="贴上标签" onclick="user_tag('0','tags_name','add');return false;" /></p>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<div class="setupTag_tit">我已经添加的标签（点X去除）：</div>
+<div id="user_tag_list">
+<!--{template "user_tag_ajax"}-->
+</div>
+
+<div class="setupTag_tit" style="padding-top:30px;">关于标签：</div>
+<div class="setupTag_txtList">
+<p>·已经添加的标签将显示在“我的微博”页面右侧栏中，方便大家了解你。</p>
+<p>·点击你已添加的标签，可以搜索到有同样兴趣的人。</p>
+</div>   					
+</div>
+</div>
+
+</div>
+<!--{template "topic_footer"}-->

@@ -1,0 +1,124 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".mclose").click(function(){$(this).parents(".alertBox").hide();});
+	$(".modifyiew").click(function(){$(this).parents(".alertBox").hide();});
+});
+
+function DelMusic(musicid)
+{
+	if(musicid > 0) {
+		$.post(
+			'ajax.php?mod=topic&code=delete_music',
+			{
+				id:musicid
+			},
+			function (d) {				
+				if(''!=d) {
+					//alert(d);
+				} else {
+					;
+				}
+			}
+		);
+		musicid = 0;
+	}
+	listTopic(0,0);
+}
+</script>
+
+
+<!--<div class="alertBox" id="modify_topic_{$topiclist[tid]}" >-->
+<div class="dialog_inner" style=" margin-bottom:15px;">
+      <div class="mWarp">
+	     <form method="post" action="ajax.php?mod=topic&code=do_modifytopic" enctype="multipart/form-data" name="modify_form" target="modifyframe" id="modify_form">
+		 
+          <div>
+            <div style="float:left; width:200px;">
+				<!-- 插入表情-->
+				 <script type="text/javascript">
+				 //关闭后 在点击 显示表情 
+				 $(document).ready(function(){
+				 $(".modify_menu_bqb_c").click(function(){$("#midify_face_{$topiclist[tid]}").show();});
+				 });
+				 </script>
+				<div>
+					<div class="menuf_bq" style="position:static;">
+					<b class="modify_menu_bqb_c">
+					<a href="javascript:void(0);" onclick="topic_face('midify_face_{$topiclist[tid]}','contents_{$topiclist[tid]}');return false;">表情</a>
+					</b>
+					</div>
+				</div>
+				<!-- 插入表情-->
+            </div>
+            <div style="float:right;"> <span>还可以输入</span> <span id="wordCheck_{$topic_info[tid]}"> <span style='color:#FF0000;font-size:12px;'>{conf topic_length}</span> </span> <span style="width:14px;">字</span> </div>
+          </div>
+		  <!--表情显示层--><div id="midify_face_{$topiclist[tid]}" class="modify_face" style="top:55px;"></div> <!--表情显示层-->
+          <div>
+          <textarea name="content"  id="contents_{$topiclist[tid]}" onkeyup="javascript:reply_checkWord({conf topic_length},event)" class="textarea" style="width:368px; height:60px;">{$topiclist[content]}</textarea>
+          <input name="tid" 		type="hidden" 		id="tids" 		value="{$topiclist[tid]}" />
+          <input name="imageid" 	type="hidden" 		id="imageids" 	value="{$topiclist[imageid]}" />
+          </div>
+          
+		  <div>
+            <input name="modify_{$topiclist[tid]}" type="button" class="shareI modifyiew" id="modifySubmit" onclick="do_modifyTopic('{$topiclist[tid]}','imageids','mshoppingurl','contents_{$topiclist[tid]}','{$types}', '{$handle_key}');return false;" value="提 交" title="按Ctrl+Enter直接提交"/>
+		  </div>
+	     </form>
+ 
+        
+        <!--上传图片-->
+        
+        <!--{eval $image_uploadify_topic = $topiclist;}-->
+        <!--{eval $image_uploadify_modify = 1;}--> 
+        <!--{eval $image_uploadify_topic_uid = $topiclist[uid];}--> 
+        <!--{eval $content_textarea_id = 'contents_'.$topiclist[tid];}-->
+      	{template "image_shopping_uploadify.inc"}
+
+        <!--上传图片-->		
+        
+
+        <!--内容操作-->
+      </div>
+	  
+</div>
+
+<script language="Javascript">
+$("#contents_{$topiclist[tid]}").bind('keydown',function(event){
+	event = event || window.event;
+    if (event.keyCode == 13 && event.ctrlKey) {
+        $("#modifySubmit").click();
+    }
+});
+
+//输入时自动提醒
+$(document).ready(function(){
+	initAiInput("contents_{$topiclist[tid]}");	
+});
+</script>
+<script language="Javascript">
+function reply_checkWord(len,evt){ 
+   if(evt==null) 
+   evt = window.event; 
+   var src = evt.srcElement? evt.srcElement : evt.target; 
+   var str = src.value.trim();//
+   myLen =0;
+   i=0;
+   for(;(i<str.length)&&(myLen<=len*2);i++){
+   if(str.charCodeAt(i)>0&&str.charCodeAt(i)<128)
+   myLen++;
+   else
+   myLen+=2;
+   }
+   var mydiv=document.getElementById("wordCheck_{$topic_info[tid]}");
+   if(myLen>len*2){
+   src.value=str.substring(0,i-1);
+   }
+   else{ 
+   document.getElementById("wordCheck_{$topic_info[tid]}").innerHTML = "<span style='color:#FF0000;'>"+Math.floor((len*2-myLen)/2)+"</span>";
+   }
+}
+String.prototype.trim = function() 
+{ 
+return this.replace(/(^\s*)|(\s*$)/g, ""); 
+}
+
+</script>

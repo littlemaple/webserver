@@ -1,0 +1,181 @@
+<!--{subtemplate common_header}-->
+<!--{if MEMBER_ID}-->
+<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	<!--{eval $t_col_header ='t_col_header';  $t_col_logo ='t_col_logo'; $t_col_main='t_col_main'; $t_col_main_side='t_col_main_side'; $t_col_foot='t_col_foot'; $t_col_backTop='t_col_backTop'; $t_col_main_rn='t_col_main_rn'; $t_col_main_lb='t_col_main_lb'; $t_col_tagBox='t_col_tagBox'; }-->
+<!--{/if}-->	
+<!--{/if}-->
+
+<div class="header">
+<script type="text/javascript">
+$(document).ready(function(){
+$(".t_c1").mouseover(function(){$(".t_c1_box").show();$(".t_c1").addClass("on");});
+$(".t_c1").mouseout(function(){$(".t_c1_box").hide();$(".t_c1").removeClass("on");});
+//$(".t_c2").mouseover(function(){$(".t_c2_box").show();$(".t_c2").addClass("on");});
+//$(".t_c2").mouseout(function(){$(".t_c2_box").hide();$(".t_c2").removeClass("on");});
+});
+</script>
+<div class="headerNav {$t_col_header}">
+    <ul class="hleft">
+	<li class="logo2"><a href="index.php?mod=topic&code=shopping" title="{$this->Config[site_name]}"><img src="images/logo2.png" /></a></li>
+	{eval $navigation_config=ConfigHandler::get('navigation');global $rewriteHandler;}
+	<!--{loop $navigation_config[list] $_v}-->
+	<!--{if !empty($_v[type_list])}-->
+		<script type="text/javascript">
+		$(document).ready(function(){
+			$(".t_c{$_v[code]}").mouseover(function(){$(".t_c{$_v[code]}_box").show();$(".t_c{$_v[code]}").addClass("on");});
+			$(".t_c{$_v[code]}").mouseout(function(){$(".t_c{$_v[code]}_box").hide();$(".t_c{$_v[code]}").removeClass("on");});
+		});
+		</script>
+	<!--{/if}-->
+	<!--{eval if($rewriteHandler)$_v[url]=$rewriteHandler->formatURL($_v[url]);}-->
+	<li class="t_c{$_v[code]}"><a href="{$_v[url]}" target="{$_v[target]}" title="{$_v[name]}">{$_v[name]}</a>
+	<!--{if !empty($_v[type_list])}-->
+		<ul class="t_c1_box t_c{$_v[code]}_box" style="display:none;">
+		 <!--{loop $_v[type_list]  $val}-->
+		  <!--{if $val[name]}-->
+		  	<!--{eval if($rewriteHandler)$val[url]=$rewriteHandler->formatURL($val[url]);}-->
+			<li><a href="{$val[url]}" target="{$val[target]}">{$val[name]}</a></li>
+		   <!--{/if}-->	
+		 <!--{/loop}-->
+		 <!--{if !empty($navigation_config[pluginmenu]) && $_v[code] == 'app'}-->
+		 <!--{loop $navigation_config[pluginmenu] $pmenus}-->
+		 <!--{loop $pmenus $pmenu}-->
+			<!--{if $pmenu[type] == 1}-->
+			<!--{eval if($rewriteHandler)$pmenu[url]=$rewriteHandler->formatURL($pmenu[url]);}-->
+			<li><a href="{$pmenu[url]}" target="{$pmenu[target]}">{$pmenu[name]}</a></li>
+			<!--{/if}-->	
+		 <!--{/loop}-->
+		 <!--{/loop}-->
+		 <!--{/if}-->
+		 </ul>
+	 <!--{/if}-->
+	</li>
+	<!--{/loop}-->
+	<li class="sweibo">
+	    <div class="searchTool">
+          <form method="get" action="#" name="headSearchForm" id="headSearchForm" onsubmit="return headDoSearch();">
+            <input id="headSearchType" name="searchType" type="hidden" value="topicSearch">
+            <div class="selSearch">
+              <div class="nowSearch" id="headSlected" onclick="if(document.getElementById('headSel').style.display=='none'){document.getElementById('headSel').style.display='block';}else {document.getElementById('headSel').style.display='none';};return false;" onmouseout="drop_mouseout('head');">分享</div>
+              <div class="btnSel"><a href="#" onclick="if(document.getElementById('headSel').style.display=='none'){document.getElementById('headSel').style.display='block';}else {document.getElementById('headSel').style.display='none';};return false;" onmouseout="drop_mouseout('head');"></a></div>
+              <div class="clear"></div>
+              <ul class="selOption" id="headSel" style="display:none;">
+			  	<li><a href="#" onclick="return search_show('head','topicSearch',this)" onmouseover="drop_mouseover('head');" onmouseout="drop_mouseout('head');">分享</a></li>
+                <li><a href="#" onclick="return search_show('head','userSearch',this)" onmouseover="drop_mouseover('head');" onmouseout="drop_mouseout('head');">用户</a></li>
+                <li><a href="#" onclick="return search_show('head','tagSearch',this)" onmouseover="drop_mouseover('head');" onmouseout="drop_mouseout('head');">话题</a></li>
+				
+				<!--{eval $vote_setting = ConfigHandler::get('vote');}-->
+				<!--{if $vote_setting['vote_open']}-->
+					<li>
+						<a href="#" onclick="return search_show('head','voteSearch',this)" onmouseover="drop_mouseover('head');" onmouseout="drop_mouseout('head');">投票</a>					</li>
+				<!--{/if}-->
+				
+				<!--{eval $qun_setting = ConfigHandler::get('qun_setting');}-->
+				<!--{if $qun_setting['qun_open']}-->
+					<li>
+						<a href="#" onclick="return search_show('head','qunSearch',this)" onmouseover="drop_mouseover('head');" onmouseout="drop_mouseout('head');">微群</a>					</li>
+				<!--{/if}-->
+              </ul>
+            </div>
+            <input class="txtSearch" id="headq" name="headSearchValue" type="text" value="请输入关键字" onfocus="this.value=''"/>
+            <div class="btnSearch"> <a href="#" onclick="javascript:return headDoSearch();"><span class="lbl"></span></a></div>
+          </form>
+        </div>
+	  	</li>
+		
+
+		<li class="pweibo" style="cursor:pointer;" onclick="showMainPublishBox();">发分享
+		  <input type="hidden" name="check_PublishBox_uid" id="check_PublishBox_uid"  value="{MEMBER_ID}"/>
+		</li>
+    </ul>
+    <ul class="hright">
+      <!--{if MEMBER_ID > 0}-->
+	  <li class="t_c3">欢迎您</li>
+	  <li class="t_c2" onmouseout="this.className='t_c2'" onmouseover="this.className='t_c2 t_c2_over'">
+	  <dl>
+	  <dt><a title="{MEMBER_NICKNAME}" href="index.php?mod={MEMBER_NAME}">{MEMBER_NICKNAME}</a><span class="more"></span></dt>
+	  <dd><a href="index.php?mod=profile&code=invite">邀请</a></dd>
+	  <dd id="web_list_type_{MEMBER_ID}">
+	  <input type="hidden" id="web_style" name="web_style" value="{MEMBER_STYLE_THREE_TOL}"/>
+	  <!--{eval if (MEMBER_STYLE_THREE_TOL == 1) $ajax_list = 'right'; else $ajax_list = 'left';}-->   
+	  <a href="javascript:void(0);" onclick="web_list_type({MEMBER_ID},'web_style','{$params[code]}','{$ajax_list}','{$member[uid]}'); return false;"></a> 
+	  </dd>
+	  <dd><a href="index.php?mod=pm&code=list" title="私信">私信</a></dd>
+	  <dd><a href="index.php?mod=settings" title="设置用户昵称、头像等">账号设置</a></dd>
+	  <dd><a href="index.php?mod={MEMBER_NAME}&code=follow">关系中心</a></dd>
+	  <!--{if 'admin'==MEMBER_ROLE_TYPE}-->
+	  <dd><a href="admin.php">后台管理</a></dd>
+	  <!--{/if}-->
+	  <dd><a href="{conf site_url}/index.php?mod=login&code=logout" rel="nofollow">退出</a></dd>
+	  </dl>
+	  </li>
+	  <li class="theme_c"><a href="index.php?mod=theme">换肤</a></li>
+	  <!--{else}-->
+      <li><a href="javascript:viod(0)" rel="nofollow" title="登录即可分享新鲜事" onclick="ShowLoginDialog(); return false;">登录</a></li>
+      <!--{/if}-->
+    </ul>
+  </div>
+  <!--<div class="headerBg"></div>-->
+</div>
+
+<div class="logow {$t_col_logo}">
+
+    <!--{if MEMBER_ID>0}-->
+    <!-- 消息提示框 开始 -->
+    <!--{if $__my[comment_new]>0 || $__my[fans_new]>0 || $__my[at_new]>0 || $__my[newpm]>0 || $__my[favoritemy_new]>0 || $__my['vote_new']>0 || $__my['qun_new']>0 || $__my['event_new']>0 || $__my['topic_new']>0 || $__my['event_post_new']>0 || $__my['fenlei_post_new']>0}-->
+        <!--{eval $__tagBoxStyle='display:block;visibility:visible;';}-->
+    <!--{else}-->
+        <!--{eval $__tagBoxStyle='display:none;visibility:hidden;';}-->
+    <!--{/if}-->
+    <script type="text/javascript">
+        function tagBox_close()
+        {
+            var obj = document.getElementById("tagBox_{MEMBER_ID}");
+            obj.style.visibility = "hidden";
+        }
+    </script>
+    <div class="tagBox {$t_col_tagBox}" id="tagBox_{MEMBER_ID}" style="{$__tagBoxStyle}">
+        <div id="tagBoxContent_{MEMBER_ID}">
+        <ul>
+		
+          <!--{if $__my[newpm]>0}-->
+          <li><a href="index.php?mod=pm&code=list">{$__my[newpm]}条新私信，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[comment_new]>0}-->
+          <li><a href="index.php?mod=topic&code=mycomment">{$__my[comment_new]}条新评论，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[fans_new]>0}-->
+          <li><a href="index.php?mod={$__my[username]}&code=fans">{$__my[fans_new]}人关注了我，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[at_new]>0}-->
+          <li><a href="index.php?mod=topic&code=myat">{$__my[at_new]}人@提到我，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[favoritemy_new]>0}-->
+          <li><a href="index.php?mod=topic&code=favoritemy">{$__my[favoritemy_new]}人收藏了我的微博，查看</a></li>
+          <!--{/if}-->
+		  <!--{if $__my['vote_new']>0}-->
+		  <li><a href="index.php?mod=vote&view=me&filter=new_update&uid={$__my[uid]}">投票新增{$__my[vote_new]}人参与，查看</a></li>
+		  <!--{/if}-->
+		  <!--{if $__my['qun_new']>0}-->
+		  <li><a href="index.php?mod=topic&code=qun">微群新增{$__my[qun_new]}条内容，查看</a></li>
+		  <!--{/if}-->
+          <!--{if $__my[event_new]>0}-->
+          <li><a href="index.php?mod=event&code=myevent&type=new">活动新增{$__my[event_new]}人报名，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[topic_new]>0}-->
+          <li><a href="index.php?mod=topic&code=tag">话题新增{$__my[topic_new]}条微博，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[event_post_new]>0}-->
+          <li><a href="index.php?mod=topic&code=other&view=event">新增{$__my[event_post_new]}个关注的活动，查看</a></li>
+          <!--{/if}-->
+          <!--{if $__my[fenlei_post_new]>0}-->
+          <li><a href="index.php?mod=topic&code=other&view=fenlei">新增{$__my[fenlei_post_new]}个关注的分类信息，查看</a></li>
+          <!--{/if}-->
+        </ul>
+        </div>
+        <div class="tagBox_del"><a href="javascript:tagBox_close();" title="关闭" javascript:void(0)><img src="images/imgdel.gif" /></a></div>
+    </div>
+    <!-- 消息提示框 结束 -->
+    <!--{/if}-->
+</div>
+

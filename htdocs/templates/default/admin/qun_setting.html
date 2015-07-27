@@ -1,0 +1,84 @@
+{template admin/header}
+{template admin/sub_menu}
+<div id="main_wp" class="mt10">
+<form action="admin.php?mod=qun&code=dosetting" method="post" name="search">
+<table cellspacing="1" width="100%" align="center" class="tableborder">
+	<tr class="header">
+		<td colspan="2">基本设置</td>
+	</tr>
+	<tr>
+		<td class="altbg1" width="150">
+		微群
+		</td>
+		<td class="altbg2">
+			<input name='config[qun_open]' id='qun_open_1' type='radio' value='1' class="radio" {$checked['qun_open'][1]} >
+			<label for='qun_open_1'>是</label>
+			<input name='config[qun_open]' id='qun_open_0' type='radio' value='0' class="radio" {$checked['qun_open'][0]} >
+			<label for='qun_open_0'>否</label>	
+		</td>
+	</tr>
+	<tr>
+		<td class="altbg1" width="150">
+		允许创建新微群
+		</td>
+		<td class="altbg2">
+			<input name='config[new_qun]' id='new_qun_1' type='radio' value='1' class="radio" {$checked['new_qun'][1]} >
+			<label for='new_qun_1'>是</label>
+			<input name='config[new_qun]' id='new_qun_0' type='radio' value='0' class="radio" {$checked['new_qun'][0]} >
+			<label for='new_qun_0'>否</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="altbg1" width="150">
+		微群头像最大尺寸(KB)
+		</td>
+		<td class="altbg2">
+		<input type="text" name="config[img_size]" id="img_size" value="{$config['img_size']}" size="40">		
+		</td>
+	</tr>
+	<tr>
+		<td class="altbg1" width="150">
+		群人数上限
+		</td>
+		<td class="altbg2">
+		<input type="text" name="config[member_num]" id="member_num" value="{$config['member_num']}" size="40">		
+		</td>
+	</tr>
+	<tr>
+		<td class="altbg1" width="150">
+		群管理员上限
+		</td>
+		<td class="altbg2">
+		<input type="text" name="config[admin_num]" id="admin_num" value="{$config['admin_num']}" size="40">		
+		</td>
+	</tr>
+</table>
+
+<!--微群奖惩设置 Begin-->
+<!--
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="tableborder tl">
+	<tr class="header">
+		<td colspan="5">微群积分奖惩设置</td>
+	</tr>
+	<tr class="list_h_2">
+		<td>积分名称</td>
+		<td>发表原创微博</td>
+		<td>转发微博</td>
+		<td>发表评论</td>
+		<td>删除微博</td>
+	</tr>
+	<!--{loop $credits_type $key $value}-->
+		<!--<tr>
+			<td class="td2">{$value['name']}</td>
+			<td class="td2"><input type="text" name="config[credits_rule][{$key}][first]" value="{$credits_rule[$key]['first']}" size="8">	</td>
+			<td class="td2"><input type="text" name="config[credits_rule][{$key}][forward]" value="{$credits_rule[$key][forward]}" size="8"></td>
+			<td class="td2"><input type="text" name="config[credits_rule][{$key}][reply]" value="{$credits_rule[$key][reply]}" size="8"></td>
+			<td class="td2"><input type="text" name="config[credits_rule][{$key}][delete]" value="{$credits_rule[$key][delete]}" size="8"></td>
+		</tr>
+	<!--{/loop}-->
+<!--</table>-->
+<!--微群奖惩设置 End-->
+
+<center><input class="button" type="submit" name="setting_submit" value="提 交"></center>
+</form>
+</div>

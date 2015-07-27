@@ -1,0 +1,64 @@
+/* CSS Document */
+body{ background-color:#E7A5A5; background-image:url(../images/theme/t5/themebg.jpg);background-position:0px 0px;background-repeat:repeat;background-attachment:fixed;}
+a:link{color:#2965B1;text-decoration:none;}
+a:visited{color:#2965B1;text-decoration:none;}
+a:hover{color:#2965B1;text-decoration:underline;}
+.headerBg { background:#600012;}
+.headerNav{ color:#fff;}
+.headerNav a:link {color:#fff;text-decoration:none;}
+.headerNav a:hover {color:#fff;text-decoration:underline;}
+.headerNav a:visited {color:#fff;text-decoration:none;}
+.main{ background:url(../images/theme/t5/rightbg.png) repeat-y right center}
+.top_nav2 { background:#fff}
+.top_nav2 li .m_r0 a{ color:#fff;}
+.person_atten_l{}
+.sideBox .sTitle{ background:url(../images/theme/t5/side_bg.gif) no-repeat 0 0 }
+.boxRNav2 li,.boxRNav2 li a{background:url(../images/theme/t5/sideLb.gif) 0 -126px no-repeat;color:#C3E9FF}
+.boxRNav2 li.current{height:34px;z-index:2;background:url(../images/theme/t5/sideLb.gif) 0 -90px no-repeat;}
+.boxRNav2 li.current a:hover{ color:#fff;}
+.sendMail{ width:100%;background:url(../images/theme/t5/sideLb.gif) -334px -200px no-repeat; text-indent:21px; padding-top:5px;}
+.ts3_mbtn1{border:1px solid #b86b72; border-bottom:none;}
+.ts3_mbtn2{border:1px solid #b86b72; border-bottom:none;background:#e7a5a5;}
+.boxRNav2 li.myfav .anoTh{color:#C3E9FF}
+.boxRNav2 li.letter .anoTf{color:#C3E9FF}
+.boxRNav2 li.mailBox .anoTv{ color:#C3E9FF}
+.boxRNav2 li.actBox .anoTv{ color:#C3E9FF}
+.vDateBox{background:#ECF5F9; border:1px solid #B0C9D8;}
+.rbt_2 a{ color:#fff;}
+.boxRNav3 li,.boxRNav3 li a{background:url(../images/theme/t5/sideLb.gif) 0 -126px no-repeat;color:#C3E9FF;}
+.boxRNav3 li.current{height:34px;z-index:2;background:url(../images/theme/t5/sideLb.gif) 0 -90px no-repeat;}
+.sideBox{ color:#C3E9FF;}
+.sideBox a:link,.sideBox a:visited,.sideBox a:hover{}
+.bottomLinks{ background:url(../images/theme/t8/foot_bg.png); color:#fff}
+.bottomLinks a:link,.bottomLinks a:visited,.bottomLinks a:hover{color:#C3E9FF;}
+/*新增侧栏部分*/
+.SC{border-top:none;}
+.SC h3{border-top:none;}
+.rught_tj_box{background:url(../images/theme/t4/right_tj_t.gif) no-repeat; color:#666666;}
+.rught_tj_box span{ background:#ecf5f9;border:#B0C9D8 1px solid; border-top:none;}
+.follow_html2_1{ background:#80BAC4;}
+
+/*三栏部分*/
+.t_col_main{background:url(../images/theme/t5/rightbg.png) repeat-y;}
+.FTL li{}
+.FTL li a:link,.FTL li a:visited,.FTL li a:hover{}
+.r_replace a:link,.r_replace a:visited,.r_replace a:hover{color:#fff;}
+.SC_woguanzhu_box li a:link,.SC_woguanzhu_box li a:visited,.SC_woguanzhu_box li a:hover{color:#333;}
+/*三栏左边导航*/
+.t_col_main_fl .boxRNav2 li,.boxRNav2 li a{background:url(../images/theme/t5/sideLb.png) 0 -126px no-repeat;_background:url(../images/theme/t5/sideLb.gif) 0 -126px no-repeat;}
+.t_col_main_fl .boxRNav2 li.current{height:34px;z-index:2;background:url(../images/theme/t5/sideLb.gif) 10px -462px no-repeat;}
+.t_col_main_fl .sendMail{ width:100%;background:url(../images/theme/t5/sideLb.gif) -334px -200px no-repeat; text-indent:21px; padding-top:5px;}
+.t_col_main_fl .boxRNav2 li.myfav .anoTh{color:#C3E9FF;}
+.t_col_main_fl .boxRNav2 li.letter .anoTf{color:#C3E9FF;}
+.t_col_main_fl .boxRNav2 li.mailBox .anoTv{ color:#C3E9FF;}
+.t_col_main_fl .boxRNav2 li:hover,.t_col_main_fl .boxRNav2 li.hover{background-position:10px -428px;}
+.t_col_main_fl .boxRNav2 li.index:hover,.t_col_main_fl .boxRNav2 #x1.hover{background-position:10px -428px;}
+.t_col_main_fl .boxRNav2 li.current a{color:#C3E9FF}
+.FTL .thread_add a{color:#C3E9FF;}
+.followList li .fBox_R .ff_1{color:#C3E9FF;}
+.m_m2 a{}
+#interestUid .media_user_list,.SC_renqituijian_box{color:#333;}
+#interestUid .media_user_list a,.SC_renqituijian_box a{color:#2965B1;}
+
+
+.f14B a:link, .f14B a:visited, .f14B a:hover{ color:#333;}

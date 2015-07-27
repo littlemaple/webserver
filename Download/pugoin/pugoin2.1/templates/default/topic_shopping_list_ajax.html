@@ -1,0 +1,62 @@
+ <div class="vg_connbody">
+    <span id="favCountMsg" class="fr"></span>            
+	<div class="item_wrap">
+		<ul class="item_list">
+		<!--{loop $topics $val}-->
+			<!--{eval $counts++;}-->
+			<!--{eval $imagecounts=0;}-->
+			<li class="vg_line">
+				<!--{if $val[imageid] && $val[image_list]}-->
+					<!--{eval $val[image_key]=$val[tid].'_'.random(6);}-->
+					<!--{loop $val[image_list] $iv}-->
+						<!--{eval $imagecounts++;}-->
+						<!--{if $imagecounts == 1}-->
+						<div class="item_photo">
+							<!--{if $val[ShoppingPrice]}-->
+							<span class="p"><span><b>¥</b>{$val[ShoppingPrice]}</span></span>
+							<!--{/if}-->
+							<a target="_blank" title="" href="index.php?mod=topic&code={$val[tid]}">
+								<img alt="" src="{$iv[image_original]}" style="width: 200px;">
+							</a>
+						</div>
+						<!--{/if}-->
+					 <!--{/loop}-->
+				<!--{/if}-->
+				
+				<div class="favorite">
+					<a href="javascript:void(0)" onclick="dig('{$val[tid]}','digCount_{$val[tid]}','favCountMsg');return false;" class="favaImg"></a>
+					<span class="favCount">(<span id="digCount_{$val[tid]}">{$val[digs]}</span>)</span>
+					<a href="index.php?mod=topic&code={$val[tid]}" class="creply" target="_blank">评论({$val[replys]})</a>
+				</div>
+				<div class="vg_line_solid"></div>
+				<div class="ws_bd">
+					<a href="index.php?mod={$val[username]}" target="_blank"><img alt="$val[username]" class="avt fl" src="{$val[face]}" onerror="javascript:faceError(this);"></a>
+					<p>
+					由<a target="_blank" href="index.php?mod={$val[username]}" class="n">$val[nickname]</a><span>分享</span>
+					<br><span class="fca">{$val[dateline]}</span>
+					</p>
+				</div>
+				<div class="tk">
+					<p>{$val[content]}   <a href="index.php?mod=topic&code={$val[tid]}" class="creply" target="_blank">查看详细>></a></p>
+				</div>
+			</li>
+			<!--{if $counts%5 == 0}-->
+				</ul>
+			</div>
+			<div class="item_wrap">
+				<ul class="item_list">
+			<!--{/if}-->	
+			
+			<!--{/loop}-->
+		
+			</ul>
+		</div>
+		
+   
+        
+</div>
+<!--{if $page_arr[html]}-->
+<div class="pageStyle">
+	<li>{$page_arr[html]}</li>
+</div>
+<!--{/if}-->

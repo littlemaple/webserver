@@ -1,0 +1,43 @@
+<!--{template admin/header}-->
+<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+  <tr class="header">
+    <td>技巧提示</td>
+  </tr>
+  <tr class="altbg1">
+    <td><ul>
+        <li>用来存储短信帐号用。</li>
+      </ul></td>
+  </tr>
+</table>
+<form method="post" name="smsplugin" action="{$action}">
+  <a name="在线支付设置"></a>
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    <tr class="header">
+      <td colspan="2">短信账号支付设置</td>
+    </tr>
+    <tr>
+      <td class="altbg1" width="45%"><b>短信帐号</b><br>
+        <span class="smalltxt">手机号码</span></td>
+      <td class="altbg2"><input type="text" size="30" name="smsplugin[account]" value="{$smsplugin[account]}">
+      </td>
+    </tr>
+    <tr>
+      <td class="altbg1" width="45%"><b>密码:</b><br>
+        <span class="smalltxt">明文显示</span></td>
+      <td class="altbg2"><input type="text" size="30" name="smsplugin[password]" value="{$smsplugin[password]}">
+      </td>
+    </tr>
+	<tr>
+      <td class="altbg1" width="45%"><b>发送字符串:</b><br>
+        <span class="smalltxt">发送短信字符串(请不要修改)</span></td>
+      <td class="altbg2"><input type="text" size="100" name="smsplugin[sendurl]" value="{$smsplugin[sendurl]}">
+      </td>
+    </tr>
+  </table>
+  <br>
+  <center>
+    <input class="button" type="submit" name="settingsubmit" value="提 交">
+  </center>
+  <br>
+</form>
+<br>

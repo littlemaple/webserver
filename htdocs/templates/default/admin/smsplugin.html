@@ -1,0 +1,67 @@
+<!--{template admin/header}-->
+
+<form action="admin.php?mod=market&code=sendsms" method="post">
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    <tr class="header">
+      <td colspan="3"> 短信营销</td>
+    </tr>
+    <tr>
+       <td width="13%" bgcolor="#F8F8F8">
+	   <span class="altbg1">手机号码: </span>
+	   <br>
+	   <span class="smalltxt">多个手机号用英文分号(;)隔开</span></td>
+       <td bgcolor="#FFFFFF"><span class="altbg2">
+        <textarea name="phones" cols="100" rows="10" id="phones">{$phones}</textarea>
+      </span>
+	  </td>
+    </tr>
+	    <tr>
+       <td width="13%" bgcolor="#F8F8F8"><span class="altbg1">短信内容: </span><br>
+	   <span class="smalltxt"></span></td>
+       <td bgcolor="#FFFFFF">
+	   <textarea name="content" cols="100" rows="10" id="content">{$content}</textarea>
+	   长度70个字以内，1个字母和1个汉字都认为是1个字，当前 <p id="wordcount">您已输入<font id="str" color="#FF0000">0</font>字
+	   </td>
+    </tr>
+	</tr>
+	  <td rowspan="3" class="altbg1" width="200"></td>
+      <td rowspan="3" class="altbg1" width="200"><button name="btnSend" id="btnSend" type="submit" class="button">{$ButtonTitle}</button></td>
+    </tr>
+  </table>
+</form>
+
+<script type="text/javascript">
+
+
+
+function show_result(json) //回传函数实体，参数为XMLhttpRequest.responseText
+{
+	alert(json);
+	$("#btnSend").removeAttr("disabled");//将按钮可用
+	$("#btnSend").attr('value','重新发送'); 
+}
+
+$(function(){  
+    var smscontent = $('#content');  
+    var str  =  $('#str');  
+    var time;  
+
+    smscontent.focus(function(){  
+        time = window.setInterval( substring,100 );  
+    });  
+
+    function substring() {  
+        var val = smscontent.val();  
+        var length = val.length;  
+        if( str.html() != (length) ){  
+            if(length==0){  
+                $("#wordcount")[0].firstChild.nodeValue = "您已输入0";  
+                str.html(length);  
+            }else{  
+                $("#wordcount")[0].firstChild.nodeValue = "您已输入";  
+                str.html(length);  
+            }  
+        }  
+    }  
+});  
+</script>

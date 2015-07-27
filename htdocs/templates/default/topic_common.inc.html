@@ -1,0 +1,192 @@
+<!-- 可能感兴趣的人start -->
+	  <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_guanxingqu").click(function(){$(this).parent().toggleClass("fold_guanxingqu");$(".SC_guanxingqu_box").toggle();});
+	    });
+	  </script>
+      <div class="SC">
+        <h3>
+		可能感兴趣的人<a class="btn SC_guanxingqu" href="javascript:void(0);" onclick="right_show_ajax('{$member[uid]}','refresh'); return false;"></a>
+		</h3>
+        <div class="FTL SC_guanxingqu_box">
+   			<div id="{$member[uid]}_refresh"></div>
+		</div>
+    </div>
+<!-- 可能感兴趣的人end -->
+
+
+
+<!--本周热门话题--> 
+  <!--{if $day7_r_tags}-->
+  	  <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_benzhouremen").click(function(){$(this).parent().toggleClass("fold_benzhouremen");$(".SC_benzhouremen_box").toggle();});
+	    });
+	  </script>
+    <div class="SC">
+    <h3>本周热门话题<a class="btn SC_benzhouremen" href="javascript:void(0)"></a></h3>
+    <ul class="FTL SC_benzhouremen_box">
+      <!--{loop $day7_r_tags $val}-->
+      <li><a href="index.php?mod=tag&code={$val[name]}">{$val[name]}</a>&nbsp;&nbsp;({$val[topic_count]})</li>
+      <!--{/loop}-->
+    </ul>
+  </div>
+  <!--{/if}-->
+<!--本周热门话题--> 
+
+  <!-- 热门话题推荐-->
+  <!--{if $this->Config[hot_tag_recommend_enable] && ($hot_tag_recommend = ConfigHandler::get('hot_tag_recommend')) && $hot_tag_recommend[list]}-->
+	  <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_rementuijian").click(function(){$(this).parent().toggleClass("fold_rementuijian");$(".SC_rementuijian_box").toggle();});
+	    });
+	  </script>
+    <div class="SC">
+	<h3>{$hot_tag_recommend[name]}<a class="btn SC_rementuijian" href="javascript:void(0);" onclick="right_show_ajax('{MEMBER_ID}','hot_tag');"></a></h3>
+    <ul class="FTL SC_rementuijian_box">
+   		<div id="{MEMBER_ID}_hot_tag"></div>
+    </ul>
+  </div>
+  <!--{/if}-->
+
+<!-- 今日热门话题-->
+  <!--{if $day1_r_tags}-->
+      <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_jinriremen").click(function(){$(this).parent().toggleClass("fold_jinriremen");$(".SC_jinriremen_box").toggle();});
+	    });
+	  </script>
+    <div class="SC">
+    <h3>今日热门话题<a class="btn SC_jinriremen" href="javascript:void(0)"></a></h3>
+    <ul class="FTL SC_jinriremen_box">
+      <!--{loop $day1_r_tags $val}-->
+      <li><a href="index.php?mod=tag&code={$val[name]}" target="_blank">{$val[name]}</a></li>
+      <!--{/loop}-->
+    </ul>
+  </div>
+  <!--{/if}-->
+<!-- 今日热门话题-->
+
+<!--人气用户推荐-->
+  <!--{if $recommend_user_list}-->
+	  <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_renqituijian").click(function(){$(this).parent().toggleClass("fold_renqituijian");$(".SC_renqituijian_box").toggle();});
+	    });
+	  </script>
+  <div class="SC">
+  <h3>人气用户推荐<a class="btn SC_renqituijian" href="javascript:void(0)"></a></h3>
+    <ul class="FTL FTL3 SC_renqituijian_box">
+      <!--{loop $recommend_user_list $val}-->
+      <li class="h_h2">
+	  	<a href="index.php?mod={$val[username]}" target="_blank"><img onerror="javascript:faceError(this);" src="{$val[face]}" class="manface" onmouseover="get_user_choose({$val[uid]},'_user',{$val[uid]})" onmouseout="clear_user_choose()"/></a>
+	  	<b><a href="index.php?mod={$val[username]}" target="_blank">{$val[nickname]}</a></b>
+		{template "alert_menu"}
+	  </li>	 
+      <!--{/loop}-->
+    </ul>
+  </div>
+  <!--{/if}-->
+<!-- 人气用户推荐-->
+
+<!--{if $fans_list}-->
+      <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_guanzhuta").click(function(){$(this).parent().toggleClass("fold_guanzhuta");$(".SC_guanzhuta_box").toggle();});
+	    });
+	  </script>
+    <div class="SC">
+    <h3>关注{$member[nickname]}的人<a class="btn SC_guanzhuta" href="javascript:void(0)"></a></h3>
+    <ul class="FTL FTL2 SC_guanzhuta_box">
+      <!--{loop $fans_list $val}-->
+      <li class="h_h2"> <a href="index.php?mod={$val[username]}" target="_blank"><img onerror="javascript:faceError(this);" src="{$val[face]}" class="manface"/></a><span><a href="index.php?mod={$val[username]}" target="_blank">{$val[nickname]}</a></span></li>
+      <!--{/loop}-->
+	  <li><a href="index.php?mod={$member[username]}&code=fans">更多</a></li>
+    </ul>
+  </div>
+  <!--{/if}-->
+<!--获取积分方式--> 
+<!--{if $this->Config[extcredits_enable] && MEMBER_ID > 0 && $member[uid]==MEMBER_ID}-->
+  <script type="text/javascript">
+	$(document).ready(function(){
+	$(".SC_jifen").click(function(){$(this).parent().toggleClass("fold_jifen");$(".SC_jifen_box").toggle();});
+	});
+  </script>
+  <div class="SC">
+	<h3>获取积分<a class="btn SC_jifen" href="javascript:void(0)"></a></h3>
+	<ul class="FTL SC_jifen_box">
+		<!--{eval $credits_rule=ConfigHandler::get('credits_rule');}-->
+		<!--{loop $credits_rule $k $v}-->
+			<!--{if $v[related] && '_'==$k[0]}-->
+				<li>
+				<!--{if 'T'==$k[1]}-->
+					<a href="index.php?mod=tag&code={$v[related]}">发布<b>#{$v[related]}#</b>话题</a>
+				<!--{elseif 'U'==$k[1]}-->
+					<a href="index.php?mod={$v[related]}">关注<b>{$v[related]}</b></a>
+				<!--{/if}-->
+				
+				<!--{loop $this->Config[credits][ext] $_k $_v}-->
+					<!--{if $_v[enable] && $v[$_k]}-->
+						{$_v[name]}
+						<!--{if $v[$_k]>0}-->
+						+
+						<!--{/if}-->
+						{$v[$_k]}
+					<!--{/if}-->
+				<!--{/loop}-->
+				</li>
+			<!--{/if}-->
+		<!--{/loop}-->
+		<li>更多获取积分的方法，<a href="index.php?mod=settings&code=extcredits&op=rule">点此查看</a></li>
+	</ul>
+  </div>
+<!--{/if}-->
+<!--获取积分方式--> 
+  
+  
+<!-- 意见反馈-->
+<script type="text/javascript">
+	$(document).ready(function(){
+	$(".SC_yijianfankui").click(function(){$(this).parent().toggleClass("fold_yijianfankui");$(".SC_yijianfankui_box").toggle();});
+	});
+  </script>
+  <div class="SC">
+  <h3>{$this->Config[site_name]}意见反馈<a class="btn SC_yijianfankui" href="javascript:void(0)"></a></h3>
+  <ul class="FTL SC_yijianfankui_box">
+	  <li>众人拾柴火焰高，如您有任何建议欢迎点<a href="index.php?mod=tag&code=意见反馈" target="_blank">意见反馈</a>告诉我们。</li>
+	  <li>&nbsp;</li>
+	</ul>
+  </div>
+<!--意见反馈-->
+
+
+<!----------------------------------------------话题页面显示------------------------------------------------------>
+  <!--{if $tag}-->
+      <script type="text/javascript">
+		$(document).ready(function(){
+		$(".SC_guanzhugaihuati").click(function(){$(this).parent().toggleClass("fold_guanzhugaihuati");$(".SC_guanzhugaihuati_box").toggle();});
+	    });
+	  </script>
+    <div class="SC">
+    <h3>关注该话题的人<a class="btn SC_guanzhugaihuati" href="javascript:void(0)"></a></h3>
+    <ul class="FTL FTL2 SC_guanzhugaihuati_box">
+      <!--{loop $tag_favorite_list $val}-->
+      <li class="h_h2"><a href="index.php?mod={$val[username]}" target="_blank"><img onerror="javascript:faceError(this);" src="{$val[face]}" title="{$val[nickname]}" class="manface" onmouseover="get_user_choose({$val[uid]},'_user',{$val[uid]})" onmouseout="clear_user_choose()"/></a>
+	  <b><a href="index.php?mod={$val[username]}" target="_blank">{$val[nickname]}</a></b>
+	  <div id="user_{$val[uid]}_user" class="layS2"></div>
+	  </li>
+      <!--{/loop}-->
+      <!--{if !$tag_favorite_list}-->
+	  暂无人关注该话题。
+      <!--{/if}-->
+    </ul>
+	<!--{if $__my[uid]>0}-->
+		<!--{if $is_favorite}-->
+		<span id="favorite_tag_id"><a href="javascript:void(0);" onclick="favoriteTag('{$tag}','delete');return false;"><img src="images/noattention.gif" /></a></span>
+		<!--{else}-->
+		<span id="favorite_tag_id"><a href="javascript:void(0);" onclick="favoriteTag('{$tag}');return false;"><img src="images/attention.gif" /></a></span>
+		<!--{/if}-->
+	  <!--{/if}-->  
+  </div>
+  <!--{/if}-->
+<!----------------------------------------------话题页面显示------------------------------------------------------>

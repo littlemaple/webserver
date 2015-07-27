@@ -1,0 +1,144 @@
+<!--{eval $__my=$this->MemberHandler->MemberFields;}-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<base href="{$this->Config[site_url]}/" />
+{eval $conf_charset=$this->Config['charset'];}<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=7" />
+<title>{$this->Title} - {$this->Config[site_name]}({$this->Config[site_domain]})</title>
+<meta name="Keywords" content="{$this->MetaKeywords},{conf site_name}" />
+<meta name="Description" content="{$this->MetaDescription},{conf site_notice}" />
+<script type="text/javascript">
+var thisSiteURL = '{conf site_url}/';
+var thisTopicLength = '{conf topic_length}';
+var thisMod = '{$this->Module}';
+var thisCode = '{$this->Code}';
+<!--{eval $qun_setting = ConfigHandler::get('qun_setting');}-->
+<!--{if $qun_setting['qun_open']}-->	
+	var isQunClosed = false;
+<!--{else}-->
+	var isQunClosed = true;
+<!--{/if}-->
+
+function faceError(imgObj)
+{
+	{if TRUE===UCENTER_FACE}
+		var errorSrc = '{conf site_url}/images/noavatar.gif';
+	{else}
+		var errorSrc = '{conf site_url}/images/no.gif';
+	{/if}
+
+	imgObj.src = errorSrc;
+}
+</script>
+<link rel="shortcut icon" href="images/favicon.ico" >
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+<link href="styles/reg.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/reg.js"></script>
+<script type="text/javascript" src="js/validate.js"></script>
+<!--{if $this->Config[theme_id]}-->
+<link href="templates/default/styles/{$this->Config[theme_id]}.css" rel="stylesheet" type="text/css" />
+<!--{/if}-->
+<style type="text/css">
+<!--{if $this->Config[theme_text_color]}-->
+body{ color:{$this->Config[theme_text_color]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_color]}-->
+body{ background-color:{$this->Config[theme_bg_color]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_image]}-->
+body{ background-image:url({$this->Config[theme_bg_image]});}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_position]}-->
+body{ background-position:{$this->Config[theme_bg_position]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_repeat]}-->
+body{ background-repeat:{$this->Config[theme_bg_repeat]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_text_color]}-->
+body{ color:{$this->Config[theme_text_color]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_link_color]}-->
+a:link{ color:{$this->Config[theme_link_color]};}
+<!--{/if}-->
+a.artZoom{ cursor:url({conf site_url}/templates/default/images/magnifier_b.cur), pointer; }
+.artZoomBox a.maxImgLink { cursor:url({conf site_url}/templates/default/images/magnifier_s.cur), pointer; }
+
+a.artZoom2{ cursor:url({conf site_url}/templates/default/images/magnifier_b.cur), pointer; }
+
+a.artZoom3{ cursor:url({conf site_url}/templates/default/images/magnifier_b.cur), pointer; }
+.artZoomBox a.maxImgLink3 { cursor:url({conf site_url}/templates/default/images/magnifier_s.cur), pointer; }
+
+a.artZoomAll{ cursor:url({conf site_url}/templates/default/images/magnifier_b.cur), pointer; }
+.artZoomBox a.maxImgLinkAll { cursor:url({conf site_url}/templates/default/images/magnifier_s.cur), pointer; }
+
+.regU{ margin:0 0 20px}
+.main_t{ background:#F6F6F6; height:35px;}
+.regP{ float:none;}
+</style>
+<div class="Rlogo"><a title="{$this->Config[site_name]}" href="index.php">title="{$this->Config[site_name]}"</a></div>
+<div class="main_2">
+<div class="main_t"><span>已注册会员请登录</span></div>
+<div class="set_warp Nlogin">
+<div class="Nll">
+<form method="POST" action="{$action}">
+	<table width="100%" border="0">
+	  <tr>
+	    <td width="30%" align="right" valign="top">登录帐户：</td>
+	    <td width="70%"><input name="username" type="text"  class="regP"/><span class="retip">可用“用户帐号”或注册Email登录</span>
+</td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">登录密码：</td>
+	    <td><input name="password" type="password" class="regP" /></td>
+	  </tr>
+	  <!--{if $this->Config['seccode_login']}-->
+		  <tr>
+			<td align="right" valign="top">验证码：</td>
+			<td>
+				<div class="ml10">
+					<input name="seccode" id="seccode_input" type="text" class="regP" style="width:80px;"/>
+				</div>
+				<div class="ml11">
+				    <script language="javascript">seccode({"id":"seccode_input"});</script>
+					<a href="javascript:updateSeccode('seccode_input');">换一换</a>
+				</div>
+
+
+			</td>
+		  </tr>
+	  <!--{/if}-->
+			  <tr>
+	    <td align="right" valign="middle">&nbsp;</td>
+	    <td class="retip"><input type="checkbox" class="checkb" checked title="请不要在公共电脑上使用自动登录功能">
+		下次自动登录&nbsp;&nbsp; <a onclick="window.location.href='{conf site_url}/index.php?mod=get_password';return false;" href="javascript:void(0)" title="点此可通过2种方式重设密码">忘记密码？</a></td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="middle">&nbsp;</td>
+	    <td>	
+			
+		<input name="" type="submit" value="" class="Nbtn_login" />
+		
+		{if $this->Config[sina_enable] && sina_weibo_init()} &nbsp; <br>{eval echo sina_weibo_login('b');} {/if}
+		{if $this->Config[qqwb_enable] && qqwb_init()} &nbsp; <br>{eval echo qqwb_login('b');} {/if}
+		{if $this->Config[yy_enable] && yy_init()} &nbsp; <br>{eval echo yy_login('b');} {/if}
+		{if $this->Config[renren_enable] && renren_init()} &nbsp; <br>{eval echo renren_login('b');} {/if}
+		
+		</td>
+	  </tr>
+	</table>
+</form>
+</div>
+<div class="Nlr">
+<span class="font14px">还没帐户？</span>
+<a title="注册{conf site_name}" onclick="window.location.href='{conf site_url}/index.php?mod=member';return false;" class="Nbtn_reg">注册{conf site_name}</a>
+
+注册后，可以即时分享新鲜事，并可方便关注用户分享；
+
+可随时随地用<a href="index.php?mod=other&code=wap" target="_blank"><b>手机访问</b></a>，如果<a href="index.php?mod=tools&code=imjiqiren" target="_blank" rel="nofollow"><b>绑定QQ机器人</b></a>，还可以第一时间知道谁回复我的微博，并参与互动。
+</div>
+</div>
+</div>
+<!--{template "topic_footer"}-->

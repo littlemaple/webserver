@@ -1,0 +1,22 @@
+<!--{if $qun_list}-->
+<!--{loop $qun_list $value}-->
+<div class="qun_block">
+	<div class="rbl">
+		<div class="img_wp">
+			<a href="index.php?mod=qun&qid={$value['qid']}"><img src="{$value['icon']}" /></a>
+		</div>
+	</div>
+	<div class="rbr">
+	<span style="font-size:12px; font-weight:600;"><a href="index.php?mod=qun&qid={$value['qid']}">{$value['name']}</a></span>
+	<span>({$value['member_num']})</span>
+	<br />
+	<span style="color:#666">
+		{$value['desc']}
+	</span>
+	</div>
+	<div style="clear:both"></div>
+</div>
+<!--{/loop}-->
+<div style="clear:both"></div>
+<div style="text-align:right"><a href="index.php?mod=qun&code=category&cat_id={$cat_id}">查看全部{$top_cat_ary[$cat_id]['cat_name']}分类>></a></div>
+<!--{/if}-->

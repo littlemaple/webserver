@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{eval $conf_charset=$this->Config['charset'];}<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$this->Config[site_name]}({$this->Config[site_domain]}){conf page_title}</title>
+<meta name="Keywords" content="{$this->MetaKeywords},{conf site_name}{conf meta_keywords}" />
+<meta name="Description" content="{$this->MetaDescription},{conf site_notice}{conf meta_description}" />
+<link rel="shortcut icon" href="templates/default/images/favicon.ico" />
+<link href="styles/pugoin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/min.js"></script>
+<script type="text/javascript" src="js/rotate.js"></script>
+<script type="text/javascript" src="js/dialog.js" id="dialog_js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body>
+<div class="full_wrapper index_warpper">
+
+	<div class="header wrapper">
+		<div class="contents">
+			<div class="logo_slogn">
+				<p>大学女生专属微社区</p>
+				<p class="font12">来这里吧，这里有很多大学女生网购的分享心得，说不定对你有参考哦。</p>
+			</div>
+			<div class="logo"><a href="index.php?mod=topic&code=shopping" title="蒲公英">Skinpp</a></div>
+		</div>
+	</div>
+    
+    <div class="contents main_content">
+        <div class="index-login-box">
+            <h3 class="login_title"><span style="font-weight:normal; font-size:14px; float:right;"><a title="注册" class="sub_link" href="{conf site_url}/index.php?mod=member">注册</a></span>登录</h3>				
+            <div id="show_loginform" class="row ">
+                <form method="POST" action="{conf site_url}/index.php?mod=login&code=dologin" id="guest_login" onKeyDown="if(event.keyCode==13) guestLoginSubmit();" autocomplete="off">
+                <!--{if $this->Config['seccode_login']}-->
+					<input type="hidden" name="seccode" id="seccode_input" value="">
+				<!--{/if}-->
+                <div class="login">
+                    <div class="item">
+                        <label class="form_label">用户名</label>
+						<input type="text" name="username" class="form_input" id="username_input">
+                        <div class="err_box hidden" id="login_email_tip"></div>
+                        <div id="user_preview" class="login_p_box hidden"></div>
+                    </div>
+                    <div class="item">
+                        <label class="form_label">密码</label>
+						<input type="password" name="password" class="form_input" id="password_input">
+                        <div class="err_box hidden" id="login_pwd_tip"></div>                            
+                    </div>
+                </div>
+                <div style="float:left; width:90px; padding-top:47px;" class="form_btn">
+                    <input type="submit" value="" class="btn_login_index" alt="登录" title="登录">
+                    <p>
+					<input type="checkbox" name="savelogin" style="vertical-align: middle;" checked title="请不要在公共电脑上使用自动登录功能">&nbsp;记住我
+					</p>
+                </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="footer wrapper">
+		<div class="contents">			
+			<div class="clearfix boot"><!--{template "topic_footer"}--></div>
+		</div>
+	</div>
+
+    
+</div>
+
+</body>
+</html>

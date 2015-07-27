@@ -1,0 +1,186 @@
+<!--{template "topic_header"}-->
+<div class="main_2">
+	<div class="main_t"><span>QQ微博帐号绑定</span></div>
+    <div class="Menubox2">
+    	<ul>
+    	   <li><div id="qqwb_div_0" class="tago"><a onclick="qqwb_switch_div(0);return false;" href="javascript:void(0)"><span>注册新帐户</span></a></div></li>
+    	   <li><div id="qqwb_div_1" class="tagn"><a onclick="qqwb_switch_div(1);return false;" href="javascript:void(0)"><span>绑定已有的帐号</span></a></div></li>
+    	</ul>
+	</div>
+    <script language="javascript">
+        function qqwb_switch_div(ss)
+        {
+            var ss = ('undefined'==typeof(ss) ? 0 : ss);
+            
+            if(ss)
+            {
+                $('#qqwb_div_0').attr('class','tagn');
+                $('#qqwb_div_1').attr('class','tago');
+                $('#qqwb_user_reg').css('display','none');
+                $('#qqwb_user_login').css('display','block');
+            }
+            else
+            {                
+                $('#qqwb_div_0').attr('class','tago');
+                $('#qqwb_div_1').attr('class','tagn');
+                $('#qqwb_user_reg').css('display','block');
+                $('#qqwb_user_login').css('display','none');
+            }
+            
+            return false;            
+        }
+        function qqwb_user_reg_check()
+        {
+            var reg_username = $('#reg_username').val(); 
+            var reg_nickname = $('#reg_nickname').val();
+            var reg_email = $('#reg_email').val();
+            var reg_password = $('#reg_password').val();           
+            
+            var myAjax = $.post
+            (
+                'index.php?mod=qqwb&code=reg_check&in_ajax=1',
+                {
+                    username:reg_username,
+                    nickname:reg_nickname,
+                    email:reg_email,
+                    password:reg_password
+                },
+                function(d)
+                {
+                    if(d)
+                    {
+                        alert(d);
+                    }
+                    else
+                    {
+                        $('#qqwb_user_reg_form').submit();
+                        
+                        return true;
+                    }
+                }
+            );
+            
+            return false;
+        }
+        function qqwb_user_login_check()
+        {
+            var login_username = $('#login_username').val();
+            var login_password = $('#login_password').val();
+            
+            var myAjax = $.post
+            (
+                'index.php?mod=qqwb&code=login_check&in_ajax=1',
+                {
+                    username:login_username,
+                    password:login_password
+                },
+                function(d)
+                {
+                    if(d)
+                    {
+                        alert(d);
+                    }
+                    else
+                    {
+                        $('#qqwb_user_login_form').submit();
+                        
+                        return true;
+                    }
+                }
+            );
+            
+            return false;
+        }
+    </script>
+    <div class="set_warp" style="width:650px; margin:0 auto; padding:20px 0 50px;">    
+        <div id="qqwb_user_reg" style="display: block;">
+            {if $this->Config[invite_enable] && !$this->Config[invite_by_admin]}
+            
+                非常抱歉，本站目前需要有邀请链接才能注册；<a onclick="qqwb_switch_div(1);return false;" href="javascript:void(0)"><span><strong>请点此绑定已有的帐号</strong></span></a>
+                
+            {else}            
+                
+        	<form id="qqwb_user_reg_form" name="qqwb_user_reg_form" method="POST" action="index.php?mod=qqwb&code=do_reg" onsubmit="return qqwb_user_reg_check();">
+                <input type="hidden" name="qqwb_username" value="{$qqwb_username}" />                
+            	<input type="hidden" name="token" value="{$token}" />                
+            	<input type="hidden" name="tsecret" value="{$tsecret}" />                
+            	<table width="100%" border="0">
+                  <tr>
+            	    <td colspan="2">            
+            	       <div class="tagg2">新注册的帐号将会与QQ微博帐号绑定</div>
+           	        </td>
+            	  </tr>
+                  {if $reg[face]}
+            	  <tr>
+            	    <td width="13%" align="right" valign="top">用户头像：</td>
+            	    <td><input type="hidden" id="reg_face" name="face" onerror="javascript:faceError(this);" value="{$reg[face]}" type="text" class="p1" />
+                        <img onerror="javascript:faceError(this);" src="{$reg[face]}" />
+                        <input type="checkbox" id="qqwb_face" name="synface" value="1" /><label for="qqwb_face">同步QQ微博头像</label>
+            		</td>
+            	  </tr>
+                  {/if}
+            	  <tr>
+            	    <td width="13%" align="right" valign="top">用户帐户：</td>
+            	    <td><input id="reg_username" name="username" value="{$reg[username]}" type="text" class="p1" />
+            		（用于登录本站和访问个人微博，后期不能修改）
+            		</td>
+            	  </tr>
+            	  <tr>
+            	    <td width="15%" align="right" valign="top">姓名/昵称：</td>
+            	    <td><input id="reg_nickname" name="nickname" type="text"  class="p1"  value="{$reg[nickname]}" />
+            		（发微博后会显示，也用于@姓名 通知）
+            		</td>
+            	  </tr>
+            	  <tr>
+            	    <td align="right" valign="top">Email 邮箱：</td>
+            	    <td><input id="reg_email" name="email" type="text" value="{$reg[email]}" class="p1" />
+            		（用于登录、提醒和取回密码）
+            		</td>
+            	  </tr>
+                  <tr>
+            	    <td align="right" valign="top">登录密码：</td>
+            	    <td><input id="reg_password" name="password" type="password" value="{$reg[password]}" class="p1" />
+            		</td>
+            	  </tr>          
+            	  <tr>
+            	    <td align="right" valign="top">&nbsp;</td>
+            	    <td><input type="submit" class="save" value="注 册"/></td>
+            	  </tr>
+            	</table>
+            </form>
+            
+            {/if}
+            
+        </div>        
+        <div id="qqwb_user_login" style="display: none;">
+            <form id="qqwb_user_login_form" name="qqwb_user_login_form" method="POST" name="profile_base" action="index.php?mod=qqwb&code=do_login" onsubmit="return qqwb_user_login_check();">
+            	<input type="hidden" name="qqwb_username" value="{$qqwb_username}" />                
+            	<input type="hidden" name="token" value="{$token}" />                
+            	<input type="hidden" name="tsecret" value="{$tsecret}" />                
+            	<table width="100%" border="0">
+                  <tr>
+            	    <td colspan="2">            
+            	       <div class="tagg2">登录的帐号将会与QQ微博帐号绑定</div>
+           	        </td>
+            	  </tr>
+            	  <tr>
+            	    <td width="13%" align="right" valign="top">登录帐户：</td>
+            	    <td><input id="login_username" name="username" type="text" value="" class="p1" />
+            		</td>
+            	  </tr>
+                  <tr>
+            	    <td align="right" valign="top">登录密码：</td>
+            	    <td><input id="login_password" name="password" type="password" value="" class="p1" />
+            		</td>
+            	  </tr>          
+            	  <tr>
+            	    <td align="right" valign="top">&nbsp;</td>
+            	    <td><input type="submit" class="save" value="登 录"/></td>
+            	  </tr>
+            	</table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--{template "topic_footer"}-->

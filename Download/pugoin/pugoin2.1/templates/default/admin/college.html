@@ -1,0 +1,74 @@
+{template admin/header}
+<div class="nav3">
+  <ul class="cc">
+    <li>
+      <a href="admin.php?mod=city">省份管理</a>
+    </li>
+    <li>
+      <a href="admin.php?mod=city&code=city">城市管理</a>
+    </li>
+    <li>
+      <a href="admin.php?mod=city&code=zone">区域管理</a>
+    </li>
+	<li>
+	  <a href="admin.php?mod=city&code=street">地段管理</a>
+	</li>
+	<li class="current">
+	  <a href="admin.php?mod=city&code=college">大学管理</a>
+	</li>
+  </ul>
+</div>
+
+<div class="mt10">
+<form name="form1" id="form1" method="post" action="admin.php?mod=city&code=addcollege">
+  <table width=98% cellspacing=1 cellpadding=3 class="tableorder">
+  <!-- {if $college} -->
+    <tr class="header">
+      <td colspan=2>修改学校</td>
+    </tr>
+    <tr>
+      <td class="altbg1">名称</td>
+      <td class="altbg2"><input type="text" name="college" id="college" value="{$name}"></td>
+    </tr>
+    <tr>
+  <!-- {else} -->
+    <tr class="header">
+      <td colspan=2>创建学校</td>
+    </tr>
+    <tr>
+      <td class="altbg1">名称</td>
+      <td class="altbg2"><textarea name="college" id="college" rows="5" cols="40"></textarea><font color="red">注:</font>如要同时添加多个学校,每个学校换一行.</td>
+    </tr>
+  <!-- {/if} -->
+    <tr>
+      <td class="altbg1">省份：</td>
+      <td class="altbg2">
+        <select name="province" id="province" onchange="return changeProvince();">
+          <option value=0>请选择</option>
+          $area_option
+        </select>
+      </td>
+    </tr>
+  </table>
+<script type="text/javascript">
+  function changeProvince(){
+	var province = document.getElementById("province").value;
+
+	var url = "ajax.php?mod=class&code=resultlist&act=college&province="+province;
+
+  	var myAjax=$.post(
+  		  	url,
+  		  	function(d){
+  	  		  	$('#' + "resultlist").html(d);
+  		  	});
+    return false;
+  }
+  changeProvince();
+</script>
+<div>
+  <input type="submit" name="addcollege" value="确定" class="button">
+  <input type="hidden" name="id" value="{$college}">
+</div>
+</form>
+<div id="resultlist"></div>
+</div>

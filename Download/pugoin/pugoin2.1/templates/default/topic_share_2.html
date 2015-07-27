@@ -1,0 +1,79 @@
+<script type="text/javascript"> var __TOPIC_VIEW__ = '{$topic_view}'; </script>
+<!--{if ($tpid=$val[top_parent_id])>0 && !in_array($this->Code, array('forward', 'reply'))}-->
+<!--{if ('mycomment'==$this->Code || $topic_view) && 'reply'==$val[type] && $tpid!=($pid=$val[parent_id]) && $parent_list[$pid]}-->
+<p class="feedP">回复{<a href="index.php?mod={$parent_list[$pid][username]}">{$parent_list[$pid][nickname]}：</a><span>{$parent_list[$pid][content]}</span>}</p>
+<!--{/if}-->
+<!--{if !$topic_view}-->
+<!--{eval $pt=$parent_list[$tpid];}-->
+<div class="blogTxt">
+  <div class="top"></div>
+  <div class="mid">
+    <!--{if $pt}-->
+		<span>
+        <a href="index.php?mod={$pt[username]}" onmouseover="get_user_choose({$pt[uid]},'_reply_user',{$pt[tid]});" onmouseout="clear_user_choose();">
+       	 	{$pt[nickname]}
+		</a>
+        {$pt[validate_html]} :  
+        	<!--悬浮头像、弹出对话框-->
+            <span id="user_{$pt[tid]}_reply_user"></span>
+            <!--悬浮头像、弹出对话框-->	
+        </span>
+		
+		<!--{eval $TPT_ = $TPT_ ? $TPT_ : 'TPT_';}-->
+		<span id="topic_content_{$TPT_}{$pt[tid]}_short">{$pt[content]}</span>
+		<span id="topic_content_{$TPT_}{$pt[tid]}_full"></span>
+		<!--{if $pt[longtextid] > 0}-->
+			<span>
+			<a href="javascript:;" onclick="view_longtext('{$pt[longtextid]}', '{$pt[tid]}', this, '{$TPT_}');return false;">查看全文</a>
+			</span>
+		<!--{/if}-->
+		
+		<!--{if $pt[imageid] && $pt[image_list]}-->
+		<!--{eval $pt[image_key]=$pt[tid].'_'.random(6);}-->
+			<ul class="imgList" id="image_area_{$pt[image_key]}">
+			  <!--{loop $pt[image_list] $iv}-->
+			  <li><a href="{$iv[image_original]}" class="artZoomAll" rel="{$iv[image_small]}" topicId="{$pt[tid]}" rev="{$pt[image_key]}" shoppingUrl="{$pt[ShoppingUrl]}" shoppingPrice="{$pt[ShoppingPrice]}" shoppingTypeLogo="{$pt[ShoppingTypeLogo]}"><img style="width:{conf thumbwidth}px; height:{conf thumbheight}px;" src="{$iv[image_small]}" /></a></li>
+			  <!--{/loop}-->
+			</ul>
+		<!--{/if}-->
+		
+		<!--投票 Begin-->
+			<!--{if $pt['is_vote'] > 0}-->
+				<!--{eval $__vote_key = $pt['tid'].'_'.$pt['random']}-->
+				<ul class="imgList" id="vote_detail_{$__vote_key}">
+				  <li><a href="javascript:;" onclick="getVoteDetailWidgets('{$__vote_key}', {$pt['is_vote']});"><img src='./images/vote_pic_01.gif'/></a> </li>
+				</ul>
+				<div id="vote_area_{$__vote_key}" style="display:none;">
+
+						<div class="vote_zf_box" id="vote_content_{$__vote_key}"></div> 
+
+				</div>
+			<!--{/if}-->              
+		<!--投票 End-->
+			
+			
+		<!--{if $pt[videoid] and $this->Config[video_status]}-->
+		<div class="feedUservideo"><a onClick="javascript:showFlash('{$pt[VideoHosts]}', '{$pt[VideoLink]}', this, '{$pt[VideoID]}','{$pt[VideoUrl]}');" >
+		  <div id="play_{$pt[VideoID]}" class="vP"><img src="images/feedvideoplay.gif"  /></div>
+		  <img src="{$pt[VideoImg]}" style="border:none"/> </a></div>
+		<!--{/if}-->
+		
+		<!--{if $pt[musicid]}-->
+		<div class="feedUserImg"><div id="play_{$pt[MusicID]}"></div><img src="images/music.gif" title="点击播放音乐" onClick="javascript:showFlash('music', '{$pt[MusicUrl]}', this, '{$pt['MusicID']}');" style="cursor:pointer; border:none;" /> </div>
+		<!--{/if}-->
+	    
+	    
+		<div>
+		<a href="index.php?mod=topic&code={$tpid}" target="_blank">原文评论({$pt[replys]})</a>&nbsp;
+		<a onclick="get_forward_choose($tpid);return false;" href="index.php?mod=topic&code={$tpid}" target="_blank">转发原文({$pt[forwards]})</a>&nbsp;	
+		{$pt[from_html]}
+		</div>
+    <!--{else}-->
+		<!--{eval $val[reply_disable]=0;}-->
+		<p><span>原始微博已删除</span></p>
+    <!--{/if}-->
+  </div>
+  <div class="bottom"></div>
+</div>
+<!--{/if}-->
+<!--{/if}-->

@@ -1,0 +1,35 @@
+/* CSS Document */
+body{ background-color:#87c8ee; background-image:url(../images/theme/t7/themebg.jpg);background-position:0px 0px;background-repeat:no-repeat;}
+a:link{color:#0066CC;text-decoration:none;}
+a:visited{color:#0066CC;text-decoration:none;}
+a:hover{color:#0066CC;text-decoration:underline;}
+.headerBg { background:#72C2E5;}
+.headerNav{ color:#fff;}
+.headerNav a:link {color:#fff;text-decoration:none;}
+.headerNav a:hover {color:#fff;text-decoration:underline;}
+.headerNav a:visited {color:#fff;text-decoration:none;}
+.main{ background:url(../images/theme/t7/rightbg.gif) repeat-y right center #FFFFFF}
+.top_nav2{ background:#BBE6FF}
+.top_nav2 li .m_r0 a{ color:#fff;}
+.person_atten_l{ border-right:#336699 1px solid}
+
+.sideBox .sTitle{ background:url(../images/theme/t7/side_bg.gif) no-repeat 0 0 }
+.boxRNav2 li,.boxRNav2 li a{background:url(../images/theme/t7/sideLb.gif) 0 -126px no-repeat;}
+.boxRNav2 li.current{height:34px;z-index:2;background:url(../images/theme/t7/sideLb.gif) 0 -90px no-repeat;}
+.sendMail{ width:100%;background:url(../images/theme/t7/sideLb.gif) -334px -200px no-repeat; text-indent:21px; padding-top:5px;}
+.ts_menu_2{background:url(../images/theme/t7/hotb_1.gif) repeat-x bottom;}
+.ts3_mbtn1{border:1px solid #3d98cd; border-bottom:none}
+.ts3_mbtn2{border:1px solid #3d98cd; border-bottom:none;background:#abdcf9;}
+.boxRNav2 li.myfav .anoTh{color:#0066CC}
+.boxRNav2 li.letter .anoTf{color:#0066CC}
+.boxRNav2 li.mailBox .anoTv{ color:#0066CC}
+.bottomLinks{ background:#c9f1ff;}
+.vDateBox{background:#ECF5F9; border:1px solid #B0C9D8;}
+.rbt_2{ background:url(../images/rbg_r2_c1.gif) no-repeat; width:180px; height:30px;}
+.rbt_2 a{ color:#fff;}
+.boxRNav3 li,.boxRNav3 li a{background:url(../images/theme/t7/sideLb.gif) 0 -126px no-repeat;}
+.boxRNav3 li.current{height:34px;z-index:2;background:url(../images/theme/t7/sideLb.gif) 0 -90px no-repeat;}
+/*三栏部分*/
+.t_col_main{background:url(../images/theme/t7/rightbg2.gif) repeat-y;}
+
+

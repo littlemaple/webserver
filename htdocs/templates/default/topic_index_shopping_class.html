@@ -1,0 +1,42 @@
+<!--{template "topic_header"}-->
+<link href="styles/square.css" rel="stylesheet" type="text/css" />
+<div id="vg_center">
+
+	<!--Shopping列表 Begin-->
+		<!--{subtemplate topic_shopping_class}-->
+	<!--Shopping列表 End-->
+	
+    <div class="list_wrap">
+    	
+		<div class="imagewall_sort"><h1 class="fl">{$subclassname}</h1>
+            <div style="margin-left:20px;" class="fl">
+            <a>排序：</a>
+			<!--{if empty($order)}-->
+            <a class="c" href="index.php?mod=topic&code=shopping&cls={$cls}">最新分享</a>
+			<!--{else}-->
+			<a href="index.php?mod=topic&code=shopping&cls={$cls}">最新分享</a>
+			<!--{/if}-->
+			<!--{if $order=='dig'}-->
+            <a class="c" href="index.php?mod=topic&code=shopping&cls={$cls}&order=dig">最多喜欢</a>
+			<!--{else}-->
+			<a href="index.php?mod=topic&code=shopping&cls={$cls}&order=dig">最多喜欢</a>
+			<!--{/if}-->
+			<!--{if $order=='hits'}-->
+            <a class="c" href="index.php?mod=topic&code=shopping&cls={$cls}&order=hits">最高人气</a>
+			<!--{else}-->
+			<a href="index.php?mod=topic&code=shopping&cls={$cls}&order=hits">最高人气</a>
+			<!--{/if}-->
+            
+            
+        	</div>
+        </div>
+		
+    	
+        <!--Shopping列表 Begin-->
+		<!--{subtemplate topic_shopping_list_ajax}-->
+		<!--Shopping列表 End-->
+    </div>
+</div>
+
+
+<!--{template "topic_footer"}-->

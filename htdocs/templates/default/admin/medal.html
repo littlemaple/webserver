@@ -1,0 +1,135 @@
+<!--{template admin/header}-->
+<script>
+
+function MedalInfo(addtype)
+{	
+	if(addtype == 'shoudong')
+	{
+		document.getElementById('add_medal_type_shoudong').style.display='block';
+		document.getElementById('add_medal_type_zidong').style.display='none';
+	}
+	else
+	{
+		document.getElementById('add_medal_type_zidong').style.display='block';
+		document.getElementById('add_medal_type_shoudong').style.display='none';
+	}
+	
+}
+
+</script>
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+   <tr>
+      <td width="12%">勋章设置：</td>
+      <td width="25%" height="40">
+      <input name="radio" type="radio" onclick="MedalInfo('zidong');" checked="checked"  />
+       添加勋章
+	   <input name="radio" type="radio"  onclick="MedalInfo('shoudong');" />
+       手动发放	  </td>
+      <td width="63%"><p>提示：<br />
+        选择添加勋章，创建一个新的勋章。用户满足条件即可点亮。<br />
+        选择手动发放，不需要用户自动获取,管理员手动给用户发放。</p>
+     </td>
+   </tr>
+  </table>
+
+<div id="add_medal_type_zidong">
+<form action="admin.php?mod=medal&amp;code=add" method="post" enctype="multipart/form-data" name="form1" id="form1">
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    <tr class="header">
+      <td colspan="5"> 快速设置用户勋章 </td>
+    </tr>
+	<tr >
+      <td width="13%"><span class="altbg2">
+        <select name="type" id="type"  onchange="check_topic_type(this.value);">
+          <option value="">----- 请选择要增加的规则 ------ </option>
+		  <option value="shoudong">添加手动发放勋章</option>
+		  
+          <option value="topic">连续发原创微博</option>
+          <option value="reply">连续评论微博</option>
+          <option value="tag">发布指定话题</option>
+		  <option value="invite">邀请好友</option>
+        </select>
+      </span></td>
+      <td width="87%" height="40"><button name="do" value='' type="submit" class="button">添加勋章</button></td>
+    </tr>
+  </table>
+  
+</form>
+</div>
+
+<div id="add_medal_type_shoudong" style="display:none;">
+<form action="admin.php?mod=medal&code=add_medal_user" method="post" enctype="multipart/form-data">
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    <tr class="header">
+      <td colspan="5"> 快速设置用户勋章 </td>
+    </tr>
+    <tr>
+      <td  width="116">输入用户昵称:</td>
+	  
+      <td colspan="3">
+	    <input name="nickname" type="text" id="nickname" size="40" /></td>
+    </tr>
+	<tr>
+      <td  width="116">选择勋章：</td>
+	  
+      <td colspan="3">
+	  <!--{loop $medal_list $medal}-->
+        <span><input name="medal_id[]" type="checkbox" id="medal_id[]" value="{$medal[id]}" />
+        {$medal[medal_name]}</span>
+	  <!--{/loop}-->      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      
+      <td width="942" class="altbg2"><button name="do" value='' type="submit" class="button">设置勋章</button></td>
+    </tr>
+  </table>
+</form>
+</div>
+
+<form method="post" action="admin.php?mod=medal&code=delete">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableborder">
+<tr class="header">
+		
+	<td>图标</td>
+	<td>勋章名称</td>
+	<td>完成条件</td>
+	<td>勋章获得人数</td>
+	<td>是否启用</td>
+	
+	<td>管理操作</td>
+</tr>
+<!--{loop $medal_list $medal}-->
+<tr align="center">
+	
+	<td  style="border-bottom:1px dashed #ccc"  width="10%">
+	<img src="{$medal[medal_img]}" />	</td>
+	<td align="left" style="border-bottom:1px dashed #ccc" width="16%">
+	{$medal[medal_name]}	</td>
+	<td width="14%" align="left"  style="border-bottom:1px dashed #ccc">
+	{$medal[medal_depict]}	</td>
+	<td width="13%" align="left"  style="border-bottom:1px dashed #ccc">{$medal[medal_count]}</td>
+	<td width="11%" align="left"  style="border-bottom:1px dashed #ccc">
+		<a href="admin.php?mod=medal&code=isopen&ids={$medal[id]}"><!--{if $medal[is_open] == 1}-->点此关闭<!--{else}-->点此开启<!--{/if}--></a>	</td>
+	<td  style="border-bottom:1px dashed #ccc" width="17%">
+		<a href="admin.php?mod=medal&amp;code=view&amp;ids={$medal[id]}">查看用户</a>&nbsp;|&nbsp;
+		<a href="admin.php?mod=medal&code=modify&ids={$medal[id]}">编辑</a>&nbsp;|&nbsp;
+		<A href="admin.php?mod=medal&code=delete&ids={$medal[id]}">删除</A>&nbsp;	</td>
+</tr>
+<!--{/loop}-->
+
+
+<!--{if $page_arr[html]}-->
+<tr align="center">
+	<td colspan="8">
+	{$page_arr[html]}				</td>
+</tr>
+<!--{/if}-->
+<tr align="center">
+	<td colspan="8" >&nbsp;	</td>
+</tr>
+</table>
+</form>
+
+
+

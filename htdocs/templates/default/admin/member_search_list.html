@@ -1,0 +1,68 @@
+<!--{template admin/header}-->
+
+
+<!-- <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+	<tr class="header">
+		<td>技巧提示</td>
+	</tr>
+	<tr bgcolor="#F8F8F8">
+		<td><br>
+		<ul>
+			<li>系统角色为<B>粗体</B>显示，自定义角色为普通。</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<br> -->
+<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+	<form method="post" action="{$action}">
+		<tr align="center" class="header">
+			<td width="10%">
+			<input type="checkbox" name="chkall" onclick="checkall(this.form, 'ids')" class="checkbox">全删</td>
+			<td width="20%">帐号</td>
+			<td width="20%">昵称</td>
+            
+            <!--{if $this->Config[extcredits_enable]}-->
+            <td>总积分</td>
+			<!--{loop $this->Config['credits']['ext'] $k $v}-->
+			<td>{$v[name]}</td>
+			<!--{/loop}-->
+			<!--{/if}-->
+			
+			<td width="7%">角色</td>
+			<td width="8%">认证</td>
+			<td width="8%">备注</td>
+			<td width="20%">操作</td>
+		</tr>
+		<!--{loop $member_list $member}-->
+		<tr align="center" class="smalltxt">
+			<td class="altbg1">
+			<input type="checkbox" name="ids[]" value="{$member[uid]}" class="checkbox">删</td>
+			<td class="altbg2"><a href="index.php?mod={$member[username]}" target="_blank">{$member[username]}</a></td>
+			<td class="altbg1">{$member[nickname]}</td>
+            
+			<!--{if $this->Config[extcredits_enable]}-->
+            <td class="altbg2">{$member[credits]}</td>
+			<!--{loop $this->Config['credits']['ext'] $k $v}-->
+			<td class="altbg1">{$member[$k]}</td>
+			<!--{/loop}-->
+			<!--{/if}-->
+			
+			<td class="altbg2">{$member[role_name]}</td>
+			<td class="altbg1"><!--{if $member[validate]}--><img src="./images/vip.gif" title="{$member[validate_remark]}"/><!--{else}-->无<!--{/if}--></td>
+			<td class="altbg2">{$member[private_remark]}</td>
+			<td class="altbg1"> <a href="admin.php?mod=member&code=modify&id={$member[uid]}">[编辑]</a>
+			<a href="admin.php?mod=member&code=dodelete&ids={$member[uid]}">[删除]</a></td>
+		</tr>
+		<!--{/loop}-->
+		<!--{if $pages}-->
+		<tr>
+		<td colspan="22">$pages</td>
+		</tr>
+		<!--{/if}-->
+</table>
+
+<br>
+<center><input type="submit" name="editsubmit" value="提 交" class="button"></center>
+</form>
+

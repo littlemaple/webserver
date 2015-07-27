@@ -1,0 +1,68 @@
+{template admin/header}
+<div class="nav3">
+  <ul class="cc">
+    <li class="current">
+      <a href="admin.php?mod=fenlei">大类管理</a>
+    </li>
+    <li>
+      <a href="admin.php?mod=fenlei&code=subclass">小类管理</a>
+    </li>
+    <li>
+      <a href="admin.php?mod=fenlei&code=tag">标签管理</a>
+    </li>
+  </ul>
+</div>
+
+<div class="mt10">
+<form name="form1" method="post" action="admin.php?mod=fenlei&code=addclass">
+  <table width=98% cellspacing=1 cellpadding=3 class="tableorder">
+  <!-- {if $id} -->
+    <tr class="header"> 
+      <td colspan=2>修改大类</td>
+    </tr>
+    <tr>
+  	  <td class="altbg1">名称</td>
+  	  <td class="altbg2"><input type="text" id="class" name="class" value="{$class}"></td>
+    </tr>
+  <!-- {else} -->
+    <tr class="header"> 
+      <td colspan=2>创建大类</td>
+    </tr>
+    <tr>
+  	  <td class="altbg1">名称</td>
+  	  <td class="altbg2"><textarea id="class" name="class" rows="5" cols="40"></textarea><font color="red">注:</font>如要同时添加多个地名,每个大类换一行.</td>
+    </tr>
+  <!-- {/if} -->
+    <tr>
+      <td>
+        <input type="submit" name="submit22" value="确定" class="button">
+        <input type="hidden" name="id" value="{$id}">
+      </td>
+    </tr>
+  </table>
+</form>
+<br>
+<form name="form2" method="post" action="admin.php?mod=fenlei&code=classorder">
+  <table width="98%" border="0" cellspacing="0" cellpadding="0" class="tableorder">
+    <tr align="center" class="header"> 
+      <td width="40%">名称</td>
+      <td width="30%">排序</td>
+      <td width="30%">操作</td>
+    </tr>
+    <!-- {loop $rs $key $val} -->
+    <tr> 
+      <td class="altbg1" style="border-bottom:1px dashed #ccc"><a href="admin.php?mod=fenlei&code=subclass&class=$val[id]">{$val['name']}</a></td>
+      <td class="altbg1" style="border-bottom:1px dashed #ccc"><input type='text' name='order[{$val[id]}]' value='$val[list]' size='5'/></td>
+      <td class="altbg1" style="border-bottom:1px dashed #ccc">
+        <a href="admin.php?mod=fenlei&id=$val[id]">编辑</a>
+        <span>&nbsp;|&nbsp;</span>
+        <a href="admin.php?mod=fenlei&code=delclass&fid=$val[id]" onclick="return confirm('你确实要删除吗?不可恢复');">删除</a>
+      </td>
+    </tr>
+    <!-- {/loop} -->
+    <tr>
+      <td><input type="submit" name="submit11" value="修改排序" class="button"></td>
+    </tr>
+  </table>
+</form>
+</div>

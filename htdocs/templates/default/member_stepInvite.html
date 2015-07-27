@@ -1,0 +1,189 @@
+<!--{eval $__my=$this->MemberHandler->MemberFields;}-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<base href="{$this->Config[site_url]}/" />
+{eval $conf_charset=$this->Config['charset'];}<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="x-ua-compatible" content="ie=7" /> 
+<title>{$this->Title} - {$this->Config[site_name]}({$this->Config[site_domain]})</title>
+<meta name="Keywords" content="{$this->MetaKeywords},{conf site_name}" />
+<meta name="Description" content="{$this->MetaDescription},{conf site_notice}" />
+<script type="text/javascript">
+var thisSiteURL = '{conf site_url}/';
+var thisTopicLength = '{conf topic_length}';
+var thisMod = '{$this->Module}';
+var thisCode = '{$this->Code}';
+<!--{eval $qun_setting = ConfigHandler::get('qun_setting');}-->
+<!--{if $qun_setting['qun_open']}-->	
+	var isQunClosed = false;
+<!--{else}-->
+	var isQunClosed = true;
+<!--{/if}-->
+
+function faceError(imgObj)
+{
+	{if TRUE===UCENTER_FACE}
+		var errorSrc = '{conf site_url}/images/noavatar.gif';
+	{else}
+		var errorSrc = '{conf site_url}/images/no.gif';
+	{/if}
+
+	imgObj.src = errorSrc;
+}
+</script>
+<link rel="shortcut icon" href="images/favicon.ico" >  
+<link href="styles/main.css" rel="stylesheet" type="text/css" />
+<link href="styles/reg.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<!--{if $this->Config[theme_id]}-->
+<link href="templates/default/styles/{$this->Config[theme_id]}.css" rel="stylesheet" type="text/css" />
+<!--{/if}-->
+<style type="text/css">
+<!--{if $this->Config[theme_text_color]}-->
+body{ color:{$this->Config[theme_text_color]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_color]}-->
+body{ background-color:{$this->Config[theme_bg_color]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_image]}-->
+body{ background-image:url({$this->Config[theme_bg_image]});}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_position]}-->
+body{ background-position:{$this->Config[theme_bg_position]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_bg_repeat]}-->
+body{ background-repeat:{$this->Config[theme_bg_repeat]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_text_color]}-->
+body{ color:{$this->Config[theme_text_color]};}
+<!--{/if}-->
+<!--{if $this->Config[theme_link_color]}-->
+a:link{ color:{$this->Config[theme_link_color]};}
+<!--{/if}-->
+</style>
+<link href="styles/r_setp.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="Rlogo"><a title="{$this->Config[site_name]}" href="index.php">title="{$this->Config[site_name]}"</a></div>
+<div class="main_2" style="padding-bottom:170px;">
+  <div class="main_t"></div>
+  <div class="bdy colf"> 
+	<div class="c0"> 
+		
+		<div class="c1"> 
+			<div class="mn init">
+				<!--S 步骤--> 
+				<ol class="step3"> 
+					<li class="t1"><b><i class="ii"></i></b><em>注册帐号</em></li>
+					 
+					<li class="t2 on"><b><i class="ii"></i></b><em>邀请好友</em></li>
+					
+					<li class="t3"><b><i class="ii"></i></b><em>找找感兴趣的人</em></li> 
+				</ol> 
+				<!--E 步骤--> 
+
+				<div class="aps recom_best"> 
+				您必须至少邀请 <span class="fontRed">{$this->Config[invite_active_count]}</span> 人来注册，才能激活您的帐号 <BR /> 
+				<div class="friends textB">
+						<span>方法一：根据情况复制下面的邀请内容，通过QQ、MSN、网站等发给你的朋友<br />
+						注意：以下邀请链接每次最多可邀请{$this->Config[invite_enable]}人，达到{$this->Config[invite_enable]}人后邀请即自动失效</span>
+						<textarea id="invite_url" type="text" onclick="copyText($(this).val());"><!--{if !empty($invite_msg)}-->{$invite_msg}
+						<!--{else}-->想体验最酷、最火的即时微博服务吗？欢迎在内测期加入【{$this->Config[site_name]}】做‘创始元老’，即可随时随地的记录生活、分享见闻，更可自由关注人物和话题的动态，与朋友保持联络；内测邀请{$inviteURL}（限{$this->Config[invite_enable]}人）
+						<!--{/if}-->
+						</textarea>
+						<input type="button" class="save frr" value="复制链接" onclick="copyText($('#invite_url').val());" />
+				</div>
+				<br />
+				<div class="friends textB">
+					<form method="POST" action="index.php?mod=profile&code=invite_by_email" onsubmit="return Validator.Validate(this,3);">
+						<span>方法二：直接在下面输入朋友的邮箱地址，系统将自动通过邮件发邀请<br />
+						注意：多个邮箱地址需用;分隔开，最多不超过10个。<br/></span>
+						<input dataType="LimitB" min="6" max="300" msg="请将长度控制在6~300个字符之间" name="inviteEmail" type="text" class="p1" style="width:400px; height:80px; padding:5px; margin-bottom:5px; margin-top:10px;" />&nbsp;<input type="submit" class="save frr" value="发送邀请" />
+					</form>
+				</div>
+				<div class="apb"> 
+					<p class="t1">
+						<form method="POST" action="index.php?mod=member&code=step1" id="invite_form">
+						<input type="button" class="flo_b" name="Submit"  value="关注并进入下一步"  onclick="document.getElementById('invite_form').submit(); return fasle;" />
+						</form>
+					</p> 
+				</div> 
+				</div> 
+			</div> 
+		</div> 
+			
+	</div> 
+</div> 
+
+<script>
+
+/*
+* selectCount  	=  '每个关注类别的 记录总数 ，用于计算已选择了多少个。';
+* checkType 	=  '判断 是全选 还是 单个勾选 ， 全选就将 已选择统计数 设为传过来的数值，取消全选则设为0。';
+* checkedid 	=  '勾选的 复选框ID , 判断复选框是否被勾选。';
+* countType		=  '已选择总数 显示类别 ，user表示统计的是关注用户 。tag表示统计的是关注话题.';
+*/
+function check_user_mun(selectCount,checkType,checkedid,countType)
+{	
+	var checkType = 'undefined' == typeof(checkType) ? '' : checkType;	
+	
+	if(checkType)
+	{
+		if($("#btn_all").attr("checked")==true)
+		{	
+		
+			if(countType == 'user'){	
+				parent.document.getElementById('user_count').value=selectCount;
+				parent.document.getElementById('follow_user_count').innerHTML=selectCount;
+			}
+			else{
+				parent.document.getElementById('tag_count').value=selectCount;
+				parent.document.getElementById('follow_tag_count').innerHTML=selectCount;
+			}
+
+		}
+		else
+		{
+			
+			if(countType == 'user'){	
+				parent.document.getElementById('user_count').value='0';
+				parent.document.getElementById('follow_user_count').innerHTML='0';
+			}
+			else{
+				parent.document.getElementById('tag_count').value='0';
+				parent.document.getElementById('follow_tag_count').innerHTML='0';
+			}
+
+		}
+	}
+	else
+	{
+			var selectCount = $('#'+selectCount).val();
+			
+			var follow_count = 0;
+		
+			if($("#checked_"+checkedid).attr("checked")==true)
+			{	
+				follow_count = Number(selectCount) + 1;
+			}
+			else
+			{
+				 follow_count = Number(selectCount) - 1;
+			}
+			
+			if(countType == 'user'){	
+				parent.document.getElementById('user_count').value=follow_count;
+				parent.document.getElementById('follow_user_count').innerHTML=follow_count;
+			}
+			else{
+				parent.document.getElementById('tag_count').value=follow_count;
+				parent.document.getElementById('follow_tag_count').innerHTML=follow_count;
+			}
+
+	}
+	
+}
+</script>
+</div>
+<!--{template "topic_footer"}-->

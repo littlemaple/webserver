@@ -1,0 +1,110 @@
+{template "topic_header"}
+
+<link href="styles/theme.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+var theme_bg_color="$theme_bg_color";
+var theme_text_color="$theme_text_color";
+var theme_link_color="$theme_link_color";
+var theme_id="$theme_id";
+if (!theme_bg_color) {theme_bg_color="#b5ce4c";}
+if (!theme_text_color) {theme_text_color="#333333";}
+if (!theme_link_color) {theme_link_color="#2E75BC";}
+if (!theme_id) {theme_id="t1";}
+</script>
+<script type="text/javascript" src="js/colorpicker/colorpicker.js"></script>
+<script type="text/javascript" src="js/theme.js"></script>
+<style>
+.farbtastic {position: relative;}
+.farbtastic * {position: absolute;cursor: crosshair;}
+.farbtastic, .farbtastic .wheel {width: 195px;height: 195px;}
+.farbtastic .colors, .farbtastic .overlay {top: 47px;left: 47px;width: 101px;height: 101px;}
+.farbtastic .wheel {background: url(js/colorpicker/wheel.png) no-repeat;width: 195px;height: 195px;}
+.farbtastic .overlay {background: url(js/colorpicker/mask.png) no-repeat;}
+.farbtastic .marker {width: 17px;height: 17px;margin: -8px 0 0 -8px;overflow: hidden; background: url(js/colorpicker/marker.png) no-repeat;}
+</style>
+
+<form method="post" action="index.php?mod=theme&code=do_modify" enctype="multipart/form-data" name="theme">
+<input type="hidden" name="theme_bg_image" id="theme_bg_image" value="{$theme_bg_image}" />
+<input type="hidden" name="theme_id" id="theme_id" value="{$theme_id}">
+<div class="main {$t_col_main}">
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+
+
+<div class="main_2b">
+<div class="main_t"><span>设置模板</span></div>
+<div class="themepwarp">
+<p class="tBlod">1、选择主题样式 &raquo;</p>
+<ul class="themelist">
+	<!--{loop $themelist $val}-->
+    <a href="javascript:void(0)" onclick="usertheme('$val[element]')">
+	<img alt="" src="templates/default/images/theme/{$val[theme_id]}/themebg_preview.jpg"/></a>
+    <!--{/loop}-->
+</ul>
+
+<p class="tBlod">2、更换背景图片（可选） &raquo;{conf my_bg_image}</p>
+        <div class="upload">
+            可选择上传自定义背景图片：<input id="file" name="theme" class="input_file" size="30" type="file">
+        </div>
+        <div class="images" id="themeimages">
+        <p>
+         <a href="javascript:void(0);" id="setbgyes" class="yesbg"  style="background-image: url({conf theme_bg_image});" title="已使用的背景图片"></a>
+
+         <a href="javascript:void(0);" id="setbgno" class="nobg" title="不使用背景图片"><img src="templates/default/images/theme_nobg.gif"></a> 
+		 </p>
+         <p><dl class="setii"><dt>设置背景图</dt><dd>
+            <label for="user-background-left"><input id="user-background-left" name="theme_bg_image_type" onclick='leftclick()' type="radio" value="left" <!--{if ($theme_bg_image_type=="left")}-->checked<!--{/if}-->> 左对齐</label>&nbsp;&nbsp;
+            <label for="user-background-center"><input id="user-background-center" name="theme_bg_image_type" onclick='centerclick()' type="radio" value="center" <!--{if ($theme_bg_image_type=="center")}-->checked<!--{/if}-->> 背景居中</label>&nbsp;&nbsp;
+            <label for="user-background-right"><input id="user-background-right" name="theme_bg_image_type" onclick='rightclick()' type="radio" value="right" <!--{if ($theme_bg_image_type=="right")}-->checked<!--{/if}-->> 右对齐</label></dd>
+            <dd><label for="user-background-repeat"><input id="user-background-repeat" name="theme_bg_repeat" onclick='repeatclick()' type="checkbox" value="1" <!--{if ($theme_bg_repeat)}-->checked<!--{/if}-->> 背景平铺</label>&nbsp;&nbsp;<label for="user-background-fixed"><input id="user-background-fixed" name="theme_bg_fixed" onclick='fixedclick()' type="checkbox" value="1" <!--{if ($theme_bg_fixed)}-->checked<!--{/if}-->> 背景固定</label>&nbsp;&nbsp;</dd></dl>
+		</p>
+        </div>
+		 <img id="mybgimage" src="{$my_bg_image}" style="display:none;">
+<!--{if 'admin'==MEMBER_ROLE_TYPE}-->
+<p class="manss"><b><i>*</i>管理员选项:</b><input type="radio" name="set_default" value="1" id="set_default_1" onclick="alert_check()" /><label for="set_default_1">设置为网站默认的模板样式</label></p>
+<!--{/if}-->
+<br />
+<p class="tBlod">3、更换界面颜色（可选） &raquo;</p>
+
+ <div id="settings-color" class="color">
+        <div id="color-inputs" class="inputs">
+            <table>
+                <tr>
+                    <td><label for="color-background">背景颜色：</label></td>
+                    <td><input id="color-background" name="theme_bg_color" value="{$theme_bg_color}" type="text"></td>
+					<td></td> 
+                </tr>
+                <tr>
+                    <td><label for="color-text">文字颜色：</label></td>
+                    <td><input id="color-text" name="theme_text_color" value="{$theme_text_color}" type="text"></td>
+					<td></td>
+                </tr>
+				<tr>
+                    <td><label for="color-links">链接颜色：</label></td>
+					<td><input id="color-links" name="theme_link_color" value="{$theme_link_color}" type="text"></td>
+                </tr>
+            </table>
+        </div>
+		<div id="colorpicker" style="margin-left:320px"></div>
+        <div style="clear:both;"></div>
+</div>
+    <p class="act">
+        <input type="submit" class="shareI" id="save" value="保存" />
+        <input type="button" class="shareI" id="cencel" value="取消"/>
+    </p>
+	</div>      
+</div>
+</div>
+</form>
+
+{template "topic_footer"}

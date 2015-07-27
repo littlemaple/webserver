@@ -1,0 +1,166 @@
+{template "topic_header"}
+<link href="styles/theme.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.farbtastic {position: relative;}
+.farbtastic * {position: absolute;cursor: crosshair;}
+.farbtastic, .farbtastic .wheel {width: 195px;height: 195px;}
+.farbtastic .colors, .farbtastic .overlay {top: 47px;left: 47px;width: 101px;height: 101px;}
+.farbtastic .wheel {background: url(js/colorpicker/wheel.png) no-repeat;width: 195px;height: 195px;}
+.farbtastic .overlay {background: url(js/colorpicker/mask.png) no-repeat;}
+.farbtastic .marker {width: 17px;height: 17px;margin: -8px 0 0 -8px;overflow: hidden; background: url(js/colorpicker/marker.png) no-repeat;}
+.themepwarp .inputs {
+    border-color: #C1C1C1 #ECECEC #ECECEC #C1C1C1;
+    border-style: solid;
+    border-width: 1px;
+    float: left;
+    height: 18px;
+    padding: 2px 0 2px 1px;
+    width: 300px;
+	margin-top:0;
+}
+.themepwarp select{ border:1px solid #c1c1c1; padding:2px;}
+
+</style>
+
+<form method="post" action="index.php?mod=qun&code=docreate" autocomplete="off" id="qun_form" enctype="multipart/form-data" >
+<div class="main {$t_col_main}">
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+  <div class="t_col_main_fl">
+    <div id="topic_index_left_ajax_list">
+      <!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+      {template "topic_left.inc"}
+      <!--{/if}-->
+    </div>
+  </div>
+</div>
+<!--此处三栏-->
+<div class="main_2b">
+<div class="main_t">
+<span style=" float:left;">创建新微群</span>
+<span style="float:right; margin-right:10px;"><a href="index.php?mod=qun&code=profile"><em><<</em>返回</a></span>
+</div>
+<div class="themepwarp qun_sub">
+ <div id="settings-color" class="qun_create_2">
+ 	<!--{if $is_allowed}-->
+	<!--{if MEMBER_ROLE_TYPE != 'admin'}-->
+		<div class="qun_tips_2">
+			您当前等级可以创建{$detail['ploy_qnum']}个微群,
+			<!--{if $detail['my_qnum']}-->
+				您已经创建了{$detail['my_qnum']}个微群,还可以创建{$detail['allow_create_num']}个
+			<!--{else}-->
+				您还没有创建微群呢。赶快创建吧！
+			<!--{/if}-->
+		</div>
+	<!--{/if}-->
+	<table style="width:100%">
+		<tr>
+			<td width="15%" align="right"><label for="color-background"><i>*</i> 微群名称：</label></td>
+			<td>
+				<input id="qun_name" name="qun_name" value="" type="text" class="inputs">
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" align="right"><label for="color-background"><i>*</i> 微群分类：</label></td>
+			<td>
+				<div style="float:left; margin-right:10px;">
+					<select id="top_cat" name="top_cat" onchange="get_catselect(this)">
+						{$catselect['first']}
+					</select>
+				</div>
+				<div style="float:left; ">
+					<select id="sub_cat" name="sub_cat">
+						{$catselect['second']}
+					</select>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" align="right"><label for="color-background"><i>*</i> 微群所在地：</label></td>
+			<td>
+				<div style="width:100px; float:left;">
+					<select id="province" name="province">
+						{$member[province]}
+					</select>
+				</div>
+				<div style="width:100px;float:left; ">
+					<select id="city" name="city"></select>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" align="right"><label for="color-background">微群标签：</label></td>
+			<td>
+				<input id="tag" name="tag" value="" type="text" class="inputs">
+				<span style="margin-left:10px;">可以使用空格或英文逗号分隔，最多可填写5个标签</span>
+			</td>
+			
+		</tr>
+		<tr>
+			<td width="15%" align="right" valign="top"><label for="color-background">微群简介：</label></td>
+			<td><textarea id="desc" class="inputs" style="padding: 3px 2px;width:450px;height:50px;" name="desc"></textarea></td>
+		</tr>
+		<tr>
+			<td width="15%" align="right" valign="top"><label for="color-background"><i>*</i> 微群类型：</label></td>
+			<td>
+				<input type="radio" value="0" name="gview_perm" id="privacy_open" {$checked['gview_perm'][0]} />
+				<label for="privacy_open">公开群组</label>
+				<br />
+				<input type="radio" value="1" name="gview_perm" id="privacy_closed" {$checked['gview_perm'][1]} onclick="privacy_radio_force(1);"/>
+				<label for="privacy_closed">私密群组</label>
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" align="right" valign="top"><label for="color-background"><i>*</i> 加入方式：</label></td>
+			<td>
+				<input type="radio" value="0" name="join_type" id="join_free" {$checked['join_type'][0]} onclick="privacy_radio_force(2)"/>
+				<label for="join_free">任何人可自由加入</label>
+				<br />
+				<input type="radio" value="1" name="join_type" id="join_ratify" {$checked['join_type'][1]}/>
+				<label for="join_ratify">需群主批准后才能加入</label>
+			</td>
+		</tr>
+		<tr>
+			<td width="15%" align="right"><label for="color-background">微群头像：</label></td>
+			<td>
+				<input id="icon" name="icon" type="file"/>
+				<span>{$u_tips}</span>
+			</td>
+		</tr>
+	</table>
+</div>
+    <p class="act">
+        <input type="submit" class="shareI" id="save" value="创建"/>
+    </p>
+	      
+</div>
+<!--{else}-->
+<div class="qun_tips_2">
+	<!--{if $detail['no_avatar']}-->
+		系统要求上传了头像才能创建微群，请先上传你的头像吧&nbsp;&nbsp;<a href="index.php?mod=settings&code=face" target="_blank">立刻去上传</a>
+	<!--{elseif $detail['my_qnum'] > 0 && $detail['my_qnum'] ==  $detail['ploy_qnum']}-->
+		你已经达到了你可以创建群的上限了。
+	<!--{elseif $detail['little_fans']}-->
+		你当前拥有{$detail['my_fans_count']}个粉丝，系统策略要求最少拥有{$detail['ploy_fans_count']}个粉丝才能创建群
+	<!--{elseif $detail['little_topic']}-->
+		你当前拥有{$detail['my_topic_count']}条微博，系统策略要求最少拥有{$detail['ploy_topic_count']}条微博才能创建群
+	<!--{elseif $detail['sys_not_allow']}-->
+		系统禁止普通用户创建微群
+	<!--{/if}-->
+	<br /> <a href="index.php?mod=topic&code=myhome">返回我的首页</a> <span style="color:#444">|</span> <a href="index.php?mod=qun">返回微群首页</a>
+	</div>
+<!--{/if}-->
+</div>
+</div>
+</div>
+</form>
+</div>
+<script type="text/javascript" src="js/city.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	var selectOption={eval load::functions('area');echo area_config_to_json();};
+	
+	$("#province").doubleSelect('city',selectOption,{preselectFirst:'{$member[province]}',preselectSecond:'{$member[city]}'});
+	});
+</script>
+{template "topic_footer"}

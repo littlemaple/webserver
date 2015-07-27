@@ -1,0 +1,143 @@
+<script type="text/javascript" src="{conf site_url}/templates/default/js/min.js"></script> 
+<style type="text/css">
+.jsg_mcenter{ width:{$width}px; height:{$height}px; background:{$bg_color}; border:{$style[border_siz]}px solid {$style[border_color]}; padding:1px; text-align:left}
+.iframe_share_title{ width:100%; height:30px; line-height:30px; overflow:hidden; background:{$title_color}; color:{$style[topicname_color]}; font-size:14px; text-indent:7px;}
+.jsg_mcenter .comBox{ display:none;margin:10px 0; overflow:hidden; padding:10px; z-index:200}
+.jsg_mcenter .indexrow{ width:{$warp_width}px;}
+.jsg_mcenter .feedCell{ width:{$warp_width}px; overflow:hidden;}
+.jsg_mcenter .msg_left_img{ width:47px; height:47px; float:left;display:inline;margin-right:10px;}
+.jsg_mcenter .msg_left_con{ float:left; display:inline; white-space:normal; *height:{$content_height};width:{$content_width}px; overflow:hidden;}
+.jsg_mcenter .feedCell {padding:6px; line-height:18px; *width:100%; *height:100%; overflow:hidden;}
+.jsg_mcenter .feedCell .avatar {display:inline;float:left;height:45px;width:45px; overflow:hidden; margin-bottom:-15px;margin-top:4px;text-align:center;border:1px solid #ccc; padding:1px;}
+.jsg_mcenter .feedCell .avatar img {height:45px;width:45px;}
+.jsg_mcenter .feedCell .feedUservideo {overflow:hidden;position:relative;}
+.jsg_mcenter .feedCell .feedUservideo img {border:1px solid #dcdcdc;padding:2px; cursor:pointer; width:120px; height:80px;}
+.jsg_mcenter .feedCell .feedUservideo .vP{position:absolute; margin:27px 46px;}
+.jsg_mcenter .feedCell .feedUservideo .vP img{border:none; filter:alpha(opacity=70);-moz-opacity:0.7; opacity:0.7; width:25px; height:25px;}
+.jsg_mcenter .bg_arrow{background:#e6e6e6 url({conf site_url}/images/ico_tblog_arrow.png);background-repeat:repeat-x;height:7px;text-align:center;margin:0}
+.jsg_mcenter .bg_arrow img{ margin:0 auto; width:8px; height:4px; background:url({conf site_url}/images/ico_tblog_arrow.png) no-repeat}
+.jsg_mcenter a.arrow_up img {background-position: 0 -20px;}
+.jsg_mcenter a.arrow_down {background-position: 0 -32px;}
+.jsg_mcenter .mBlog_linedot {background:url({conf site_url}/templates/default/images/linedot.gif) repeat-x;clear:both;height:1px;overflow:hidden;margin-top:5px;}
+.jsg_mcenter .list_warp{overflow:scroll;overflow-x:hidden;width: 100%; position:relative; height:{$warp_height}px;overflow:hidden;}
+.jsg_mcenter .iframe_tt{ width:100%; height:7px; background:#e4e4e4; margin:0; overflow:hidden;}
+.jsg_mcenter .iframe_tt .bg_arrow{ background-position:0 2px; margin-left:47%;} 
+.jsg_mcenter .iframe_ft{ width:100%; height:7px; background:#e4e4e4; margin:0; overflow:hidden; margin-top:7px;}
+.jsg_mcenter .iframe_ft .bg_arrow{ background-position:0 -12px; margin-left:47%;} 
+</style>
+<div class="jsg_mcenter"> 
+	<!--{if $show[is_topic_title] == 1}-->
+	<div class="iframe_share_title">{$style[topic_name]}</div>
+	<!--{/if}-->
+	  <!--{if $show[topic_up] == 'topic_up_sd'}-->
+	  <div class="iframe_tt">
+	   <a class="bg_arrow arrow_up" href="javascript:;" onmousedown="jishigou_scroll(-3)" onmouseover="jishigou_scroll(-3)" style="CURSOR: hand" onmouseout="jishigou_scroll(0)">
+ 		 <img src="{conf site_url}/templates/default/images/transparent.gif" width="8" height="4" border="0" class="arrow" title=""> 	  
+		</a>
+		</div>
+	  <div class="list_warp" id="News">
+	  <!--{else}-->
+	  <div class="comBox" id="ajaxcontent">
+	  <!--{/if}-->
+	  
+	  <!--{loop $topic_list $val}-->
+	  <!--{eval $content = $topic_string ? cut_str($val[content],{$topic_string}) : $val[content]; $nickname = $val[nickname];}-->
+	  <!--{eval $content = strip_tags($content);}-->
+	  <!--{eval if($topic_charset == "utf-8") $content  = array_iconv("utf-8","{$topic_charset}",{$content});}-->
+	  <!--{eval if($topic_charset == "utf-8") $nickname = array_iconv("utf-8","{$topic_charset}",{$nickname});}-->
+	  <div class="indexrow">
+		<div class="feedCell">
+			<div style="color:{$text_color};">
+			    <!--{if $Module[face] || $Module[face_link]}-->
+				<div class="msg_left_img">
+				<span class="avatar">
+					<!--{if $Module[face_link]}-->
+					<a href="{conf site_url}/index.php?mod={$val[username]}" target="_blank"><img border="0" onerror="javascript:faceError(this);" src="{$val[face_original]}"></a>
+					<!--{else}-->
+					<img border="0" onerror="javascript:faceError(this);" src="{$val[face_original]}" >
+					<!--{/if}-->
+				</span>&nbsp;
+				</div>
+				<!--{/if}-->
+				<div class="msg_left_con" style="margin-top:3px;">
+				
+					<!--{if $Module[nickname] || $Module[nickname_link]}-->
+						<!--{if $Module[nickname_link]}-->
+						<a href="{conf site_url}/index.php?mod={$val[username]}" target="_blank" style="color:{$link_color};">{$nickname}</a>：
+						<!--{else}-->
+						{$nickname}：
+						<!--{/if}-->
+					<!--{/if}-->
+					
+					<!--{if $Module[content] || $Module[content_link]}-->
+						<!--{if $Module[content_link]}-->
+						<a href="{conf site_url}/index.php?mod=topic&code={$val[tid]}" target="_blank" style="color:{$link_color};">{$content}</a>
+						<!--{else}-->
+						{$content}
+						<!--{/if}-->
+					<!--{/if}-->
+					
+					<!--{if $Module[image] == 'image'}-->
+						<!--{if $val[imageid] && $val[image_list]}-->
+							<div class="img_avatar">
+								{loop $val[image_list] $iv}
+								<a href="{conf site_url}/index.php?mod=topic&code={$val[tid]}" target="_blank"><img src="{$iv[image_small]}" border="0" title="图片"></a>
+								{/loop}
+							</div>
+						<!--{/if}-->
+					<!--{/if}-->
+					
+					<!--{if $Module[video] == 'video'}-->
+						<!--{if $val[videoid]}-->
+							<div class="feedUservideo">
+							  <a href="{conf site_url}/index.php?mod=topic&code={$val[tid]}" target="_blank" style="color:{$link_color};">
+							  <div class="vP"><img src="{conf site_url}/images/feedvideoplay.gif" title="点击跳转播放视频"/></div>
+							  <img src="{$val[VideoImg]}" style="border:none" title="点击跳转播放视频"/> </a>
+							</div>
+						<!--{/if}-->
+					<!--{/if}-->
+				
+					<!--{if $Module[music] == 'music'}-->
+						<!--{if $val[musicid]}-->
+							<div class="feedUserImg">
+								<div id="play_{$val[MusicID]}"></div>
+								<a href="{conf site_url}/index.php?mod=topic&code={$val[tid]}" target="_blank">
+									<img src="{conf site_url}/images/music.gif" title="点击跳转播放音乐" style="cursor:pointer; border:none;" /> 
+								</a>
+							</div>
+						<!--{/if}-->
+					<!--{/if}-->
+				
+					<!--{if $Module[dateline] || $Module[forward] || $Module[reply]}-->
+					<div>
+						 <!--{if $Module[dateline] == 'dateline'}-->
+							<span> <a href="{conf site_url}/index.php?mod=topic&code={$val[tid]}" target="_blank" style="color:{$link_color};">{$val[dateline]}</a></span>
+						 <!--{/if}-->
+						 <!--{if $Module[forward] == 'forward'}-->
+							<span style="margin-left:10px;">[转发:{$val[forwards]}]</span>
+						 <!--{/if}-->
+						 <!--{if $Module[reply] == 'reply'}-->
+							<span>[评论:{$val[replys]}]</span>
+						 <!--{/if}-->
+					</div>
+					<!--{/if}-->
+				
+			  </div>
+			</div>
+		</div>
+		<div class="mBlog_linedot" style="width:{$warp_width}px; overflow:hidden"></div>
+	  </div>
+	  <!--{/loop}-->
+	 
+	</div>
+	 <!--{if $show[topic_up] == 'topic_up_sd'}-->
+	 <div class="iframe_ft">
+	  <a class="bg_arrow arrow_down" href="javascript:;" onmousedown="jishigou_scroll(3)" onmouseover="jishigou_scroll(3)" style="CURSOR: hand" onmouseout="jishigou_scroll(0)" >
+	  	<img width="8" height="4" title="" class="arrow" border="0" src="{conf site_url}/templates/default/images/transparent.gif">
+	  </a>
+	  </div>
+	 <!--{/if}--> 
+	<div id="Pcontent" style="z-index:100;height:{$warp_height}px; overflow:hidden; position:absolute; margin-left:5px;"></div>
+</div>
+
+<script language="javascript" src="{conf site_url}/templates/default/js/recommend.js"></script> 

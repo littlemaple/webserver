@@ -1,0 +1,148 @@
+<!--{template admin/header}-->
+
+<!--{if 'modify'==$this->Code}-->
+
+    <form method="post" action="admin.php?mod=api&code=do_modify">
+    <input type="hidden" name="id" value="{$app[id]}" />
+        <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    		<tr class="header">
+    			<td colspan="2">APP编辑</td>
+    		</tr>
+    		<tr>
+    			<td class="altbg1" width="40%">
+                    <b>APP KEY:</b>
+                    <span class="smalltxt"></span><br />			
+    			</td>
+    			<td class="altbg2">
+    			 {$app[app_key]}
+    			</td>
+    		</tr>
+    		<tr>
+    			<td class="altbg1" width="40%">
+                    <b>APP SECRET:</b>
+                    <span class="smalltxt"></span><br />			
+    			</td>
+    			<td class="altbg2">
+    			 {$app[app_secret]}
+    			</td>
+    		</tr>
+    		<tr>
+    			<td class="altbg1" width="40%">
+                    <b>应用名称:</b>
+                    <span class="smalltxt"></span><br />			
+    			</td>
+    			<td class="altbg2">
+    			 <input type="text" name="app_name" value="{$app[app_name]}" />
+    			</td>
+    		</tr>
+    		<tr>
+    			<td class="altbg1" width="40%">
+                    <b>应用介绍:</b>
+                    <span class="smalltxt"></span><br />			
+    			</td>
+    			<td class="altbg2">
+    			 <textarea name="app_desc">{$app[app_desc]}</textarea>
+    			</td>
+    		</tr>
+    		<tr>
+    			<td class="altbg1" width="40%">
+                    <b>开启应用？</b>
+                    <span class="smalltxt"></span><br />			
+    			</td>
+    			<td class="altbg2">
+    			 {$app_status_radio}
+    			</td>
+    		</tr>
+    	</table>
+    	<br />
+    	<center><input class="button" type="submit" name="cronssubmit" value="提 交" /> &nbsp; <input class="button" type="button" value="返 回" onclick="window.location.href='admin.php?mod=api'" /></center>
+    	<br />
+    </form>
+
+<!--{else}-->
+
+<form method="post" action="admin.php?mod=api&code=do_modify_setting">
+	<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+		<tr class="header">
+			<td colspan="2">参数设置</td>
+		</tr>
+		<tr>
+			<td class="altbg1" width="40%">
+                <b>开启网站API应用:</b>
+                <span class="smalltxt">开启网站API应用的功能</span><br />			
+			</td>
+			<td class="altbg2">
+                {$app_enable_radio}
+			</td>
+		</tr>
+		<tr>
+			<td class="altbg1" width="40%">
+                <b>API请求次数限制:</b>
+                <span class="smalltxt">填写0时不限制，当天最多请求次数</span><br />			
+			</td>
+			<td class="altbg2">
+                <input type="text" name="api[request_times_day_limit]" value="{$api[request_times_day_limit]}" />
+			</td>
+		</tr>
+	</table>
+	<br />
+	<center><input class="button" type="submit" name="cronssubmit" value="提 交" /></center>
+	<br />
+	<!--{if $api_config[enable]}-->
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableborder">
+    	<tr class="header">
+    	   <td colspan="6">API应用列表</td>
+    	</tr>
+    	<!--{if !$app_list}-->
+    	<tr align="center">
+    		<td colspan="6" align="center">
+    		暂无API应用
+    		</td>
+    	</tr>
+    	<!--{else}-->
+    	<tr class="altbg1">
+    		<td>应用名称</td>
+            <td>AppKey<br />AppSecret</td>
+    		<td>最后请求时间</td>
+    		<td>
+                (日/周/月/年/总)请求数<br />
+                上(日/周/月/年/)请求数
+            </td>
+            <td>状态</td>
+            <td>其他操作</td>
+    	</tr>
+    	<!--{/if}-->
+    	<!--{loop $app_list $app}-->
+    	<tr align="center">
+    		<td class="altbg2">{$app[app_name]}</td>
+    		<td class="altbg2">{$app[app_key]}<br />{$app[app_secret]}</td>
+    		<td class="altbg2">{$app[last_request_time_html]}</td>
+    		<td class="altbg2">
+                {$app[request_times_day]}/{$app[request_times_week]}/{$app[request_times_month]}/{$app[request_times_year]}/{$app[request_times]}<br />
+                {$app[request_times_last_day]}/{$app[request_times_last_week]}/{$app[request_times_last_month]}/{$app[request_times_last_year]}
+            </td>
+    		<td class="altbg2">{$app[status_html]}</td>
+    		<td class="altbg2"> 
+                <!--{if $app[status]}-->
+                <a href="admin.php?mod=api&code=status0&id={$app[id]}">暂停</a> &nbsp;
+                <!--{else}-->
+                <a href="admin.php?mod=api&code=status1&id={$app[id]}">开启</a> &nbsp;
+                <!--{/if}-->             
+                <a onclick="return confirm('删除后的内容不可恢复，确认删除？');" href="admin.php?mod=api&code=delete&id={$app[id]}">删除</a> &nbsp;             
+                <a href="admin.php?mod=api&code=modify&id={$app[id]}">编辑</a> &nbsp;             
+            </td>
+    	</tr>
+    	<!--{/loop}-->
+        <tr>
+            <td colspan="6" align="center">
+                应用名称：
+        		<input type="text" name="app_name_new" value="" style="width:200px;" />
+                <input type="submit" name="app_submit" value="新 增" class="button" />
+    		</td>
+        </tr>        
+	</table>
+	<br />
+	<!--{/if}-->
+</form>
+
+<!--{/if}-->

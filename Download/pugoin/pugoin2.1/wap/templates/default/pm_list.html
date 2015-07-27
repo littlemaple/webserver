@@ -1,0 +1,25 @@
+<!--{template "topic_header"}-->
+<div class="m">
+<!--{if $pm_list}-->
+	<!--{loop $pm_list $val}-->
+	<div class="u2">
+	<div style="padding:5px;">
+		<span><a href="index.php?mod={$val[msgfrom]}">{$val[msgnickname]}</a></span> 发来私信:<span style="margin-left:5px;">{$val[message]}</span>
+	</div>
+	<div style="padding:5px;">
+		<span style="color:#999999;">{$val[send_time]}</span>   
+		<span style="margin-left:4px;"><a href="index.php?mod=pm&amp;code=view&amp;pmid={$val[pmid]}">回信</a></span>
+		<span style="margin-left:4px;">
+			<!--{if {$val[new]} == 1}--><font color="#FF0000";><a href="index.php?mod=pm&amp;code=view&amp;pmid={$val[pmid]}">未读</a></font><!--{else}-->已读<!--{/if}-->
+		</span>
+		<span style="margin-left:4px;"><a href="index.php?mod=pm&amp;code=pmdel&amp;pmid={$val[pmid]}">删除</a></span>
+	</div>
+	</div>
+	<div class="lineDot"></div>
+	<!--{/loop}-->
+<!--{else}-->
+<div class="t_list_c">这里暂时还没有私信</div>
+<!--{/if}-->
+
+</div>
+<!--{template "topic_footer"}-->

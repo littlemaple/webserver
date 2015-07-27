@@ -1,0 +1,107 @@
+<script type="text/javascript" src="js/combobox.js"></script>
+<script language="javascript" src="js/jsgst.js"></script>
+<script language="javascript" src="js/jsgst_autocomplete.js"></script>
+<script language="javascript" src="js/ai.js"></script>
+<!-- JS消息提示层 show_message('发布成功') -->
+<div id="show_message_area"></div>
+{eval echo $this->js_show_msg();}
+{$GLOBALS[schedule_html]}
+<!--{eval if($this->Config['jsg_schedule'] || jsg_getcookie('jsg_schedule')) echo jsg_schedule();}-->
+<!-- Ajax端内容返回 -->
+<div id="ajax_output_area"></div>
+<div class="bottomLinks {$t_col_foot}">
+<div class="bL_List">
+<div class="bL_info bL_io1">  
+        <h4 class="MIB_txtar">找感兴趣的人</h4>
+        <ul>
+            <li class="MIB_linkar"><a href="index.php?mod=other&code=media">名人媒体汇</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=topic&code=top">达人排行榜</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=profile&code=search" rel="nofollow">站内找朋友</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=profile&code=maybe_friend" rel="nofollow">猜你感兴趣的</a></li>
+        </ul>
+    </div>
+	<div class="bL_info bL_io2">  
+        <h4 class="MIB_txtar">大家在说什么</h4>
+        <ul>
+            <li class="MIB_linkar"><a href="index.php?mod=tag">话题榜</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=topic&code=hotforward">热门转发</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=topic&code=hotreply">热门评论</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=topic&code=new">最新微博</a></li>
+        </ul>
+    </div>
+	
+	<div class="bL_info bL_io3">  
+        <h4 class="MIB_txtar">微博更多玩法</h4>
+        <ul>
+            <li class="MIB_linkar"><a href="index.php?mod=other&code=wap">手机访问</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=tools&code=imjiqiren" rel="nofollow">QQ机器人</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=other&code=vip_intro">申请身份认证</a></li>
+            <li class="MIB_linkar"><a href="index.php?mod=profile&code=invite" rel="nofollow">邀请好友关注</a></li>
+        </ul>
+    </div>
+	
+	<div class="bL_info bL_io4">  
+        <h4 class="MIB_txtar">关于我们</h4>
+        <ul>
+			<li class="MIB_linkar"><a href="index.php?mod=other&code=about">关于我们</a></li>
+			<li class="MIB_linkar"><a href="index.php?mod=other&code=contact">联系我们</a></li>
+			<li class="MIB_linkar"><a href="index.php?mod=other&code=joins">加入我们</a></li>
+			<li class="MIB_linkar"><a href="index.php?mod=tag&code=意见反馈">意见反馈</a></li>
+        </ul>
+    </div>
+	<div class="bL_info bL_io5">  
+        <h4 class="MIB_txtar"></h4>
+        <ul>
+			<!--{if !empty($navigation_config[pluginmenu])}-->
+			<!--{loop $navigation_config[pluginmenu] $pmenus}-->
+			<!--{loop $pmenus $pmenu}-->
+			<!--{if $pmenu[type] == 2}-->
+			<li><a href="{$pmenu[url]}" target="{$pmenu[target]}">{$pmenu[name]}</a></li>
+			<!--{/if}-->
+			<!--{/loop}-->
+			<!--{/loop}-->
+			<!--{/if}-->
+			<li><!--{conf tongji}--></li>
+            <li class="MIB_linkar">
+				<a href="http://www.miibeian.gov.cn/" target="_blank" title="网站备案" rel="nofollow">{conf icp}</a></li>
+			<li class="MIB_linkar">
+				<a href="index.php?mod=other&code=notice" target="_blank" title="网站公告" rel="nofollow">网站公告</a></li>
+			<li>{conf copyright}</li>
+            <li class="MIB_linkar">
+				<!--{eval global $time_start;}--> 		
+				<!--{eval $time_end = microtime_float();}--> 
+				<!--{eval $__server_execute_time = round($time_end - $time_start,5) . " Second ";}-->	
+				<!--{eval $__gzip_tips = ((defined('GZIP') && GZIP) ? "&nbsp;Gzip Enable." : "Gzip Disable.");}-->
+				<span title="{$__server_execute_time},{$__gzip_tips}">网页执行信息</span>
+                <!--{echo upsCtrl()->Comlic()}-->
+			</li>
+        </ul>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+$('.goTop').click(function(e){
+e.stopPropagation();
+$('html, body').animate({scrollTop: 0},300);
+backTop();
+return false;
+});
+});
+</script>
+<div id="backtop" class="backTop {$t_col_backTop}"><a href="/#" class="goTop" ></a></div>
+<script type="text/javascript">
+window.onscroll=backTop;
+function backTop(){
+var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  if(scrollTop==0){
+   document.getElementById('backtop').style.display="none";
+   }else{
+   document.getElementById('backtop').style.display="block";
+    }
+  }
+backTop();
+</script>
+</body>
+</html>
+{$GLOBALS[iframe]}

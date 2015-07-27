@@ -1,0 +1,721 @@
+<!--{template "topic_header"}-->
+<script type="text/javascript" src="js/validate.js"></script>
+<div class="main {$t_col_main}">
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+
+
+<div class="main_2b">
+	<div class="main_t"><span>设置</span></div>
+	<div class="Menubox2">
+	<ul>
+	<!--{loop $act_list $key $val}-->
+	<!--{eval $_hoverCLS = ($key==$act ? ' class="tago" ' : 'class="tagn"');}-->
+	<!--{if !is_array($val)}-->
+	<li><div {$_hoverCLS}><A HREF="index.php?mod=settings&code={$key}"><span>{$val}</span></A></div></li>
+	<!--{else}-->
+	<li><div {$_hoverCLS}><A HREF="index.php?mod={$val[link_mod]}&code={$val[link_code]}"><span>{$val[name]}</span></A></div></li>
+	<!--{/if}-->
+	<!--{/loop}-->
+	</ul>
+	</div>
+
+<div class="set_warp" style="width:715px; margin:0 auto; padding:20px 0 100px;">
+  <!--{if 'secret'==$act}-->
+	<form method="POST" action="index.php?mod=settings&code=do_modify_password" onSubmit="return Validator.Validate(this,3);">
+		<table width="100%" border="0">
+		  <tr>
+		<td width="110" align="right" valign="top">当前登录密码：</td>
+		<td><input name="password_old" dataType="LimitB" min="3" msg="修改本页信息，必须输入当前登录密码" type="password"  class="p1"/>
+		（必填）</td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="top">设置新的密码：</td>
+			<td><input name="password_new1" require="false" dataType="LimitB" min="5" msg="新密码过短，请设置5位以上" type="password"  class="p1"/>
+			（如不修改请留空即可）</td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="top">确认新的密码：</td>
+			<td><input name="password_new2" dataType="Repeat" to="password_new1" msg="两次输入的密码不一致" type="password"  class="p1"/></td>
+		  </tr>
+
+		  <tr>
+			<td align="right" valign="middle">&nbsp;</td>
+			<td>（修改上述信息需要重新登录）<br /><input type="submit" class="save" value="保存修改" /></td>
+		  </tr>
+		</table>
+	</form>
+	<div style="font-size:12px;">
+		<BR />如忘记了登录密码，可通过如下方式找回：<BR/>
+		1、在登录界面，点<a href="index.php?mod=get_password" target="_blank">取回密码</a>链接，重设密码的邮件会发送到您的登录Email中；<BR />
+		2、请在<a href="index.php?mod=settings">个人资料</a>设置中，填写好真实姓名和证件号码信息，可据此凭证通过客服重设密码。
+	</div>
+
+ 	<!--{elseif 'email'==$act}-->
+ 	<form method="POST" action="index.php?mod=settings&code=modify_email" onSubmit="return Validator.Validate(this,3);">
+		<table width="100%" border="0">
+		  <tr>
+		<td width="110" align="right" valign="top">当前登录密码：</td>
+		<td><input name="password_old" dataType="LimitB" min="3" msg="修改本页信息，必须输入当前登录密码" type="password"  class="p1"/>
+		（必填）</td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="top">登录提醒Email：</td>
+			<td><input name="email_new" dataType="Email" msg="请输入正确的Email 地址" type="text" value="{$member[email]}" class="p1" /></td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="middle">&nbsp;</td>
+			<td>（修改上述信息需要重新登录）<br /><input type="submit" class="save" value="保存修改" /></td>
+		  </tr>
+		</table>
+	</form>
+
+  <!--{elseif 'extcredits'==$act}-->
+	<div class="jfMenu">
+		<ul>
+			<!--{if $op_lists}-->
+			<!--{loop $op_lists $_k $_v}-->
+				<a href="index.php?mod=settings&code={$act}&op={$_k}" {if $op==$_k} class="selected" {/if}>{$_v}</a>
+			<!--{/loop}-->
+			<!--{/if}-->
+		</ul>
+	</div>
+	<div class="Contentbox">
+		<script type="text/javascript">
+			$(document).ready(function(){
+			 $(".stripe_tb tr").mouseover(function(){
+			 $(this).addClass("over");}).mouseout(function(){
+			 $(this).removeClass("over");})
+			 $(".stripe_tb tr:even").addClass("alt");
+			 });
+		</script>
+		<!--{if 'base'==$op}-->
+			<table width="100%" border="0">
+			<!--{loop $credits_config[ext] $_k $_v}-->
+			<!--{if $_v[enable]}-->
+			  <tr>
+				<td width="10%">{$_v[name]}：</td>
+				<td><b>{$_v[ico]} {$member[$_k]} {$member[unit]}</b></td>
+			  </tr>
+			  <!--{/if}-->
+			  <!--{/loop}-->
+			  <tr>
+				<td>总积分：</td>
+				<td><b>{$member[credits]}</b> （{$credits_config_formula}）</td>
+			  </tr>
+			  <tr>
+				<td colspan=2><A HREF="index.php?mod=settings&code=exp">点此查看我的微博积分等级</A></td>
+			  </tr>
+			</table>
+		<!--{elseif 'log'==$op}-->
+			<table width="100%" border="0" class="stripe_tb">
+			<thead>
+		   <tr>
+				 <th>动作名称</th>
+				 <th>总次数</th>
+				 <th>周期次数</th>
+				<!--{loop $credits_config[ext] $__k $__v}-->
+				 <th>{$__v[name]}</th>
+				<!--{/loop}-->
+				 <th>最后奖励时间</th>
+			 </tr>
+		  </thead>
+			<!--{loop $log_list $_k $_v}-->
+			  <tr>
+				<td>{$_v[rulename]}</td>
+				<td>{$_v[total]}</td>
+				<td>{$_v[cyclenum]}</td>
+				<!--{loop $credits_config[ext] $__k $__v}-->
+					<td>{$_v[$__k]}</td>
+				<!--{/loop}-->
+				<td>{$_v[dateline]}</td>
+			  </tr>
+			  <!--{/loop}-->
+		 <thead>
+		   <tr>
+				 <th>总计</th>
+				 <th>&nbsp;</th>
+				 <th>&nbsp;</th>
+				 <!--{loop $credits_config[ext] $__k $__v}-->
+				 <th>{$_counts[$__k]}</th>
+				 <!--{/loop}-->
+				 <th>&nbsp;</th>
+		   </tr>
+		  </thead>
+			</table>
+		<!--{elseif 'rule'==$op}-->
+			<span style="font-size:12px; float:left; padding:4px 0 4px 5px">进行以下动作，会得到积分奖励。注意：在一个周期内，你得到的奖励次数是有限制。</span>
+			<table width="100%" border="0" class="stripe_tb">
+			<thead>
+		   <tr>
+				 <th>动作名称</th>
+				 <th>周期范围</th>
+				 <th>周期内最多奖励次数</th>
+				 <!--{loop $credits_config[ext] $__k $__v}-->
+				 <th>{$__v[name]}</th>
+				 <!--{/loop}-->
+			 </tr>
+		  </thead>
+			<!--{loop $credits_rule $_k $_v}-->
+			  <tr>
+				<td>{$_v[rulename]}<b>{$_v[related]}</b></td>
+				<td>{$_v[cycletype]}</td>
+				<td>{$_v[rewardnum]}</td>
+				<!--{loop $credits_config[ext] $__k $__v}-->
+				<td><!--{if $_v[$__k]>0}-->+<!--{/if}-->{$_v[$__k]}</td>
+				<!--{/loop}-->
+			  </tr>
+			  <!--{/loop}-->
+			</table>
+		<!--{else}-->
+		未定义的操作
+		<!--{/if}-->
+	</div>
+
+  <!--邮件提醒-->
+  <!--{elseif 'notice'==$act}-->
+	<form method="post" action="index.php?mod=settings&amp;code=do_notice" enctype="multipart/form-data">
+		<table width="100%" border="0">
+		  <tr>
+			<td align="right">提醒邮箱：</td>
+			<td><input name="textfield" type="text" value="{$member[email]}" class="p1"  readonly disabled />
+			（<A HREF="index.php?mod=settings&code=email">点此修改</A>）
+			</td>
+		  </tr>
+		  <tr>
+			<td width="18%" align="right" valign="top"><span class="fontRed"></span>提醒类型：</td>
+			<td width="82%">
+
+			<input name="notice_at" type="checkbox" id="notice_at" value="1"
+			<!--{if $member[notice_at] == 1}-->checked="checked" <!--{/if}-->/>
+			@我的&nbsp;&nbsp;
+			<br />
+
+			<input name="notice_reply" type="checkbox" id="notice_reply" value="1"
+			<!--{if $member[notice_reply] == 1}-->checked="checked" <!--{/if}--> />
+			评论我的
+			<br />
+
+			<input name="notice_pm" type="checkbox" id="notice_pm" value="1"
+			<!--{if $member[notice_pm] == 1}--> checked="checked" <!--{/if}--> />
+			站内短消息 &nbsp;&nbsp;
+
+			</td>
+		  </tr>
+		  <tr>
+			<td align="right">提醒频率：</td>
+			<td>
+			{$user_notice_time}		    </td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="top">&nbsp;</td>
+			<td><input type="submit" class="save" value="确定提醒"/></td>
+		  </tr>
+		</table>
+	</form>
+
+ <!--上传头像-->
+ <!--{elseif 'face'==$act}-->
+ 	<script type="text/javascript">
+		function updateavatar() {
+			window.location.reload();
+		}
+	</script>
+	<div style="padding:10px 0;">
+		<span class="fontRed">用户头像会显示在<a href="index.php?mod={$member[username]}" target="_blank">个人微博</a>页面，以及你的微博中！</span><BR />
+	</div>
+	<!--{if $uc_avatarflash}-->
+
+	<img src="{$member[face_original]}" onerror="javascript:faceError(this);"/>
+	<h2>设置我的新头像</h2>
+	<p>请选择一个新照片进行上传编辑。</p>
+	{$uc_avatarflash}
+
+	<!--{else}-->
+
+    <style type="text/css">
+        .jcrop-holder { text-align: left; }
+
+        .jcrop-vline, .jcrop-hline
+        {
+        	font-size: 0;
+        	position: absolute;
+        	background: white url('./templates/default/images/jcrop.gif') top left repeat;
+        }
+        .jcrop-vline { height: 100%; width: 1px !important; }
+        .jcrop-hline { width: 100%; height: 1px !important; }
+        .jcrop-handle {
+        	font-size: 1px;
+        	width: 7px !important;
+        	height: 7px !important;
+        	border: 1px #eee solid;
+        	background-color: #333;
+        	*width: 9px;
+        	*height: 9px;
+        }
+
+        .jcrop-tracker { width: 100%; height: 100%; }
+
+        .custom .jcrop-vline,
+        .custom .jcrop-hline
+        {
+        	background: yellow;
+        }
+        .custom .jcrop-handle
+        {
+        	border-color: black;
+        	background-color: #C7BB00;
+        	-moz-border-radius: 3px;
+        	-webkit-border-radius: 3px;
+        }
+        .Image {
+			 max-width:600px;height:auto;cursor:pointer;
+			 border:1px dashed #4E6973;
+			 zoom:expression( function(elm) {
+				 if (elm.width>560) {
+					 var oldVW = elm.width; elm.width=560;
+					 elm.height = elm.height*(560 /oldVW);
+				 }
+				 elm.style.zoom = '1';
+			 }(this));
+		 }
+
+
+    </style>
+    <script type="text/javascript" src="js/jquery.Jcrop.js"></script>
+    <script language="Javascript">
+    	function upload_face()
+    	{
+    		// Remember to invoke within jQuery(window).load(...)
+    		// If you don't, Jcrop may not initialize properly
+    		jQuery(document).ready(function(){
+
+    			jcrop_init();
+
+    		});    		
+    	}        
+        function jcrop_init()
+        {
+            jQuery('#cropbox').Jcrop({
+                    minSize: [ 40, 40 ],
+                    maxSize: [ 600, 600 ],
+                    aspectRatio: 1,
+    				setSelect: [ 0, 0, 200, 200 ],
+    				onChange: jcrop_showCoords,
+    				onSelect: jcrop_showCoords
+    			});
+        }        
+        // Our simple event handler, called from onChange and onSelect
+		// event handlers, as per the Jcrop invocation above
+		function jcrop_showCoords(c)
+		{
+			jQuery('#x').val(c.x);
+			jQuery('#y').val(c.y);
+			jQuery('#w').val(c.w);
+			jQuery('#h').val(c.h);
+		};
+        {if $temp_face}
+            upload_face();
+        {/if}
+    </script>
+
+
+	<span style="font-size:12px; color:#333; display:block; margin:10px 0;">
+		上传头像支持JPG、GIF和PNG格式的图片文件，大小<i style="color:#ff0000">2M</i>以内；<br />
+		请点下面“浏览”按钮选择头像图片，系统会自动上传并显示在下面，用鼠标在头像上选择剪裁区域，最后点确认剪裁。
+	</span>
+
+	<div>
+	<div>
+		<iframe id="uploadface" name="uploadface" width="0" height="0" marginwidth="0" frameborder="0" src="about:blank"></iframe>
+		<form method="post" action="ajax.php?mod=topic&code=uploadface" enctype="multipart/form-data" name="face_form" target="uploadface" id="face_form">
+            <input type="hidden" id="temp_face" name="temp_face" value="{$temp_face}" />
+		  <input id="idFile" name="face" type="file" onchange="document.getElementById('face_form').submit();show_message('正在上传头像，请不要刷新页面');"/>
+		</form>
+	</div><br />
+
+
+        <span id="jcrop_init_id" onclick="jcrop_init();"></span>
+		<div><img src="{$member[face_original]}" id="cropbox" onclick="upload_face();" border="0" alt="" class="Image" /></div>
+
+
+		<form action="index.php?mod=settings&code=do_modify_face" method="post" id="crop_form">
+			<input type="hidden" id="x" name="x" />
+			<input type="hidden" id="y" name="y" />
+			<input type="hidden" id="w" name="w" />
+			<input type="hidden" id="h" name="h" />
+			<input name="img_path" value="{$temp_face}" type="hidden" id="img_path" /><br />
+
+			<input type="submit" value="确认" id="crop_submit" class="shareI" />
+			<input type="button" value="取消" class="shareI" onclick="updateavatar();" />
+		</form>
+
+	</div>
+ <!--{/if}-->
+
+
+
+<!--{elseif 'base'==$act}-->
+
+<script type="text/javascript"> 
+$(function(){ 
+    $("#nickname_input").focus(function(){$(this).css("background","#CBFE9F");$(".R_tt1").show();}).blur(function(){$(this).css("background","#FFF");$(".R_tt1").hide();});
+}); 
+</script>
+
+	<form method="POST" name="profile_base" action="index.php?mod=settings&code=do_modify_profile" onSubmit="return Validator.Validate(this,3);">
+	<table width="100%" border="0">
+	  <tr>
+	    <td width="110" align="right" valign="top">用户帐户：</td>
+	    <td><input value="{$member[username]}" type="text" class="p1" readonly disabled />
+		（用于登录本站和访问<a href="index.php?mod={$member[username]}" target="_blank">个人微博</a>，禁修改）
+		</td>
+	  </tr>
+	  <tr>
+	    <td width="110" align="right" valign="top">姓名/昵称：</td>
+	    <td>
+		<input name="nickname" id="nickname_input" type="text"  class="p1"  value="{$member_nickname}" {eval if($member[validate]) echo "Readonly";}  />
+		（发微博后会显示，也用于@姓名 通知）
+		<!--{if $member[validate]}-->
+        	<div class="R_tt1" >提醒：申请<a href="index.php?mod=other&code=vip_intro" target="_blank">V认证</a>后，禁止再修改昵称</div>
+		<!--{/if}-->
+		</td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">Email 邮箱：</td>
+	    <td><input name="email" type="text" value="{$member[email]}" class="p1"  readonly disabled />
+		（用于登录、<A HREF="index.php?mod=settings&code=notice">提醒</A>和<a href="index.php?mod=get_password" target="_blank">取回密码</A>，
+		<A HREF="index.php?mod=settings&code=base#modify_email_area">点此修改</A>）
+		</td>
+	  </tr>
+
+	  <tr>
+	    <td align="right" valign="top"><span class="fontRed">*</span> 所在地区：</td>
+	    <td>
+			<div style="float:left;">
+                {$province_list}
+              </div>
+              <div style="float:left;">
+                <select id="city" name="city" onchange="changeCity();">
+                <option value="0">请选择</option>
+				</select>
+              </div>
+              <div style="float:left;">
+                <select id="area" name="area" onchange="changeArea();">
+                <option value="0">请选择</option>
+				</select>
+              </div>
+              <div style="float:left;">
+                <select id="street" name="street">
+                <option value="0">请选择</option>
+				</select>
+              </div>
+              <input type="hidden" id="hid_city" name="hid_city" value="$hid_city">
+              <input type="hidden" id="hid_area" name="hid_area" value="$hid_area">
+              <input type="hidden" id="hid_street" name="hid_street" value="$hid_street">
+              <div>（设置后，其他人会通过<a href="index.php?mod=profile&code=search" target="_blank">找人</a>找到你）</div>
+	</td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top"><span class="fontRed">*</span> 用户性别：</td>
+	    <td>{$gender_radio}</td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">一句话介绍：</td>
+	    <td><textarea name="aboutme">{$member[aboutme]}</textarea><br />（会在你的<a href="index.php?mod={$member[username]}" target="_blank">个人微博</a>页面右侧看到）</td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">个人签名：</td>
+	    <td>
+	      <input name="signature" type="text" id="signature" value="{$member[signature]}" class="p1" style="width:413px;" onkeyup="javascript:checkWord(16,event)"/>
+		 
+	      <br />（显示在发布微博后，用户名后面。 还可以输入 <span id="signature_info" style='font-family:Georgia;font-size:24px;'>16</span> 字）
+
+		 </td>
+	  </tr>
+	  	 <script language="Javascript">
+			//字数统计 STR
+			function checkWord(len,evt){ 
+			   if(evt==null) 
+			   evt = window.event; 
+			   var src = evt.srcElement? evt.srcElement : evt.target; 
+			   var str = src.value.trim();
+			   myLen =0;
+			   i=0;
+			   for(;(i<str.length)&&(myLen<=len*2);i++){
+			   if(str.charCodeAt(i)>0&&str.charCodeAt(i)<128)
+			   myLen++;
+			   else
+			   myLen+=2;
+			   }
+			   var mydiv=document.getElementById("signature_info");
+			   if(myLen>len*2){
+			   src.value=str.substring(0,i-1);
+			   }
+			   else{ 
+			   document.getElementById("signature_info").innerHTML = "<span style='color:#FF0000;'>"+Math.floor((len*2-myLen)/2)+"</span>";
+			   }
+			}
+			String.prototype.trim = function() 
+			{ 
+			return this.replace(/(^\s*)|(\s*$)/g, ""); 
+			}
+			//字数统计 END
+		</script>
+	  <tr>
+	  <td colspan="2">
+
+	 <div class="tagg2">以下信息将作为通过客服取回帐号的依据
+	    <!--{if !$member[validate_true_name] || !$member[validate_card_type] || !$member[validate_card_id]}-->
+	    ，请认真填写，保存后不可修改
+	    <!--{/if}-->
+		</div>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">真实姓名：</td>
+	    <td>
+	    <!--{if $member[validate_user]}-->
+	    {$member[validate_user]}
+	    <!--{else}-->
+	    <input type="text" name="validate_true_name" value="{$memberfields[validate_true_name]}" class="p1" />
+	    <!--{/if}-->（不会对外部公开，其他人看不到）
+	    </td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">证件类型：</td>
+	    <td>
+	    <!--{if $member[validate_card_type]}-->
+	    {$memberfields[validate_card_type]}
+	    <!--{else}-->
+	    {$validate_card_type_select}
+	    <!--{/if}-->
+	    </td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">证件号码：</td>
+	    <td>
+	    <!--{if $member[validate_card_id]}-->
+	    <!--{eval $_v=substr_replace($memberfields[validate_card_id],'******',-6);}-->
+	    {$_v}
+	    <!--{else}-->
+	    <input type="text" name="validate_card_id" value="{$memberfields[validate_card_id]}" class="p1" />（保存后将只在此处显示部分号码）
+	    <!--{/if}-->
+	    </td>
+	  </tr>
+	  <tr>
+	    <td align="right" valign="top">&nbsp;</td>
+	    <td><input type="submit" class="save" value="保存"/></td>
+	  </tr>
+	</table>
+</form>
+
+<a id="modify_email_area"></a>
+<br />
+<form method="POST" action="index.php?mod=settings&code=modify_email" onSubmit="return Validator.Validate(this,3);">
+		<table width="100%" border="0">
+        <tr>
+    	  <td colspan="2">
+    	   <div class="tagg2"><b style="font-size:14px">修改邮箱，需要输入当前登录密码</b></div>
+    	  </td>
+    	</tr>
+		  <tr>
+		<td width="110" align="right" valign="top">当前登录密码：</td>
+		<td><input name="password_old" dataType="LimitB" min="3" msg="修改本页信息，必须输入当前登录密码" type="password"  class="p1"/>
+		（必填）</td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="top">登录提醒Email：</td>
+			<td><input name="email_new" dataType="Email" msg="请输入正确的Email 地址" type="text" value="{$member[email]}" class="p1" /></td>
+		  </tr>
+		  <tr>
+			<td align="right" valign="middle">&nbsp;</td>
+			<td>（修改上述信息需要重新登录）<br /><br /><input type="submit" class="save" value="保存修改" /></td>
+		  </tr>
+		</table>
+	</form>
+    
+<script type="text/javascript" src="js/city.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+var selectOption={eval load::functions('area');echo area_config_to_json();};
+});
+
+var validateRegularList={
+	province:{dataType:"LimitB",min:'1',msg:"请选择省/直辖市"},
+	city:{dataType:"LimitB",min:'1',msg:"请选择城市/地区"},
+	email2:{require:"false",dataType:"Email",msg:"邮箱格式不正确"},
+	qq:{require:"false",dataType:"QQ",msg:"请填写正确的QQ号"},
+	msn:{require:"false",dataType:"Email",msg:"MSN格式不正确"},
+	aboutme:{require:"false",dataType:"LimitB",min:'3',max:'250',msg:"请将长度控制在3~250个字符之间"}
+}
+Validator.SetRegular("profile_base",validateRegularList);
+
+function changeProvince(){
+  var province = document.getElementById("province").value;
+  var hid_city = document.getElementById("hid_city").value;
+  var url = "ajax.php?mod=member&code=sel&type=top&province="+province + "&hid_city="+hid_city;
+
+  var myAjax=$.post(
+		  	url,
+		  	function(d){
+	  		    $('#' + "city").html(d);
+	  		    document.getElementById('area').length = 1;
+	  		    document.getElementById('street').length = 1;
+				changeCity();
+		  	}
+  );
+}
+changeProvince();
+function changeCity(){
+  var city = document.getElementById("city").value;
+  var hid_area = document.getElementById("hid_area").value;
+  var url = "ajax.php?mod=member&code=sel&type=top&city="+city+"&hid_area="+hid_area;
+  var myAjax=$.post(
+		  	url,
+		  	function(d){
+				if(d){
+					document.getElementById("area").style.display = "block";
+		  		    $('#' + "area").html(d);
+					changeArea();
+				}else{
+		  		    document.getElementById('area').length = 1;
+		  		    document.getElementById('street').length = 1;
+					document.getElementById("street").style.display = "none";
+					document.getElementById("area").style.display = "none";
+				}
+		  	}
+  );
+}
+function changeArea(){
+  var area = document.getElementById("area").value;
+  var hid_street = document.getElementById("hid_street").value;
+  var url = "ajax.php?mod=member&code=sel&type=top&area="+area+"&hid_street="+hid_street;
+  var myAjax=$.post(
+		  	url,
+		  	function(d){
+				if(d){
+					document.getElementById("street").style.display = "block";
+				    $('#' + "street").html(d);
+				}else{
+		  		    document.getElementById('street').length = 1;
+					document.getElementById("street").style.display = "none";
+				}
+		  	}
+  );
+}
+</script>
+
+<!--{elseif 'user_medal'==$act}-->
+    <!--{loop $medal_list $val}-->
+	<div style="width:120px; height:120px; float:left; margin-right:15px;">
+        <img src="{$val[medal_img]}" style="margin-right:5px; vertical-align:middle" />
+		<p>{$val[medal_name]}</p>
+		<p>
+		  <input type="checkbox"  onchange="open_medal_index({$val[id]});return false;" {eval if($val[is_index] == "1") echo "checked=checkbox";}/>
+	    显示		</p>
+	</div>
+    <!--{/loop}-->
+
+    
+	<!--{if $sina}-->
+    <div style="width:120px; height:120px; float:left; margin-right:15px;">
+    <img src="images/medal/M_sina.gif" />
+    <p>绑定新浪</p>
+	<p><input type="checkbox" checked="checked" disabled="disabled"/>显示</p>
+    </div>
+    <!--{/if}-->
+    
+    <!--{if $qqwb}-->
+    <div style="width:120px; height:120px; float:left; margin-right:15px;">
+    <img src="./templates/default/images/medal/qqwb.png" />
+    <p>绑定腾讯</p>
+	<p><input type="checkbox" checked="checked" disabled="disabled"/>显示</p>
+    </div>
+    <!--{/if}-->
+	
+	 <!--{if $imjiqiren}-->
+    <div style="width:120px; height:120px; float:left; margin-right:15px;">
+    <img src="images/medal/M_qq.gif" />
+    <p>绑定QQ</p>
+	<p><input type="checkbox" checked="checked" disabled="disabled"/>显示</p>
+    </div>
+    <!--{/if}-->
+	
+    <!--{if $sms}-->
+    <div style="width:120px; height:120px; float:left; margin-right:15px;">
+    <img src="images/medal/Tel.gif" />
+	<p>绑定手机</p>
+	<p><input type="checkbox" checked="checked" disabled="disabled"/>显示</p>
+    </div>
+    <!--{/if}-->
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	  <tr>
+		<td><a href="index.php?mod=other&code=medal" target="_blank">点击获得更多勋章</a></td>
+	  </tr>
+	</table>
+	
+	<!--{elseif 'exp'==$act}-->
+	<!--等级说明结构开始-->
+    <div class="lelInfo">
+    <div class="currentLel">
+        <img src="{$member[face_original]}" alt="{$member[nickname]}" class="userPic" onerror="javascript:faceError(this);"/>
+        <div class="lelProcess">
+        	<div class="userName">
+			<b>{$member[nickname]}</b>  
+            <!--
+			<span class="wb_l_level">
+			<a href="index.php?mod=settings&code=exp" target="_blank" class="ico_level wbL{$member[level]}"><em>{$member[level]}</em></a>
+			</span>
+			-->
+			<em> LV {$member[level]} </em>
+			</div>
+            <div class="lelProcessBox">
+            	<p class="blueProcess" style="width:{$exp_width}%;"></p>
+            </div>
+            <div class="lelEx">
+            	<p>你当前的积分值是<span class="num">{$my_credits}</span>分，升级还需<span class="num">{$nex_exp_credit}</span>分。</p>
+                <div class="arrow"></div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="lelIntro">
+    	<h2>用户等级与你一起并肩成长</h2>
+        <p class="tg">担心粉丝永远超不过名人？没关系，现在我们有用户等级。</p>
+        <p class="tg">{$this->Config[site_name]}积分等级隆重上线。它是对用户“活跃程度”和“受欢迎程度”的综合衡量。</p>
+        <p class="tg">只要持续经营，努力贡献并分享优质内容，你将获得等级的加速提升，享受更多微时代的乐趣。</p>       
+        <h3>用户等级计算方法</h3>
+        <p class="fc6"><a style="float: right;" href="index.php?mod=settings&code=extcredits&op=rule">查看积分获取规则</a>您在微博的等级完全取决于积分的多少。有新鲜功能会让高等级用户优先体验。</p>
+        <table cellpadding="0" cellspacing="0" class="gTable">
+			<tr>
+			<!--{loop $exp_list $val}-->
+                <th>LV{$val[level]}</th>
+			<!--{/loop}-->
+			</tr>
+            <tr>
+			<!--{loop $exp_list $val}-->
+                <td>{$val[start_credits]}</td>
+			<!--{/loop}-->
+            </tr>
+        </table>
+    </div>
+</div>
+<!--等级说明结构结束-->
+<!--{/if}-->
+
+</div>
+</div>
+</div>
+<!--{template "topic_footer"}-->
+

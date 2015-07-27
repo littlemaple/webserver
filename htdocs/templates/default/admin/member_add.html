@@ -1,0 +1,33 @@
+<!--{template admin/header}-->
+
+
+<form method="post" action="{$action}">
+	<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+		<tr class="header">
+			<td colspan="2">添加新用户</td>
+		</tr>
+		<tr>
+			<td width="34%" bgcolor="#F8F8F8">用户名:<BR />后台添加新用户，系统将把用户名作为昵称添加</td>
+			<td width="66%" align="right" bgcolor="#FFFFFF">
+		  <input type="text" name="username"></td>
+		</tr>
+		<tr>
+			<td bgcolor="#F8F8F8">登录密码:</td>
+			<td align="right" bgcolor="#FFFFFF">
+			<input type="text" name="password"></td>
+		</tr>
+		<tr>
+			<td bgcolor="#F8F8F8">Email:</td>
+			<td align="right" bgcolor="#FFFFFF">
+			<input type="text" name="email"></td>
+		</tr>
+		<tr>
+			<td bgcolor="#F8F8F8">角色:</td>
+			<td align="right" bgcolor="#FFFFFF">
+			{$role_select}</td>
+		</tr>
+	</table>
+	<br>
+	<center><input type="submit" class="button" name="addsubmit" value="提 交"></center>
+</form>
+

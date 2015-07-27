@@ -1,0 +1,12 @@
+<div id="topic_new_add" class="topic_new_add">
+	<!--{subtemplate "topic_publish"}-->
+</div>
+<script language="javascript">
+	<!--{if $this->Get['handle_key']}-->
+	$(document).ready(function(){
+		$('#publishSubmit').click(function(){
+			closeDialog('{$this->Get[handle_key]}');	
+		})
+	});
+	<!--{/if}-->
+</script>

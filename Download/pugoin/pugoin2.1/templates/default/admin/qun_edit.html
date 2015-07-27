@@ -1,0 +1,106 @@
+<!--{template admin/header}-->
+{template admin/sub_menu}
+<script type="text/javascript" src="js/qun.js"></script>
+<form action="admin.php?mod=qun&code=domanage&op=edit" method="post" enctype="multipart/form-data" name="form1" id="form1" onsubmit="mk_date();">
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder" style="margin-top:10px;">
+    <tr class="header">
+      <td colspan="2">编辑微群</td>
+    </tr>
+    <tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">微群名称：</td>
+      <td bgcolor="#FFFFFF">
+	  	<span style="margin-right:15px;"><input type="text" name="qun_name" id="qun_name" value="{$qun_info['name']}" size="40"/></span>
+		<span><input class="checkbox" type="checkbox" name="recd" value="1" {$checked['recd']}>推荐</span>
+	  </td>
+    </tr>
+    <tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">*微群分类:</td>
+      <td bgcolor="#FFFFFF">
+		<div style="float:left; margin-right:10px;">
+			<select id="top_cat" name="top_cat" onchange="get_catselect(this)">
+				{$catselect['first']}
+			</select>
+		</div>
+		<div style="float:left; ">
+			<select id="sub_cat" name="sub_cat">
+				{$catselect['second']}
+			</select>
+		</div>
+	  </td>
+    </tr>
+    <tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">*微群所在地:</td>
+      <td bgcolor="#FFFFFF">
+		<div style="width:100px; float:left;">
+			<select id="province" name="province">
+				{$member[province]}
+			</select>
+		</div>
+		<div style="width:100px;float:left; ">
+			<select id="city" name="city"></select>
+		</div>
+	  </td>
+    </tr>
+	<tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">微群标签：</td>
+      <td bgcolor="#FFFFFF">
+	  	<input id="tag" name="tag" value="{$tag}" type="text" size="40">
+		<span style="margin-left:5px;">用英文逗号分隔,最多5个标签</span>
+	  </td>
+    </tr>
+	<tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">微群简介：</td>
+      <td bgcolor="#FFFFFF">
+	  	<textarea id="desc" style="padding: 3px 2px;width:450px;height:50px;" name="desc">{$qun_info['desc']}</textarea>
+	  </td>
+    </tr>
+	<tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">*微群类型：</td>
+      <td bgcolor="#FFFFFF">
+				<input type="radio" value="0" name="gview_perm" id="privacy_open" {$checked['gview_perm'][0]} />
+				<label for="privacy_open">公开群组</label>
+				<br />
+				<input type="radio" value="1" name="gview_perm" id="privacy_closed" {$checked['gview_perm'][1]} onclick="privacy_radio_force(1);"/>
+				<label for="privacy_closed">私密群组</label>
+	  </td>
+    </tr>
+	<tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">*加入方式：</td>
+      <td bgcolor="#FFFFFF">
+			<input type="radio" value="0" name="join_type" id="join_free" {$checked['join_type'][0]} onclick="privacy_radio_force(2)"/>
+			<label for="join_free">任何人可自由加入</label>
+			<br />
+			<input type="radio" value="1" name="join_type" id="join_ratify" {$checked['join_type'][1]}/>
+			<label for="join_ratify">需群主批准后才能加入</label>
+	  </td>
+    </tr>
+	<tr>
+      <td width="13%" align="center" bgcolor="#F8F8F8">*微群头像：</td>
+      <td bgcolor="#FFFFFF">
+	  	<div style="float:left;">
+	  	<input id="icon" name="icon" type="file" size="30"/>
+		</div>
+		<div style="float:left; margin-left:50px;">
+			<img src="{$icon}" style="vertical-align:middle; width:50px; height:50px;"/>
+			<span style="margin-left:20px; color:#999999; vertical-align:middle;">{$u_tips}</span>
+		</div>
+	  </td>
+    </tr>
+    <tr>
+      <td align="center" bgcolor="#F8F8F8">&nbsp;</td>
+      <td bgcolor="#FFFFFF">
+	  	<input type="submit" class="button" name="groupsubmit" value="提 交" />&nbsp;
+		<input name="reset" type="reset"class="button" onClick="history.go(-1)" value="取 消" />
+		<input name="qid" type="hidden" id="qid" value="{$qid}">
+	</td>
+    </tr>
+  </table>
+</form>
+<script type="text/javascript" src="js/city.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+	var selectOption={eval load::functions('area');echo area_config_to_json();};
+	
+	$("#province").doubleSelect('city',selectOption,{preselectFirst:'{$qun_info[province]}',preselectSecond:'{$qun_info[city]}'});
+	});
+</script>

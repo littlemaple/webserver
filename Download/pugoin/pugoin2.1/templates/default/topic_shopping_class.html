@@ -1,0 +1,25 @@
+<div class="top_tags">
+	<ul class="top_tags_bd clearfix">
+		<!--{loop $class_list $val}-->
+		<!--{eval $classcounts++;}-->
+		<!--{if $classcounts == 1}-->
+		<li class="c3">
+		<!--{else}-->
+		<li class="c2">
+		<!--{/if}-->
+			<span>{$val[classname]}</span>
+			<p class="list_w">
+				<!--{loop $val[sub_class_list] $iv}-->
+					<!--{if $iv[type]=='green' }-->
+					<a class="h" href="index.php?mod=topic&code=shopping&cls={$iv[id]}" title="{$iv[name]}">{$iv[name]}</a>
+					<!--{else}-->
+					<a href="index.php?mod=topic&code=shopping&cls={$iv[id]}" title="{$iv[name]}">{$iv[name]}</a>
+					<!--{/if}-->
+				<!--{/loop}-->
+			</p>
+			</p>
+		</li>
+		<!--{/loop}-->
+		
+	</ul>
+</div>

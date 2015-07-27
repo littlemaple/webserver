@@ -1,0 +1,77 @@
+<!--{template admin/header}-->
+<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+	<tr class="header">
+		<td>技巧提示</td>
+	</tr>
+	<tr class="altbg1">
+		<td>
+		<ul>
+			<li>输入昵称，选择开启或关闭V认证，填写V认证内容，提交即可。<br />
+			</li>
+		  </ul>
+	  </td>
+	</tr>
+</table>
+
+<form action="admin.php?mod=vipintro&amp;code=add" method="post" enctype="multipart/form-data" name="forminfo" id="forminfo">
+  <table cellspacing="1" cellpadding="4" width="100%" align="center">
+    <tr>
+      <td bgcolor="#F8F8F8"><strong>用户昵称:</strong><br /></td>
+      <td bgcolor="#FFFFFF">
+      <input name="nickname" type="text" id="nickname" value="$member[nickname]" />
+      </td>
+    </tr>
+    <tbody>
+      <tr>
+        <td width="26%" bgcolor="#F8F8F8"><strong>V身份认证:</strong><br />
+        选择是，用户头像右侧会显示一个“V”型图标</td>
+        <td width="74%" bgcolor="#FFFFFF">
+		   <input name="validate" id="validate_1" type="radio" value="1" checked="checked" />
+            是
+            <input name="validate" id="validate_0" type="radio" value="0" />
+       否</td>
+      </tr>
+      <tr>
+        <td width="26%" bgcolor="#F8F8F8"><strong>V认证备注:</strong><br />
+        鼠标在V型图标悬浮时，会看到右侧填写的信息</td>
+        <td bgcolor="#FFFFFF"><textarea name="validate_remark" id="validate_remark" style="width:300px; height:50px;">{$memberfields[validate_remark]}</textarea></td>
+      </tr>
+      <tr>
+        <td bgcolor="#F8F8F8">&nbsp;</td>
+        <td bgcolor="#FFFFFF"><button name="do" value='' type="submit" class="button">{$button_title}</button>&nbsp;&nbsp;<button class="button" type="button" onclick="window.location.href='admin.php?mod=vipintro';return false;">返回</button></td>
+      </tr>
+    </tbody>
+  </table>
+</form>
+
+<!--{if $this->Code == ''}-->
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableborder">
+<tr class="header">
+	<td height="15">已认证用户</td>
+	<td width="60%"><strong>认证备注</strong></td>
+	<td width="6%">&nbsp;</td>
+	<td align="center">V 认证</td>
+    <td align="center">管理</td>
+</tr>
+<!--{loop $members $val}-->
+<tr align="center">
+	<td align="left" class="altbg1" style="border-bottom:1px dashed #ccc" width="18%"><a href="index.php?mod={$val[username]}" target="_blank">{$val[nickname]}</a></td>
+	<td align="left" class="altbg1" style="border-bottom:1px dashed #ccc">{$val[vip_info]}</td>
+	<td align="left" class="altbg1" style="border-bottom:1px dashed #ccc">&nbsp;</td>
+	<td width="8%" align="center" class="altbg1" style="border-bottom:1px dashed #ccc">
+	<a href="admin.php?mod=vipintro&amp;code=open_validate&amp;ids={$val[uid]}" title="不显示用户头像右侧的“V”型图标">点此取消</a><a href="admin.php?mod=vipintro&amp;code=modify&amp;uid={$val[uid]}"></a></td>
+    <td width="8%" align="center" class="altbg1" style="border-bottom:1px dashed #ccc"><a href="admin.php?mod=vipintro&amp;code=modify&amp;uid={$val[uid]}">编辑</a></td>
+</tr>
+<!--{/loop}-->
+
+<!--{if $page_arr[html]}-->
+<tr align="center">
+	<td colspan="9" class="altbg1">
+	{$page_arr[html]}</td>
+</tr>
+<!--{/if}-->
+<tr align="center">
+	<td colspan="9" class="altbg1">&nbsp;	</td>
+</tr>
+</table>
+<!--{/if}-->

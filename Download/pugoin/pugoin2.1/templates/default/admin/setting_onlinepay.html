@@ -1,0 +1,49 @@
+<!--{template admin/header}-->
+<table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+  <tr class="header">
+    <td>技巧提示</td>
+  </tr>
+  <tr class="altbg1">
+    <td><ul>
+        <li>本功能暂时还未开放，只是用来存储帐号用。</li>
+      </ul></td>
+  </tr>
+</table>
+<form method="post" name="smtp" action="{$action}">
+  <a name="在线支付设置"></a>
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+    <tr class="header">
+      <td colspan="2">支付宝在线支付设置</td>
+    </tr>
+    <tr>
+      <td class="altbg1" width="45%"><b>支付宝商户ID号:</b><br>
+        <span class="smalltxt">如：smtp.qq.com（某些邮箱需要手动开启SMTP服务才可以使用，QQ邮箱在设置-帐户中开启）</span></td>
+      <td class="altbg2"><input type="text" size="30" name="onlinepay[alipayid]" value="{$onlinepay[alipayid]}">
+      </td>
+    </tr>
+    <tr>
+      <td class="altbg1" width="45%"><b>支付宝账户:</b><br>
+        <span class="smalltxt">一般为25</span></td>
+      <td class="altbg2"><input type="text" size="30" name="onlinepay[alipayaccount]" value="{$onlinepay[alipayaccount]}">
+      </td>
+    </tr>
+	 <tr>
+      <td class="altbg1" width="45%"><b>交易密钥:</b><br>
+        <span class="smalltxt">一般为25</span></td>
+      <td class="altbg2"><input type="text" size="30" name="onlinepay[alipaykey]" value="{$onlinepay[alipaykey]}">
+      </td>
+    </tr>
+    <tr>
+      <td class="altbg1" width="45%"><b>接口类型:</b><br>
+        <span class="smalltxt">发送邮件时使用，如 10000@qq.com</span></td>
+      <td class="altbg2"><input type="text" size="30" name="onlinepay[alipaytype]" value="{$onlinepay[alipaytype]}">
+      </td>
+    </tr>
+  </table>
+  <br>
+  <center>
+    <input class="button" type="submit" name="settingsubmit" value="提 交">
+  </center>
+  <br>
+</form>
+<br>

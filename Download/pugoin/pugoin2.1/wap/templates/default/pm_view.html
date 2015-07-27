@@ -1,0 +1,38 @@
+<!--{template "topic_header"}-->
+<!--{if $pmid}-->
+<div class="m">
+	<div class="t_list_c">
+		<span><a href="index.php?mod={$pmlist[msgfrom]}">{$pmlist[msgnickname]}</a></span> 发来私信:
+		<span style="margin-left:5px;">{$pmlist[message]}</span>
+		<span style="margin-left:5px; color:#999999;">[{$pmlist[send_time]}]</span>
+	</div>
+	<div class="t_list_c">
+		[<span>状态:</span>
+		<span style="margin-left:5px;"><!--{if {$pmlist[new]} == 1}--><font color="#FF0000";>未读</font><!--{else}-->已读<!--{/if}--></span>]
+		<span style="margin-left:5px;"><a href="index.php?mod=pm&amp;code=isnew&amp;pmid={$pmlist[pmid]}">标记未读</a></span>
+		<span style="margin-left:5px;"><a href="index.php?mod=pm&amp;code=pmdel&amp;pmid={$pmlist[pmid]}">删除</a></span>
+		<span style="margin-left:5px;"><a href="index.php?mod=topic&amp;code=myhome">我的首页</a></span>
+	</div>
+	<div class="lineDot"></div>
+	<!--{if $mypmlist}-->
+	<div class="t_list_c" style="color:#666666;">
+		<span>我已回复：{$mypmlist[message]}</span>
+		<span style="margin-left:5px; color:#999999;">[{$mypmlist[send_time]}]</span>
+	</div>
+	<!--{/if}-->
+</div>
+<!--{/if}-->
+
+<div style="padding:2px;"><strong>{$title}</strong></div>
+<div class="u2" style="padding:5px;">
+	<div>	
+	<form id="pmform" name="pmform" method="post" action="index.php?mod=pm&amp;code=dosend">
+	   <span>收件人昵称：
+	   	<p><textarea name="to_user" id="to_user" style="width:99%;" rows="2" cols="" />{$pmlist[msgnickname]}</textarea></p>
+	   </span>
+	   <span><p>私信内容：<textarea name="message" id="message" style="width:99%;" rows="3" cols="" /></textarea></p></span>
+	  <input type="submit" name="Submit" value="发送" />
+	</form>
+	</div>
+</div>
+<!--{template "topic_footer"}-->

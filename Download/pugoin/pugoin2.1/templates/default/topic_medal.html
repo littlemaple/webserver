@@ -1,0 +1,139 @@
+{template "topic_header"}
+<link href="styles/medal.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/medal.js"></script>
+<div class="main {$t_col_main}">
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+
+<div class="main_2b">
+  <div class="main_t"><span>{conf site_name}勋章</span></div>
+	<div class="Menubox2">
+	<ul>
+	<!--{loop $act_list $key $val}-->
+	<!--{eval $_hoverCLS = ($key==$act ? ' class="tago" ' : 'class="tagn"');}-->
+	<!--{if !is_array($val)}-->
+	<li><div {$_hoverCLS}><A HREF="index.php?mod=tools&code={$key}"><span>{$val}</span></A></div></li>
+	<!--{else}-->
+	<li><div {$_hoverCLS}><A HREF="index.php?mod={$val[link_mod]}&code={$val[link_code]}"><span>{$val[name]}</span></A></div></li>
+	<!--{/if}-->
+	<!--{/loop}-->
+	</ul>
+	</div>
+	
+  <div class="main3Box_m">
+   <div class="medalBox"> 
+      <div class="medalbanner">
+        <div id="focus_img">
+          <ul>
+		  <!--{loop $medallist $medal}-->
+		  <!--{if $medal[is_open] == 1}-->
+            <li>
+              <div class="ds">
+                <div class="ds_img"><img src="{$medal[medal_img]}"/></div>
+                <div class="ds_intro">
+                  <p>{$medal[medal_name]}</p>
+                  {$medal[medal_depict]} </div>
+              </div>
+            </li>
+			<!--{/if}-->
+           <!--{/loop}-->
+          </ul>
+        </div>
+        <span id="btn_focus_prev" class="btn"></span> <span id="btn_focus_next" class="btn"></span> </div>
+      <div class="hormain">
+        <ul class="icon_list">
+    <script type="text/javascript">
+     $(document).ready(function(){
+	 var clearTimer = null;
+     var SleepTime = 3000;   
+     $("#focus_img").jCarouselLite({
+       btnNext: "#btn_focus_next",
+       btnPrev: "#btn_focus_prev",
+	   visible: 1,
+	   scroll:1,
+	   speed: 300,
+	   auto:5000,
+	   mouseOver:true
+     });
+	 
+	 <!--{loop $medallist $v}-->
+	 	$(".yc_$v[id]").mouseover(function(){$(".yc_c_$v[id]").show();});
+		$(".yc_$v[id]").mouseout(function(){$(".yc_c_$v[id]").hide();});
+	 <!--{/loop}-->
+	 
+	 $(".sina").mouseover(function(){$(".sina_c").show();});
+     $(".sina").mouseout(function(){$(".sina_c").hide();});
+	 $(".qq").mouseover(function(){$(".qq_c").show();});
+	 $(".qq").mouseout(function(){$(".qq_c").hide();});
+	 $(".tel").mouseover(function(){$(".tel_c").show();});
+	 $(".tel").mouseout(function(){$(".tel_c").hide();});
+     });
+ </script>
+ 
+ 		<!--{loop $medallist $val}-->
+        <!--{eval $medal_type = unserialize($val[conditions]);}-->
+		<!--{if $val[is_open] == 1}-->
+          <li class="yc yc_$val[id]"> 
+		  <a class="honorlink" href="javascript:void(0);">
+		  <!--{if in_array($val[id],$medalid)}--><img src="{$val[medal_img]}"/><!--{else}--><img src="{$val[medal_img2]}"/><!--{/if}-->
+		  </a>
+		  <span class="honortitle">{$val[medal_name]}</span>
+            <div class="yc_c yc_c_$val[id]">
+              <div class="M_box">
+                <div class="M_top">
+                  <div class="med_img"><img src="{$val[medal_img]}" /></div>
+                  <div class="med_intro">
+                    <p>{$val[medal_name]}</p>
+                    {$val[medal_depict]} 
+					 <!--{if in_array($val[id],$medalid)}-->
+					 （已获得）
+					 <!--{else}-->
+						  <!--{if in_array($medal_type[type],array('topic','reply','invite','tag'))}-->
+							<a href="index.php?mod=other&code=checkmedal&mids={$val[id]}">点亮图标</a>
+						  <!--{/if}-->
+						  <br />
+							 <!--{if $medal_type[type] == 'topic'}-->
+							 <a href="index.php?mod=topic&code=myhome" target="_blank">我要发微博</a>
+							 <!--{elseif $medal_type[type] == 'reply'}-->
+							 <a href="index.php?mod=topic&code=new" target="_blank">我要发评论</a>
+							 <!--{elseif $medal_type[type] == 'tag'}-->
+							 <a href="index.php?mod=tag&code=$medal_type[tagname]" target="_blank">我要发话题</a>
+							 <!--{elseif $medal_type[type] == 'invite'}-->
+							 <a href="index.php?mod=profile&code=invite" target="_blank">马上去邀请好友</a>
+							 <!--{elseif $medal_type[type] == 'shoudong'}-->
+								管理员手动发放 |
+					  <!--{/if}-->
+                   	 <a href="index.php?mod=settings&code=user_medal" target="_blank">查看我的勋章</a>
+					 <!--{/if}-->
+			      </div>
+                </div>
+              </div>
+            </div>
+          </li>
+		  <!--{/if}-->
+		  <!--{/loop}-->
+         
+        </ul>
+      </div>
+      <div id="Pmsend_to_user_area"></div>
+      <div class="tagg4" style="margin:0">在用户荣誉用户个人页面，你会看到如下标识：
+        <!--{loop $medal_list $img}-->
+        <img src="{$img[medal_img]}" style="margin-right:5px; vertical-align:middle" />
+        <!--{/loop}-->
+        <br />
+        如果需要帮助，请联系<a href="mailto:{conf site_admin_email}">{conf site_admin_email}</a> </div>
+    </div>
+  </div>
+</div>
+</div>
+{template "topic_footer"}

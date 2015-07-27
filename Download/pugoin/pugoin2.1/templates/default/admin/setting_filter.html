@@ -1,0 +1,49 @@
+{template admin/header}
+<form method="post" action="admin.php?mod=setting&code=domodify_filter">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableborder">
+	<tr class="header">
+	<td colspan="5">内容过滤设置</td>
+	</tr>		
+
+	<tr>
+			<td class="altbg1" width="40%"><b>启用过滤功能</b><br>
+<span class="smalltext">用于提高内容质量，减少违法信息、广告内容等。 </span></td>
+			<td class="altbg2">	{$enable_radio}	<BR>
+			选择“是”会对用户发布的内容、个人签名等进行过滤，词语过多时有一定的效率影响；
+			</td>
+	</tr>			
+
+	<tr>
+			<td class="altbg1" width="40%"><b>不显示被过滤的关键词？</b><br>
+<span class="smalltext">用户发布信息被禁止时，是否提示具体哪个词语<br /></span></td>
+			<td class="altbg2">	{$keyword_disable_radio}	<BR>
+			选择“是”将不会显示具体哪个词语有问题，避免用户跳过；<br />
+			选择“否”告知具体哪个词语被过滤，方便用户改正。
+			</td>
+	</tr>
+	
+	<tr>
+	<td class="altbg1" ><b>违法关键词过滤</b><br>
+<span class="smalltext">包含下面设置的关键词时，将禁止提交发布
+<br>(关键词一行一个，或用 "|" 隔开)</span></td>
+			<td class="altbg2">
+			<img src="./templates/default/images/admincp/zoomin.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomtextarea('filter[keywords]', 1)"> 
+			<img src="./templates/default/images/admincp/zoomout.gif" onmouseover="this.style.cursor='pointer'" onclick="zoomtextarea('filter[keywords]', 0)">
+			<br />
+			<textarea cols="80" rows="10" name="filter[keywords]">$filter[keywords]</textarea>
+			</td>
+	</tr>	
+<!--
+	<tr>
+	<td class="altbg1" ><b>关键词密度智能过滤</b><br>
+<span class="smalltext">关键词密度高于此值时，系统会自动过滤掉。<br>
+默认情况下无需修改，百分比过低将可能过滤掉所有内容；<BR>
+（关键词密度低于10%的文章质量都不错了，一般不会引起搜索引擎惩罚）</span></td>
+			<td class="altbg2"><input type="text" name="filter[density]" value="{$filter[density]}" size="5">%
+			</td>
+	</tr>
+-->
+</table>
+	<br>
+	<center><input class="button" type="submit" name="cronssubmit" value="提 交"></center>
+</form>

@@ -1,0 +1,181 @@
+{template "topic_header"}
+<div class="main3 {$t_col_main}" >
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+	  
+  <div class="main3Box_m HotW">
+  <div class="H_quare_head">
+            <ul>
+
+				<!--{eval $new_class='new'==$this->Code?"cur":"";}-->
+	            <!--{eval $newreply_class='newreply'==$this->Code?"cur":"";}-->
+	            <!--{eval $hotforward_class='hotforward'==$this->Code?"cur":"";}-->
+	            <!--{eval $hotreply_class='hotreply'==$this->Code?"cur":"";}-->
+	            <li class="{$new_class}"><a href="index.php?mod=topic&code=new">最新微博</a></li>
+	            <li class="{$newreply_class}"><a href="index.php?mod=topic&code=newreply">最新评论</a></li>
+	            <li class="{$hotforward_class}"><a href="index.php?mod=topic&code=hotforward">热门转发</a></li>
+                <li class="{$hotreply_class}"><a href="index.php?mod=topic&code=hotreply">热门评论</a></li>
+				<li><a href="index.php?mod=topic&code=top" title="查看和关注微博达人">达人榜</a></li>
+				<li><a href="index.php?mod=tag" title="寻找和关注话题">话题榜</a></li>
+				<li><a href="index.php?mod=other&code=media" title="查看名人或媒体">媒体汇</a></li>
+				<!-- <li><a href="javascript:void(0)" onclick="showMainPublishBox('{$this->Code}');">随便说两句</a></li> -->
+            </ul>
+          </div>
+  
+    <div id="topNews_1" class="Hotwarp">
+	
+	<!--{if $this->Config[ad_enable]}-->
+    <div class="L_AD">{$this->Config[ad][ad_list][group_new][header]} </div>
+    <!--{/if}-->
+
+<script language="Javascript">
+function listTopic( s,lh ) {	
+	var s = 'undefined' == typeof(s) ? 0 : s;
+	var lh = 'undefined' == typeof(lh) ? 1 : lh;
+	if(lh) {
+		window.location.hash="#listTopicArea";
+	}
+    $("#listTopicMsgArea").html("<div><center><span class='loading'>内容正在加载中，请稍候……</span></center></div>");
+	var myAjax = $.post(
+		"ajax.php?mod=topic&code=list",
+		{
+			<!--{loop $params $k $v}-->
+			{$k}:"{$v}",
+			<!--{/loop}-->
+			start:s
+		},
+		function (d) {
+			$("#listTopicMsgArea").html('');
+			$("#listTopicArea").html(d);			
+		}
+	); 
+}
+</script>
+    <script type="text/javascript">
+     $(document).ready(function(){
+	
+	 $(".menu_bq").mouseover(function(){$("#newshowface").show();});
+	 $(".menu_bq").mouseout(function(){$("#newshowface").hide();});
+
+     });
+    </script>
+		<div id="listTopicMsgArea"></div>
+      <div id="listTopicArea">
+        <div class="Listmain">
+		 <!--{if $d_list}-->
+        <ul class="nleftL">
+          <div style="float:right">
+            <!--{loop $d_list $key $val}-->
+            <!--{eval $_i = ($d==$key ? 3 : 9);}-->
+            <li class="liL_{$_i}" id="Num{$key}"><a href="index.php?mod=topic&code={$this->Code}&d={$key}">{$val}</a></li>
+            <li class="liLine">|</li>
+            <!--{/loop}-->
+          </div>
+        </ul>
+        <!--{/if}-->
+          <!--{if $topics}-->
+          <!--{if 'favoritemy'==$this->Code}-->
+          <!--{loop $topics $val}-->
+          <!--{eval $counts++;}-->
+			<script type="text/javascript">
+				$(document).ready(function(){
+					var objStr = "#topic_lists_{$val[tid]}";
+					$(objStr).mouseover(function(){$(objStr + " i").show();});
+					$(objStr).mouseout(function(){$(objStr + " i").hide();});
+				});
+			</script>
+			<div class="feedCell" id="topic_list_{$val[tid]}">
+				<!--{subtemplate topic_favoritemy_item}-->	
+			</div>
+          <!--{/loop}-->
+          <!--{else}-->
+          <!--{loop $topics $val}-->
+		  <!--{eval $counts++;}-->
+          <div class="feedCell" id="topic_list_{$val[tid]}">
+			<!--{if $this->Config[ad_enable]}-->
+				<!--{if $counts == 3 && $this->Config[ad][ad_list][group_new][middle_center]}-->
+				<div class="L_AD">{$this->Config[ad][ad_list][group_new][middle_center]}</div>
+				<!--{/if}-->				
+				<!--{if $counts == 10 && $this->Config[ad][ad_list][group_new][middle_center1]}-->
+				<div class="L_AD">{$this->Config[ad][ad_list][group_new][middle_center1]}</div>
+				<!--{/if}-->			
+			<!--{/if}-->
+			<script type="text/javascript">
+			$(document).ready(function(){
+				var objStr = "#topic_lists_{$val[tid]}";
+				$(objStr).mouseover(function(){$(objStr + " i").show();});
+				$(objStr).mouseout(function(){$(objStr + " i").hide();});
+			});
+			</script>
+			<!--{subtemplate topic_item_ajax}-->
+            </div>
+          <!--{/loop}-->
+          <!--{/if}-->
+          <!--{if $page_arr[html]}-->
+          <div class="pageStyle">
+            <li>{$page_arr[html]}</li>
+          </div>
+          <!--{/if}-->
+          <!--{/if}-->
+        </div>
+      </div>
+</div>
+	<div class="Hotright">
+
+	<!--{hook/global_topicnew_extra2}-->
+	 <div class="HboxR">
+      <div class="rightBox_t">最近话题榜  TOP{$Tg_limit} <span class="set_tag"></span></div>
+      <ul>
+        <!--{loop $tags $val}-->
+		<!--{eval $TagNo++;}-->
+        <li>
+		  <span class="boxRl listyle">{$TagNo}. <a href="index.php?mod=tag&code={$val[name]}">{$val[name]}</a></span>
+		  <span style="float:right;">({$val[topic_count]})</span>
+		</li>
+        <!--{/loop}-->
+      </ul>
+     </div>
+   
+    <div class="HboxR">
+	 <div class="rightBox_t">人气关注榜 TOP{$Gz_limit} </span></div>
+      <ul>
+        <!--{loop $concern_users $val}-->
+		<!--{eval $No++;}-->
+        <li>
+		<span class="boxRl listyle">{$No}. <a href="index.php?mod={$val[username]}"><!--{eval $val[nickname]}-->{$val[nickname]}</a></span>
+		<span style="float:right;">({$val[fans_count]})</span>
+		</li>
+        <!--{/loop}-->
+		<li><span style="float:right;"><a href="index.php?mod=topic&code=top">查看更多>></a></span></li>
+      </ul>
+    </div>
+
+	  <div class="HboxR">
+		<div class="rightBox_t">{$this->Config[site_name]}意见反馈 <span class="set_tag"></span></div>
+		<ul>
+		  众人拾柴火焰高，如您有任何建议欢迎点<a href="index.php?mod=tag&code=意见反馈" target="_blank">意见反馈</a>告诉我们。
+		</ul>
+	  </div>
+    <!--{if $this->Config[ad_enable]}-->
+    <div class="R_AD">
+     {$this->Config[ad][ad_list][group_new][middle_right]}
+     {$this->Config[ad][ad_list][group_new][middle_right1]}
+    </div>
+    <!--{/if}-->
+  </div>
+</div>
+</div>
+<!--{if $this->Config[ad_enable]}-->
+<div align="center" class="T_AD"> {$this->Config[ad][ad_list][group_new][footer]} </div>
+<!--{/if}-->
+{template "topic_footer"}

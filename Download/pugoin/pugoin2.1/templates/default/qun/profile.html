@@ -1,0 +1,93 @@
+{template "topic_header"}
+<div class="main {$t_col_main}">
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+  <div class="t_col_main_fl">
+    <div id="topic_index_left_ajax_list">
+      <!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+      {template "topic_left.inc"}
+      <!--{/if}-->
+    </div>
+  </div>
+</div>
+<!--此处三栏-->
+  <div class="main3Box_m HotW">	
+  <div id="topNews_1" class="Hotwarp">
+<style type="text/css">
+	a.v_on{ color:#000; font-weight:700;}
+	.qun_block{ margin-bottom:30px; width:550px; overflow:hidden; height:auto;}
+	.qun_block .title{ font-weight:700; font-size:14px; border-bottom:dotted 1px #ddd; margin-bottom:20px;}
+	.qun_list{ padding:0px; margin:0px; list-style:none;}
+	.qun_list li{ display:block; float:left; margin-left:35px; margin-bottom:10px; display:inline; width:50px; height:110px;}
+	.qun_list .img_wp img{ padding:1px; border: solid 1px #ccc;}
+	.qun_list .txt_wp{width:50px;white-space:nowrap;text-overflow:ellipsis; -o-text-overflow:ellipsis; overflow: hidden;}
+	.cl { clear:both;}
+	.pl20{ padding-left:10px;}
+	.pl10{ padding-left:10px;}
+	.pf_r_nav{border-bottom: dotted 1px #ccc; margin-bottom:10px; margin-right:25px;}
+</style>
+      <div id="listTopicArea">
+        <div class="Listmain">
+		
+		<!--{if $view=='index'}-->
+			<!--{loop $all_list $value}-->
+			<div class="qun_block">
+				<div class="title">$value['title']({$value['row_nums']})</div>
+				<!--{if $value['row_nums'] > 0}-->
+				<div class="content">
+					<ul class="qun_list">
+						<!--{loop $value['list'] $data}-->
+						<li>
+							<div class="img_wp">
+								<a href="index.php?mod=qun&qid={$data['qid']}" title="{$data['name']}"><img src="{$data['icon']}" /></a>
+							</div>
+							<div class="txt_wp"><a href="index.php?mod=qun&qid={$data['qid']}" title="{$data['name']}">{$data['name']}</a></div>
+							<div style="color:#444;">{$data['member_num']}人</div>
+						</li>
+						<!--{/loop}-->
+					</ul>
+					<ul class="cl"></ul>
+					<div style="text-align:right;"><a href="index.php?mod=qun&code=profile&view={$value['code']}">查看全部>></a></div>
+				</div>
+				<!--{/if}-->
+			</div>
+			<!--{/loop}-->
+		<!--{else}-->
+			<div class="qun_block">
+				<div class="title">{$title}({$qun_list['row_nums']})</div>
+				<!--{if $qun_list['row_nums'] > 0}-->
+				<div class="content">
+					<ul class="qun_list">
+						<!--{loop $qun_list['list'] $value}-->
+						<li>
+							<div class="img_wp">
+								<a href="index.php?mod=qun&qid={$value['qid']}" title="{$value['name']}"><img src="{$value['icon']}" /></a>
+							</div>
+							<div><a href="index.php?mod=qun&qid={$value['qid']}" title="{$value['name']}">{$value['name']}</a></div>
+							<div style="color:#444;">{$value['member_num']}人</div>
+						</li>
+						<!--{/loop}-->
+					</ul>
+					<ul class="cl"></ul>
+				</div>
+				<div id="page_wp">{$multi}</div>
+				<!--{/if}-->
+			</div>
+		<!--{/if}-->
+		
+		</div>
+      </div>
+</div>
+
+
+
+<!--右边栏目 Begin-->
+
+<!--{subtemplate qun/qun_right}-->
+
+<!--右边栏目 End-->
+ 
+<!--{if $this->Config[ad_enable]}-->
+<div align="center" class="T_AD"> {$this->Config[ad][ad_list][qun][footer]} </div>
+<!--{/if}-->
+{template "topic_footer"}

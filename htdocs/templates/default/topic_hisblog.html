@@ -1,0 +1,177 @@
+<!--{template "topic_header"}-->
+
+<!--{if MEMBER_ID ==0}-->
+<div class="inventLine2" style="display:none "> 
+        <div class="atxt">
+			<p class="p_1"><span>{$member[nickname]}</span>在这里写分享，想收到TA的最新消息吗？</p> 
+			<p class="p_2">分享是现在最酷、最火的沟通交流工具，可以随时随地分享新鲜事，与朋友保持联络。</p> 
+			<p class="p_3">现在注册微博就可通过网页、手机、QQ机器人随时分享新鲜事，并关注好友的最新消息！</p>
+        </div>
+		<div class="abtn">
+			<a href="index.php?mod=member&code&uid={$member[uid]}">
+			<img src="images/regbtn.gif"></a>
+			<p>已有帐号，<a href="javascript:void(0);" onclick="ShowLoginDialog(); return false;">请点此登录</a></p>
+		</div> 
+</div>
+<!--{/if}-->
+
+<div class="m_group">
+    <div class="g_nav">
+        <div class="info clearfix">
+        </div>
+        <ul class="list">
+			<!--{if $params[code] == 'myblog' and $this->Get[type] == 'shopping'}-->
+            <li class="js_cur"><a href="index.php?mod={$member[username]}&type=shopping">TA的购衣柜首页</a></li>
+			<!--{else}-->
+		    <li><a href="index.php?mod={$member[username]}&type=shopping">TA的购衣柜首页</a></li>
+		    <!--{/if}-->
+			<!--{if $params[code] == 'myblog' and $this->Get[type] == ''}-->
+            <li class="js_cur"><a href="index.php?mod={$member[username]}">TA的动态</a></li>
+			<!--{else}-->
+		    <li><a href="index.php?mod={$member[username]}">TA的动态</a></li>
+		    <!--{/if}-->
+			<!--{if 'my_reply' == $this->Get[type]}-->
+            <li class="js_cur"><a href="index.php?mod={$member[username]}&type=my_reply">TA评论的</a></li>
+			<!--{else}-->
+		    <li><a href="index.php?mod={$member[username]}&type=my_reply">TA评论的</a></li>
+		    <!--{/if}-->
+        </ul>            
+    </div>
+    <div class="g_main clearfix">
+        
+        <div class="g_con">
+        
+			<!--{if $this->Get[type] == 'shopping'}-->
+               		<!--{subtemplate topic_shopping_list_ajax}-->
+			<!--{else}-->
+        	<div class="vg_connbody">
+			
+            	<!--{eval if(MEMBER_ID == $member[uid]) $_my = '我'; else $_my = $member[nickname];}-->
+                <div class="listBoxNav">
+                <div class="nleftL" style="display:none ">
+                    <li style="float:left; font-weight:600; color:#333;">&nbsp;{$_my}的微博</li> 
+					<li class="liR2"> 
+					  <!--{if $params[code] == 'myblog' and $this->Get[type] == ''}-->
+					  <span class="liL_5"><a href="index.php?mod={$member[username]}">全部</a></span> |
+					  <!--{else}-->
+					  <span><a href="index.php?mod={$member[username]}">全部</a></span> |
+					   <!--{/if}-->
+					  <!--{if 'my_reply' == $this->Get[type]}-->
+					   <span class="liL_2"><a href="index.php?mod={$member[username]}&type=my_reply">TA评论的</a></span>
+					  <!--{else}-->
+					   <span><a href="index.php?mod={$member[username]}&type=my_reply">TA评论的</a></span>
+					  <!--{/if}-->
+					</li>
+                </div>
+                </div>
+
+				
+				 <div id="listTopicArea">
+					<!--微博列表(shopping,all,reply集中判断) Begin-->
+					<div class="Listmain">
+					  <!--{subtemplate topic_list_ajax}-->
+					</div>
+					<!--微博列表 End-->
+				</div>
+               
+                
+           	 </div>
+			 <!--{/if}-->
+            
+        </div>
+		
+		
+        
+        <div class="g_side">
+            
+			
+			<!-------------start 头像------------>
+			<!--{eval $__my_link_='index.php?mod='.$member[username];$__my_link_=get_invite_url($__my_link_,$this->Config['site_url']);}-->
+            <div class="side-avt">
+                <a href="index.php?mod={$member[username]}" title="">
+		  		<img src="{$member[face_original]}" title="{$member[nickname]}" width="128" height="128" onerror="javascript:faceError(this);" />
+		  		</a>                
+            </div>
+            <div class="avatar2_info">
+                <p class="left_t_nick_name">
+                <strong title="{$member[nickname]}">{$member[nickname]}{$member[validate_html]}
+				<!--{if $this->Config[level_radio]}-->
+					<a href="index.php?mod=settings&code=exp" target="_blank" class="ico_level wbL{$member[level]}"><em>{$member[level]}</em></a>
+			 	<!--{/if}-->
+				</strong>         
+				<a href="javascript:void(0)" onclick="follower_choose({$member[uid]},'{$member[nickname]}','at','');">(@{$member[nickname]})</a>
+                <!--备注-->
+                <span id="remarklist_{$member[uid]}">{$buddys[remark]}</span>
+                <!--备注-->
+                <!--{if $member[gender] == 1}-->
+				  <img src="images/user.gif"  title="男"/>
+				  <!--{else}-->
+				  <img src="images/user_female.gif"  title="女"/>
+				<!--{/if}--> 
+                </p>
+                <p class="left_t2"><a href="index.php?mod={$member[username]}">{$__my_link_}</a></p>
+                <p class="left_t2">
+				{$member[from_area]} {if $member[credits]} 积分：<a href="index.php?mod=settings&code=extcredits&op=rule" title="点击查看获取积分的方法"><b>{$member[credits]}</b></a>{/if}
+                </p>
+                {if $member[aboutme]}
+				<p class="left_t2">简介：<!--{eval $aboutme = cut_str({$member[aboutme]},50);}--><span title="简介：{$member[aboutme]}">{$aboutme}</span></p>
+				{/if}
+               <!-- 关注 拉黑 等操作选项-->
+                <!--{if MEMBER_ID && MEMBER_ID!=$member[uid]}-->
+				<div id="topic_index_blacklist_{$member[uid]}">
+					<!--{if $member[uid] == $list_blacklist[touid]}-->
+						<div class="blacklist">
+							他在你的黑名单里 <a href="javascript:void(0)" onclick="follower_choose({$member[uid]},'{$member[nickname]}','del','topic_black_ajax');"> [取消拉黑] </a>
+						</div>
+					<!--{else}-->
+						<div class="dialogue">
+						 {$member[follow_html]}
+						 <span>
+						 <!--判断是否是好友-->
+						 <!--{if $buddys}-->
+							 | <a href="javascript:void(0)" onclick="follower_choose({$member[uid]},'','lahei','topic_black_ajax');">拉黑</a> |
+							 <a href="javascript:void(0)" onclick="get_group_choose({$member[uid]});">分组</a> |
+							 <a href="javascript:void(0)" onclick="get_remark({$member[uid]});return false;">备注</a> |
+							 <a href="javascript:void(0)" onclick="follower_choose({$member[uid]},'{$member[nickname]}','buddys','');">推荐给朋友</a> |
+							 <!--{/if}--> 	
+							 <a href="javascript:void(0)" onclick="PmSend({$member[uid]},'{$member[nickname]}');return false;" >私信</a>
+						 <!--判断是否是好友-->
+						 </span>
+						</div>
+					
+						<div id="Pmsend_to_user_area"></div>
+						<div id="alert_follower_menu_{$member[uid]}"></div>
+						<span id="button_{$member[uid]}" onclick="get_group_choose({$member[uid]});"></span>
+						<div id="global_select_{$member[uid]}" class="alertBox" style="display:none"></div>
+						<div id="get_remark_{$member[uid]}" ></div>
+					<!--{/if}-->
+				</div> 
+				<!--{/if}--> 
+			<!-- 关注 拉黑 等操作选项-->
+			<!--{hook/global_usernav_extra1}-->
+                
+            </div>
+			
+			<!-------------end 头像------------>
+            
+            
+            
+           <!--{template "topic_right.inc"}-->
+            
+              
+    </div>
+</div>
+
+<!--{template "topic_footer"}-->
+
+<!--{if $this->Config[ajax_topic_time] > 0 && MEMBER_ID > 0 && 'myhome'==$this->Code}-->
+<!--{eval $ajax_time = $this->Config[ajax_topic_time] * 1000;}-->
+<script>
+function circle_topic()
+{
+	ajax_reminded({MEMBER_ID});
+	setTimeout('circle_topic();',{$ajax_time});
+}
+setTimeout('circle_topic();',{$ajax_time});
+</script>
+<!--{/if}-->

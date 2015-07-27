@@ -1,0 +1,1 @@
+<?php $config['event_setting'] = '1'; ?>

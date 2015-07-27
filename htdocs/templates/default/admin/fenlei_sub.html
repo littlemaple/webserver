@@ -1,0 +1,66 @@
+{template admin/header}
+<div class="nav3">
+  <ul class="cc">
+    <li>
+      <a href="admin.php?mod=fenlei">大类管理</a>
+    </li>
+    <li class="current">
+      <a href="admin.php?mod=fenlei&code=subclass">小类管理</a>
+    </li>
+    <li>
+      <a href="admin.php?mod=fenlei&code=tag">标签管理</a>
+    </li>
+  </ul>
+</div>
+
+<div class="mt10">
+<form name="form1" id="form1" method="post" action="admin.php?mod=fenlei&code=addsubclass">
+  <table width=98% cellspacing=1 cellpadding=3 class="tableorder">
+  <!-- {if $id} -->
+    <tr class="header">
+      <td colspan=2>修改子类</td>
+    </tr>
+    <tr>
+      <td class="altbg1">名称</td>
+      <td class="altbg2"><input type="text" name="subclass" id="subclass" value="{$name}"></td>
+    </tr>
+    <tr>
+  <!-- {else} -->
+    <tr class="header">
+      <td colspan=2>创建子类</td>
+    </tr>
+    <tr>
+      <td class="altbg1">名称</td>
+      <td class="altbg2"><textarea name="subclass" id="subclass" rows="5" cols="40"></textarea><font color="red">注:</font>如要同时添加多个子类,每个子类换一行.</td>
+    </tr>
+  <!-- {/if} -->
+    <tr>
+      <td class="altbg1">大类：</td>
+      <td class="altbg2">
+        <select name="class" id="class" onchange="return changeClass();">
+          <option value=0>请选择</option>
+          $class_option
+        </select>
+      </td>
+    </tr>
+  </table>
+<script type="text/javascript">
+  function changeClass(){
+	var class_id = document.getElementById("class").value;
+    var url = "ajax.php?mod=fenlei&code=resultlist&act=subclass&class_id="+class_id;
+  	var myAjax=$.post(
+  		  	url,
+  		  	function(d){
+  	  		  	$('#' + "resultlist").html(d);
+  		  	});
+    return false;
+  }
+  changeClass();
+</script>
+<div>
+  <input type="submit" name="addsubclass" value="确定" class="button">
+  <input type="hidden" name="id" value="{$id}">
+</div>
+</form>
+<div id="resultlist"></div>
+</div>

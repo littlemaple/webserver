@@ -1,0 +1,86 @@
+<!--{template "topic_header"}-->
+<style>
+.pm_type_txt{font-weight:bold;}
+</style>
+<script language="JavaScript" type="text/javascript">
+var folder = '{$folder}';
+var p='{$page}';
+function checkall(form, prefix, checkall) {
+	var checkall = checkall ? checkall : 'chkall';
+	for(var i = 0; i < form.elements.length; i++) {
+		var e = form.elements[i];
+		if(e.name != checkall && (!prefix || (prefix && e.name.match(prefix)))) {
+			e.checked = form.elements[checkall].checked;
+		}
+	}
+}
+</script>
+<div class="main {$t_col_main}">
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+  <div class="mainL">
+    <div class="mblogTitle">当前：<a href="index.php?mod=pm&code=list&folder={$folder}" >{$folder_name}</a></div>
+    <!--以下站内短信导航部分-->
+    {$left_menu}
+    <!--以上站内短信导航部分-->
+    <div class="comBox" style="overflow:hidden; margin-top:20px;">
+      <form id="frmMain" action="index.php?mod=pm&code=dodelete" method="post" class="form_box" name='frmMain'>
+	  <input type="hidden" name="folder" value="{$folder}">
+	  <ul class="PmList">
+	  <li>
+	  <div class="Libox" style="text-indent:24px;">主题</div>
+	  <div class="Mibox">{$people}</div>
+	  <div class="Ribox">时间</div>
+	  </li>
+	  
+      <!--{loop $pm_list $pm}-->	  
+	  <li id="pm_list_$pm[id]">
+	  <div class="Libox">
+	  <input type="checkbox" name="ids[]" size="1" value="{$pm[id]}" style="border:0"/>
+	  <!--{if $pm['new']!=1}-->
+      <img src="./templates/default/images/read.gif" title="已读" />
+	  <a href="javascript:void(0)" onClick="pmTopic($pm[id],'Pmreply_area_$pm[id]','{$folder}');return false;">{$pm[message]}</a>
+      <!--{else}-->
+      <img src="./templates/default/images/mail.gif" title="未读" id="pm_type_img_{$pm[id]}"/>
+	  <a href="javascript:void(0)" onClick="pmTopic($pm[id],'Pmreply_area_$pm[id]','{$folder}');return false;">
+	  <span id="pm_type_txt_{$pm[id]}" class="pm_type_txt">{$pm[message]}</span></a>
+      <!--{/if}-->
+	  
+	  <div id="Pmreply_area_$pm[id]"></div>
+	  </div>
+	  <div class="Mibox">
+	  <!--{if $pm['user_id']}-->
+      <a href="index.php?mod={$pm[user]}"><span>{$pm[nickname]}</span></a>
+      <!--{else}-->
+      <span>{$pm[user]}</span>
+      <!--{/if}-->  
+	  </div>
+	  <div class="Ribox">{$pm[send_time]}</div>
+	  </li>
+      <!--{/loop}-->
+	  
+	  <!--{if $page_arr[html]}-->	
+	  <li>{$page_arr[html]}</li> 
+	  <!--{/if}--> 
+	  <li style=" border:none;">
+	  <input type="checkbox" name="chkall" onclick="checkall(this.form, 'ids')" style="border:none">全选
+      <input id="imgDel" value="删 除" type="submit" class="shareI" style="margin:10px 0 0 10px;" />
+	  </li>
+	  </ul>
+      </form>	  
+    </div>
+  </div>
+
+<!--{template "topic_right.inc"}-->
+</div>
+<!--{template "topic_footer"}-->

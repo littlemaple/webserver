@@ -1,0 +1,48 @@
+<!--{template "topic_header"}-->
+<div class="m">
+<div>
+	<!--{if MEMBER_ID}--><!--（<span><a href="index.php?mod=profile&amp;code=invite" target="_blank">邀请好友</a>来关注</span>）--><!--{/if}-->
+</div>
+
+<div style="padding:2px;">
+	<!--{eval if($this->Code == 'follow') $follow_hb = 'hb';}--> 
+	<!--{eval if($this->Code == 'fans') $fans_hb = 'hb';}--> 
+	<span class="{$follow_hb}"><a href="index.php?mod=topic&code=follow">我关注的</a></span>
+	<span class="{$fans_hb}" style="margin-left:10px;"><a href="index.php?mod=topic&code=fans">关注我的</a> </span>
+</div>
+
+<!--{loop $member_list $val}-->
+<div style="padding:2px;">
+	<div class="t_list_b">
+		<span><a href="index.php?mod={$val[username]}">{$val[nickname]}</a></span>
+		<span style="margin-left:20px;">
+		<!--{if MEMBER_ID!=$val[uid]}-->
+			{$val[follow_html]}
+		<!--{elseif MEMBER_ID == $val[uid]}-->
+			（这是我自己）
+		<!--{/if}-->
+		</span>
+	</div>
+	
+	<div class="t_list_b" style="color:#666666;">
+	 <span>关注 {$val[follow_count]} 人</span> 
+	 <span>被 {$val[fans_count]} 人关注</span> 
+	 <span>微博 {$val[topic_count]} 条</span>
+	</div>
+	<div class="lineDot"></div>
+</div>
+<!--{/loop}-->
+
+<!--{if $member[fans_count]<7}-->
+<div class="t_list_b">
+所有关注{$member[username]}的人，都能在其个人首页中第一时间看到其发布的信息<br />
+通过发布有价值的信息，或者评论转发他人的微博，将会吸引更多的人关注<!--{if MEMBER_ID > 0}-->，马上进入<a href="index.php?mod=topic&amp;code=myhome">我的首页</a>分享新鲜事吧<!--{/if}-->
+</div>
+<!--{/if}-->
+
+<!--{if $page_arr[html]}-->
+<li>{$page_arr[html]}</li>
+<!--{/if}-->
+
+</div>
+<!--{template "topic_footer"}-->

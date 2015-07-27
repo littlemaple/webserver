@@ -1,0 +1,35 @@
+<span class="un">
+
+<a title="点此查看{$val[nickname]}的微博(@{$val[nickname]})" href="index.php?mod={$val[username]}" >{$val[nickname]}</a>
+
+<!--{if $val[validate_html]}-->
+{$val[validate_html]}&nbsp;
+<!--{else}-->
+<!--{if $this->Config[topic_level_radio]}-->
+<span class="wb_l_level">
+<a href="index.php?mod=settings&code=exp" target="_blank" class="ico_level wbL{$val[level]}"><em>{$val[level]}</em></a>
+</span>
+<!--{/if}-->
+<!--{/if}-->	
+
+<!--{if $this->Config[is_signature]}-->
+<!--{if  !$_GET[mod_original]}-->
+<!--{if $val[signature]}-->
+<span class="signature">
+<!--{if $val[uid] == MEMBER_ID ||  'admin' == MEMBER_ROLE_TYPE}-->
+<a href="javascript:void(0);" onclick="follower_choose({$val[uid]},'{$val[nickname]}','topic_signature');" title="点击修改个人签名">
+<em ectype="user_signature_ajax_{$val[uid]}">({$val[signature]})</em>
+</a>
+<!--{else}-->
+<em>({$val[signature]})</em>
+<!--{/if}-->
+</span>
+<!--{/if}-->
+<!--{/if}-->
+<!--{/if}-->
+
+<!--{hook/global_topiclist_extra1}-->
+</span>
+<!--{hook/global_topiclist_extra2}-->
+
+

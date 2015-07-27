@@ -1,0 +1,258 @@
+{template "topic_header"}
+<link href="styles/vote.css" rel="stylesheet" type="text/css" />
+<div class="main {$t_col_main}">
+
+<!--此处三栏-->
+<div class="t_col_main_si {$t_col_main_side}">
+<div class="t_col_main_fl">
+	<div id="topic_index_left_ajax_list">
+	<!--{if MEMBER_STYLE_THREE_TOL == 1}-->
+	 {template "topic_left.inc"}
+	<!--{/if}-->
+	</div>
+</div>
+</div>
+<!--此处三栏-->
+
+
+  <div class="main3Box_m HotW ">	
+    <div id="topNews_1" class="Hotwarp">
+      <div>
+        <div class="Listmain">
+		
+		<!--投票介绍 Begin--> 
+		<div id="vote_desc_wp" class="vote_viewT">
+			<div class="vote_viewL">
+			<a href="index.php?mod={$member[username]}" title="{$member[username]}"><img onerror="javascript:faceError(this);" src="{$member[face]}" title="{$member[nickname]}" /></a>
+			</div>
+			<div class="vote_viewR">
+			<p>
+			<span class="spanimg">
+			<a href="index.php?mod={$member[username]}" title="@{$member[nickname]}"><b>{$member[nickname]}</b></a>{$member[validate_html]}
+			</span>
+			<span><strong>发起的投票</strong><div class="vote_num2"><b>$vote['voter_num']</b></div></span>
+			</p>
+			<p><!--{if MEMBER_ID > 0}-->{$follow_html} | <!--{/if}--><a href="index.php?mod=vote&uid=$member[uid]">{$all_vote_btn}</a></p>
+			<p>
+			<span class="vote_date">有效期：<!--{eval echo my_date_format($vote['dateline'], 'Y年m月d日 H:i')}-->&nbsp;--&nbsp;<!--{eval echo my_date_format($vote['expiration'], 'Y年m月d日 H:i')}--></span>
+			</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!--投票介绍 End-->
+			
+		<!--投票主体 Begin-->
+				<div  style="text-align:right; width:100%; margin-top:10px;">
+					<!--{if $vote[uid]==MEMBER_ID || 'admin'==MEMBER_ROLE_TYPE}-->
+						<a href="javascript:;" onclick="deleteVote({$vote[vid]});">删除这个投票</a> |
+						<a href="javascript:;" onclick="showModifyVoteExpirationDialog({$vote[vid]});">修改截止时间</a> |
+						<a href="javascript:;" onclick="showEditVoteDialog({$vote[vid]});">编辑投票</a> | 
+					<!--{/if}-->
+						<a href="javascript:;" onclick="showRecommendVoteDialog({$vote[vid]},{'subject_wp':'vote_subject_wp'});">分享到微博</a> 
+				</div>
+			<div id="vote_main_wp" style="margin-top:20px;">
+				<div class="title" style="text-align:center; font-size:14px;">
+					<strong id="vote_subject_wp">{$vote['subject']}</strong>
+					<span style="color:#999999; font-size:12px;">
+					<!--{if $vote['multiple']}-->
+						(最多可选{$vote['maxchoice']}项)
+					<!--{else}-->
+						(单选)
+					<!--{/if}-->
+					</span>
+					<!--{if !$vote['is_view'] && !$hasvoted}-->
+						<span>
+							(投票后可见)
+						</span>
+					<!--{/if}-->
+				</div>
+				<!--{if $vote['message']}--><p class="poll_depiction">$vote['message']</p><!--{/if}-->
+				<form name="vote_form" method="post" action="ajax.php?mod=vote&code=vote&vid=$vote['vid']&from=topic" id="vote_form">
+				
+				<!--投票选项 Begin-->
+					<!--{template "vote_options"}-->
+				<!--投票选项 End-->
+				
+				<!--{if MEMBER_ID>0}-->
+					<div class="poll_submit" style=" width:540px; text-align:right; padding:0">
+						<!--{if $allowedvote && !$hasvoted}-->
+						<input type="hidden" name="votesubmit" value="true" />
+						<span style="width:100px;">
+							<input type="checkbox" name="toweibo" id="toweibo_view" value="1" style="vertical-align:middle" checked="checked">
+							<label for="toweibo_view">分享到微博</label>
+						</span> 
+						<span style="width:100px;">
+							<input type="checkbox" name="anonymous" id="anonymous_view" value="1" style="vertical-align:middle">
+							<label for="anonymous_view">匿名</label>
+						</span> 
+						<input type="button" class="vote_btn" id="save" value="" onclick="vote();"/>
+						<!--{else}-->
+						<input type="submit" class="shareI" id="save" value="已投票"  disabled="disabled"/>
+						<!--{/if}-->
+					</div>
+				<!--{/if}-->
+				</form>
+			</div>
+			
+		<!--投票主体 End-->
+		
+		<!--其他人的投票 Begin-->
+		<script type="text/javascript">
+		function setTab(name,cursel,n){
+	    for(i=1;i<=n;i++){
+	    var menu=document.getElementById(name+i);
+	    var con=document.getElementById("con_"+name+"_"+i);
+	    menu.className=i==cursel?"selected":"";
+	    con.style.display=i==cursel?"block":"none";
+        }}
+		</script>
+		<div id="other_vote_wp">
+			<div class="set_warp" style="width:550px; margin:0 auto; padding:20px 0">
+				<div class="voteMenu">
+					<ul>
+						<li id="one1" class="selected" onclick="setTab('one',1,2)">大家的最新投票</li>
+						<!--{if MEMBER_ID>0}-->
+							<li id="one2" onclick="setTab('one',2,2);getVoteJoined(1,{c:2});">关注人的最新投票</li>
+						<!--{/if}-->
+					</ul>
+				</div>
+				<div id="con_one_1" class="vote_con"></div>
+				<div id="con_one_2" class="vote_con" style="display:none;"></div>
+			  </div>
+		 </div>
+		<script language="javascript">
+			function getVoteJoined(page, options)
+			{
+				if (!page) {
+					page = 1;
+				}
+				if ( typeof options == 'undefined') {
+					options = {};
+				}
+				type = '';
+				if (options.c) {
+					if (options.c == 2) {
+						wp = 'con_one_2';
+						type = 'follow';
+					} else {
+						wp = 'con_one_1';
+						type = '';
+					}
+				}
+				$('#'+wp).html("<div><center><span class='loading'>正在载入……</span></center></div>");
+				var url = "ajax.php?mod=vote&code=joined&vid={$vid}&type="+type+"&page="+page;
+				$.get(
+					url,
+					{},
+					function (r) {
+						if (is_json(r)) {
+							var json = eval('('+r+')');
+							$('#'+wp).html(json.msg);
+						} else {
+							$('#'+wp).html(r);
+						}
+					}
+				);
+			}
+			$(document).ready(function(){getVoteJoined(1, {c:1});});
+		</script>
+		<!--其他人的投票 End-->
+		
+		<!--{if MEMBER_ID>0}-->
+			<!--评论发布框 Begin-->
+			<div class="mWarp">
+				<form action="" method="POST" name="topic_simple_form" id="topic_simple_form" onsubmit="return false;" autocomplete="off">
+					<table>
+						<tr>
+						  <td colspan="2">
+							  <div class="fbqCount"><style type="text/css">ul.mycon li{ width:65px;}</style>
+								<ul class="mycon fontGreen" style="width:130px">
+								  <li>还可以输入</li>
+								  <li style="width:auto"><span style='color:#339900;' id="app_wordc">{conf topic_length}</span></li>
+								  <li style="width:40px;">个字符</li>
+								</ul>
+								</div>
+							
+								<!-- 转发插入表情-->
+								<script type="text/javascript">
+									 $(document).ready(function(){
+									 $(".menu_bqb_c").click(function(){$("#app_bq_view").show();})
+									 });
+								</script>
+	
+						
+								<textarea  id="app_content" name="content" onkeyup="javascript:checkPublishText({conf topic_length},'app_content','app_wordc')" class="Pbox_te" style="width:538px; height:60px;"></textarea>
+						  </td>
+						</tr>
+						<tr>
+						<td>
+									<div class="menuf">
+									<div class="menuf_bq" ><b class="menu_bqb_c"><a href="javascript:void(0);" onclick="topic_face('app_bq_view','app_content');return false;">表情</a></b>
+										<div class="forward_f" id="app_bq_view"></div>
+									</div>
+									
+		
+		
+								</div>
+						</td>
+							<td align="right">
+								<input id="app_topic_type" type="checkbox" onclick="selectAppTopicType(this.id)"  value="first" checked="checked">分享到微博 
+								&nbsp;&nbsp;
+								<input id="app_publish_btn" onclick="commentVote({$vid});return false;" type="button" value="发 布" class="shareI"/>
+								<input name="item" type="hidden" id="app_item" value="{$this->item}" />
+								<input name="item_id" type="hidden" id="app_item_id" value="{$this->item_id}" />
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+			<!--评论发布框 End-->
+		<!--{/if}-->
+		
+		<script language="Javascript">
+			$(document).ready(function(){
+				//初始化智能输入框
+				initAiInput('app_content');
+			});
+			function listTopic( s,lh ) {	
+				var s = 'undefined' == typeof(s) ? 0 : s;
+				var lh = 'undefined' == typeof(lh) ? 1 : lh;
+				if(lh) {
+					window.location.hash="#listTopicArea";
+				}
+				var myAjax = $.post(
+					"ajax.php?mod=app&code=list_topic",
+					{
+						<!--{loop $params $k $v}-->
+						{$k}:"{$v}",
+						<!--{/loop}-->
+						start:s
+					},
+					function (d) {
+						$("#listTopicArea").html(d);			
+					}
+				); 
+			}
+		</script>
+		
+		<div id="listTopicMsgArea"></div>
+		<div id="listTopicArea">
+			{template "topic_list_ajax"}
+		</div>
+        </div>
+      </div>
+</div>
+<script>
+$("#app_content").bind('keydown',function(event){
+	event = event || window.event;
+    if (event.keyCode == 13 && event.ctrlKey) {
+        $("#app_publish_btn").click();
+    }
+});
+</script>
+<!--{subtemplate 'vote_right'}-->
+
+<!--{if $this->Config[ad_enable]}-->
+<div align="center" class="T_AD"> {$this->Config[ad][ad_list][vote][footer]} </div>
+<!--{/if}-->
+{template "topic_footer"}

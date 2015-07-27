@@ -1,0 +1,272 @@
+<!--{template admin/header}-->
+<script type="text/javascript" src="js/iColorPicker.js"></script>
+<script type="text/javascript">
+function get_tag_insert(tag_name){
+    var tag_value;
+	tag_value=document.getElementById('i_already').value;
+	tag_value=tag_value+","+tag_name;
+	document.getElementById('i_already').focus();
+	document.getElementById('i_already').value=tag_value;
+}
+
+function insert_share_type(share_type)
+{  
+	if(share_type == 'tag')
+	{	
+		document.getElementById('tag_type').style.display='block';
+		document.getElementById('topic_type').style.display='none';
+	}
+	else
+	{
+		document.getElementById('topic_type').style.display='block';
+		document.getElementById('tag_type').style.display='none';
+	}
+}
+</script>
+<style type="text/css">
+<!--
+.STYLE2 {color: #666666}
+.STYLE3 {color: #FF0000}
+-->
+</style>
+<table width="100%" align="center" cellpadding="4" cellspacing="1" class="tableborder">
+  <tr>
+    <td width="14%"><span class="STYLE3">提示：以下是系统默认选项，可以修改后在保存，如不需修改则直接保存。</span></td>
+  </tr>
+  <!--{if $this->
+  Code == 'modify'}-->
+  <!--{/if}-->
+</table>
+<form method="post" action="{$action}" enctype="multipart/form-data" name="add_share"  id="add_share">
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+  <tr class="header">
+	  <td>样式设置</td>
+	 
+	  <td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td width="14%">描述说明：</td>
+	  <td width="86%"><input name="name" type="text" id="name" value="{$share[name]}" /> 
+	    &nbsp;
+	    <input name="ids" type="hidden" id="ids" value="{$ids}" />	    
+	    &nbsp;（简要描述，说明一下调用的数据，方便自己区分。不会显示在站外调用中。）</td>
+	</tr>
+	<!--{if $this->Code == 'modify'}-->
+	<tr>
+	  <td>话题外部调用地址：</td>
+	  <td><textarea name="textarea2" rows="2" id="textarea5" style="width:500px;"><script type="text/javascript" src="{$this->Config[site_url]}/index.php?mod=share&code=recommend&ids={$ids}"></script>
+        </textarea></td>
+	</tr>
+	<!--{/if}-->
+  </table>
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+	<tr class="header">
+	  <td>样式设置</td>
+	  <td>&nbsp;</td>
+	  <td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>1、标题栏样式</td>
+	  <td>&nbsp;</td>
+	  <td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>标题名称：</td>
+	  <td><input name="share[style][topic_name]" type="text" id="share[style][topic_name]" value="{$style[topic_name]}"/></td>
+	  <td colspan="2" align="center">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>字体色：</td>
+	  <td><input id="topicname_color" name="share[style][topicname_color]" type="text" value="{$style[topicname_color]}" class="iColorPicker" /></td>
+	  <td colspan="2">背景色：
+		<input id="title_color" name="share[style][title_color]" type="text" value="{$style[title_color]}" class="iColorPicker" /></td>
+	</tr>
+	<tr>
+	  <td>2、边框样式</td>
+	  <td>&nbsp;</td>
+	  <td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td>边框颜色</td>
+	  <td><input name="share[style][border_color]" id="border_color" type="text" value="{$style[border_color]}" class="iColorPicker" ></td>
+	  <td colspan="2">边框大小：
+	  <input name="share[style][border_siz]" type="text" value="{$style[border_siz]}" id="share[style][border_siz]" size="10" />
+	  px</td>
+	</tr>
+	<tr>
+	  <td>3、微博样式</td>
+	  <td>&nbsp;</td>	  
+	  <td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td width="186">宽度：</td>
+	  <td width="242"><input name="share[style][width]" type="text" id="share[style][width]" value="{$style[width]}" size="10" />
+	  px</td>
+	  <td colspan="2">高度：      
+		<input name="share[style][height]" type="text" id="share[style][height]" value="{$style[height]}" size="10" />
+	  px </td>
+	</tr>
+	<tr>
+	  <td width="186">微博内容高度：</td>
+	  <td width="242"><input name="share[style][jianju]" type="text" id="share[style][jianju]" value="{$style[jianju]}" size="10" />
+	  px</td>
+	  <td colspan="2">
+	  <input name="share[style][is_jianju]" type="checkbox" id="share[style][is_jianju]" value="1" {eval if($style[is_jianju] == '1') echo "checked=checkbox";}/>
+	  自适应 （高度和自适应同时选择，优先显示自适应） </td>
+	</tr>
+	<tr>
+	  <td width="186">背景颜色：</td>
+	  <td><input id="bg_color" name="share[style][bg_color]" type="text" value="{$style[bg_color]}" class="iColorPicker" ></td>
+	  <td width="296">链接颜色：
+	  <input id="link_color" name="share[style][link_color]" type="text" value="{$style[link_color]}" class="iColorPicker" /></td>
+	  
+	  <td width="612">文本颜色：
+		<input id="text_color" name="share[style][text_color]" type="text" value="{$style[text_color]}" class="iColorPicker" />	  </td>
+	</tr>
+
+	<tr>
+	  <td>&nbsp;</td>
+	  <td colspan="3">
+	   <button name="do" value='' type="submit" class="button">保 存</button>
+	   <button class="button" type="button" onclick="window.location.href='admin.php?mod=share';return false;">返回</button>
+	  </td>
+	</tr>
+  </table>
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+	<tr class="header">
+		<td>显示设置</td>
+		<td width="546">&nbsp;</td>
+		<td width="613">&nbsp;</td>
+	</tr>
+	<tr>
+	  <td align="right">1、显示页面标题：</td>
+	  <td colspan="2">
+	  <input type="radio" name="share[show][is_topic_title]" value="1" {eval if($show[is_topic_title]) echo "checked=checkbox";}/> 
+		是
+&nbsp;&nbsp;
+<input type="radio" name="share[show][is_topic_title]" value="0" {eval if(!$show[is_topic_title]) echo "checked=checkbox";}/>
+否</td>
+	</tr>
+	<tr>
+	  <td align="right">2、显示页面编码：</td>
+	  <td colspan="2">
+		<input type="radio" name="share[show][topic_charset]" value="gbk" {eval if($show[topic_charset] == "gbk") echo "checked=checkbox";}/>
+	  gbk&nbsp;&nbsp;
+	  <input type="radio" name="share[show][topic_charset]" value="utf-8" {eval if($show[topic_charset] == "utf-8") echo "checked=checkbox";}/>
+	  utf-8</td>
+	</tr>
+
+	<tr>
+	  <td align="right">3、微博截取字符：</td>
+	  <td colspan="2"><input name="share[show][topic_string]" id="topic_string" type="text" value="{$show[topic_string]}" style="width:100px; " />
+	  &nbsp;/ 字符 (为空则显示全部) </td>
+	</tr>
+	<tr>
+	  <td width="186" align="right">4、微博显示条数：</td>
+	  <td colspan="2"><input name="share[show][topic_limit]" id="topic_limit"  type="text" value="{$show[topic_limit]}" style="width:100px; "> 
+	  / 条 </td>
+	</tr>
+	<tr>
+	  <td width="186" align="right">5、微博显示样式：      </td>
+	  <td colspan="3">
+	   <input name="share[show][topic_up]" type="radio" value="topic_up_zd" {eval if($show[topic_up] == "topic_up_zd") echo "checked=checkbox";}/>
+		自动滚动 
+		&nbsp;
+		<input type="radio" name="share[show][topic_up]" value="topic_up_sd" {eval if($show[topic_up] == "topic_up_sd") echo "checked=checkbox";}/>
+		手动滚动</td>
+	</tr>
+	<tr>
+	  <td width="186" align="right">6、微博显示类别：</td>
+	  <td colspan="3">
+	  	<select name="type" id="type" onblur="insert_share_type(this.value);">
+	  	  <option value="topic" {eval if($share[type] == "topic") echo "selected=selected";}>全部微博</option>
+		  <option value="tag" {eval if($share[type] == "tag") echo "selected=selected";}>话题微博</option>
+	  	  <option value="img" {eval if($share[type] == "img") echo "selected=selected";}>图片微博</option>
+		  <option value="video" {eval if($share[type] == "video") echo "selected=selected";}>视频微博</option>
+		  <option value="music" {eval if($share[type] == "music") echo "selected=selected";}>音乐微博</option>
+	    </select> 
+	  	(可单独调用该类别微博。如：需要调用全部是图片的微博，则选择图片微博) 
+	  </td>
+	</tr>
+	<tr>
+	  <td width="186" rowspan="2" align="right">7、微博显示模块：</td>
+	  <td height="40" colspan="2">
+	    <input name="share[condition][nickname]" type="checkbox"  value="nickname" {eval if($module[nickname] == "nickname") echo "checked=checkbox";}/>
+	    昵称 |
+	    <input name="share[condition][face]" type="checkbox"  value="face" {eval if($module[face] == "face") echo "checked=checkbox";}/>
+	    头像 |
+	    <input name="share[condition][content]" type="checkbox"  value="content" {eval if($module[content] == "content") echo "checked=checkbox";}/>
+	    内容 |
+	    <input name="share[condition][dateline]" type="checkbox"  value="dateline" {eval if($module[dateline] == "dateline") echo "checked=checkbox";}/>
+	    时间 | 
+	    <input name="share[condition][reply]" type="checkbox" value="reply" {eval if($module[reply] == "reply") echo "checked=checkbox";}/>
+	    评论数 | 
+        <input name="share[condition][forward]" type="checkbox"  value="forward" {eval if($module[forward] == "forward") echo "checked=checkbox";}/>
+		转发数 |
+		<input name="share[condition][image]" type="checkbox"  value="image" {eval if($module[image] == "image") echo "checked=checkbox";}/>
+		图片 | 
+		<input name="share[condition][video]" type="checkbox"  value="video" {eval if($module[video] == "video") echo "checked=checkbox";}/>
+		视频 | 
+		<input name="share[condition][music]" type="checkbox"  value="music" {eval if($module[music] == "music") echo "checked=checkbox";}/> 音乐</td>
+	</tr>
+	<tr>
+	  <td height="40" colspan="2">
+	    <input name="share[condition][nickname_link]" type="checkbox"  value="nickname_link" {eval if($module[nickname_link] == "nickname_link") echo "checked=checkbox";}/>
+	    昵称含链接 
+	    |
+	    <input name="share[condition][face_link]" type="checkbox"  value="face_link" {eval if($module[face_link] == "face_link") echo "checked=checkbox";}/>
+		头像含链接 | 
+		<input name="share[condition][content_link]" type="checkbox"  value="content_link" {eval if($module[content_link] == "content_link") echo "checked=checkbox";}/>
+		内容含链接</td>
+	</tr>
+	
+	<tr>
+	  <td width="186" align="right"></td>
+	  <td colspan="2">
+	  提示：点击添加微博显示模块。<br /></td>
+	</tr>
+	<tr>
+	  <td align="right"></td>
+	  <td colspan="2">
+	  <button name="do" value='' type="submit" class="button">保 存</button>
+	  <button class="button" type="button" onclick="window.location.href='admin.php?mod=share';return false;">返回</button>	  </td>
+	</tr>
+  </table>
+  <table cellspacing="1" cellpadding="4" width="100%" align="center" class="tableborder">
+	<tr class="header">
+	  <td colspan="5">调用设置</td>
+	</tr>
+	<!--{eval if(in_array({$share[type]},array('topic','img','video','music')) || $this->Code == 'add') $topic_display = 'block'; else $topic_display = 'none';}-->
+	<tr id="topic_type" style="display:{$topic_display};">
+	  <td width="180">指定用户：</td>
+	  <td><textarea name="share[nickname]" style="width:500px; height:40px;">{$share[nickname]}</textarea>
+		<br />
+	  <span class="STYLE2">提示：可填写指定用户昵称,为空则调用全部的微博。多个用户请用 | 隔开。</span>
+	  <br />
+<button name="do" value='' type="submit" class="button">保 存</button>
+	     <button class="button" type="button" onclick="window.location.href='admin.php?mod=share';return false;">返回</button>
+	  </td>
+	   <td width="180">&nbsp;</td>
+	   <td width="180">&nbsp;</td>
+	   <td width="180">&nbsp;</td>
+	</tr>
+	
+	
+	<!--{eval if ($share[type] == 'tag') $tag_display = 'block'; else $tag_display = 'none'; }-->
+	<tr id="tag_type" style="display:{$tag_display};">
+	  <td  width="180">指定话题：</td>
+	  <td><textarea name="share[tag]"  style="width:500px; height:40px;">{$share[tag]}</textarea>
+          <br />
+          <span class="STYLE2">提示：可填写指定话题,为空则调用全部的话题。多个话题请用 | 隔开。</span><br />
+		 <button name="do" value='' type="submit" class="button">保 存</button>
+	     <button class="button" type="button" onclick="window.location.href='admin.php?mod=share';return false;">返回</button>
+	  </td>
+	  <td width="180">&nbsp;</td>
+	  <td width="180">&nbsp;</td>
+	  <td width="180">&nbsp;</td>
+    </tr>
+	
+  </table>
+
+</form>
+
